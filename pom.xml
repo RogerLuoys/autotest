@@ -105,6 +105,13 @@
             <version>2.7.1</version>
         </dependency>
 
+
+        <dependency>
+            <groupId>com.luoys.upgrade</groupId>
+            <artifactId>user-center-api</artifactId>
+            <version>1.0.1-SNAPSHOT</version>
+        </dependency>
+
     </dependencies>
 
 

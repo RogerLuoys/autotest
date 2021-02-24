@@ -7,10 +7,14 @@ import java.util.Random;
 public class helloTest2 {
 
     @Test
-    public void Test1() throws InterruptedException {
+    public void Test1() {
         Random rd = new Random();
         for (int i = 0; i<100; i++) {
-            Thread.sleep(1);
+            try {
+                Thread.sleep(1);
+            } catch (InterruptedException e) {
+                System.out.println(e);
+            }
             long time1 = System.currentTimeMillis();
 //            System.out.println(time1);
             int num = rd.nextInt(9);
