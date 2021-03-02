@@ -10,7 +10,8 @@ public class helloTest3 {
 
     static public UserService service = null;
 
-    public static String dubboUrl = "dubbo://192.168.10.107:20881?anyhost=true";
+//    public static String dubboUrl = "dubbo://192.168.10.107:20881?anyhost=true";
+    public static String dubboUrl = "dubbo://10.201.10.183:20881?anyhost=true";
 
     @BeforeClass
     public static void init() throws Exception {
