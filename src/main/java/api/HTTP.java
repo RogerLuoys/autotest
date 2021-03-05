@@ -1,4 +1,4 @@
 package api;
 
-public class HTTP {
+public interface HTTP {
 }

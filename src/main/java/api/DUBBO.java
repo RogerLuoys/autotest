@@ -1,4 +1,4 @@
 package api;
 
-public class DUBBO {
+public interface DUBBO {
 }
