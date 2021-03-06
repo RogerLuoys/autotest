@@ -1,7 +1,13 @@
 package demo.testBase;
 
-import supper.SupperTestBase;
+import base.Auto;
+import base.SupperTestBase;
 
-public class TestBase  extends SupperTestBase {
+public class TestBase {
+    public Auto auto = new Auto();
 
+    void test(){
+        auto.http.doGet("");
+
+    }
 }
