@@ -1,6 +1,6 @@
 package connect;
 
-import com.sun.istack.internal.NotNull;
+//import com.sun.istack.internal.NotNull;
 import lombok.*;
 
 // lombok自动生成 set、get、toString等方法
@@ -9,7 +9,7 @@ import lombok.*;
 public class UserBO {
 //    @Setter(value = AccessLevel.PUBLIC)
 //    @Getter
-    @NotNull
+//    @NotNull
     private String userid;
 
     private String username;

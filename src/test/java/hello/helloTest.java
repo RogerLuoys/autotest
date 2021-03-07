@@ -18,7 +18,8 @@ public class helloTest {
     @Test
     public void Test1() {
 
-
+//String a;
+//a.length()
 //        HttpClient http1 = new HttpClient();
 //        String a = http1.hello();
 //        String b = http1.doGet("http://118.24.117.181:8888/hello");
