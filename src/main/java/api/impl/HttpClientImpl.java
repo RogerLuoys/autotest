@@ -1,6 +1,7 @@
 package api.impl;
 
 import api.HTTP;
+import com.alibaba.fastjson.JSON;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
@@ -8,6 +9,7 @@ import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.utils.URIBuilder;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
@@ -151,7 +153,7 @@ public class HttpClientImpl implements HTTP {
         return httpGet(transformObject2String(url, params));
     }
 
-    private String httpPost(String url, Map<String, ?> params) {
+    private String httpPost(String url, String jsonData) {
         // 创建 HttpClient 客户端
 
         CloseableHttpClient httpClient = HttpClients.createDefault();
@@ -160,16 +162,20 @@ public class HttpClientImpl implements HTTP {
         HttpPost httpPost = new HttpPost(url);
         // 设置长连接
         httpPost.setHeader("Connection", "keep-alive");
+        httpPost.setHeader("userId", "101");
 
-        // 创建 HttpPost 参数
-        List<BasicNameValuePair> pairList = new ArrayList<>();
-        for (String key : params.keySet()) {
-            pairList.add(new BasicNameValuePair(key, params.get(key) != null ? params.get(key).toString() : null));
-        }
         CloseableHttpResponse httpResponse = null;
+        StringEntity stringEntity = null;
+        try {
+            stringEntity = new StringEntity(jsonData);
+            stringEntity.setContentType("application/json");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+
         try {
             // 设置 HttpPost 参数
-            httpPost.setEntity(new UrlEncodedFormEntity(pairList, "UTF-8"));
+            httpPost.setEntity(stringEntity);
             httpResponse = httpClient.execute(httpPost);
             HttpEntity httpEntity = httpResponse.getEntity();
             result = EntityUtils.toString(httpEntity);
@@ -198,13 +204,14 @@ public class HttpClientImpl implements HTTP {
         return result;
     }
 
-    @Override
-    public String doPost(String url, Map<String, ?> params) {
-        return httpPost(url, params);
-    }
+//    @Override
+//    public String doPost(String url, Map<String, ?> params) {
+//        return httpPost(url, params);
+//    }
 
     @Override
     public String doPost(String url, Object data) {
-        return null;
+        String jsonData = JSON.toJSONString(data);
+        return httpPost(url, jsonData);
     }
 }
