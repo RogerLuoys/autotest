@@ -13,9 +13,6 @@ public class UserBO {
     private String userid;
 
     private String username;
-    private String userpw;
+    private String password;
 
-    public UserBO() {
-
-    }
 }
