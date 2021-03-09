@@ -1,14 +1,21 @@
 package api.impl;
 
 import api.DB;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
 import java.util.List;
 import java.util.Map;
 
 public class DBJdbcTemplateImpl implements DB {
+    DriverManagerDataSource dataSource = new DriverManagerDataSource();
+
 
     @Override
     public Boolean update(String sql) {
+        dataSource.setDriverClassName("com.mysql.jdbc.Driver");
+        dataSource.setUrl("");
+        dataSource.setUsername("");
+        dataSource.setPassword("");
         return null;
     }
 
