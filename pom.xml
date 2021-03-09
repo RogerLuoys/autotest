@@ -114,8 +114,8 @@
 
         <dependency>
             <groupId>com.luoys.upgrade</groupId>
-            <artifactId>user-center-api</artifactId>
-            <version>1.0.1-SNAPSHOT</version>
+            <artifactId>user-center-share</artifactId>
+            <version>1.0.2-SNAPSHOT</version>
         </dependency>
 
     </dependencies>

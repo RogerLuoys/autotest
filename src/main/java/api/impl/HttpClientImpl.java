@@ -20,10 +20,7 @@ import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Field;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 //1 创建HttpClient客户端
 //2 创建Http请求
@@ -32,19 +29,18 @@ import java.util.Map;
 public class HttpClientImpl implements HTTP {
 
 
-    private String httpGet(String url) {
+    private String httpGet(String url, Map<String, String> header) {
         // 创建 HttpClient 客户端
         CloseableHttpClient httpClient = HttpClients.createDefault();
         String results = null;
         // 创建 HttpGet 请求
         HttpGet httpGet = new HttpGet(url);
-        // 设置长连接
-        httpGet.setHeader("Connection", "keep-alive");
-
+        // 设置请求头
+        for (String key : header.keySet()) {
+            httpGet.setHeader(key, header.get(key));
+        }
         CloseableHttpResponse httpResponse = null;
-
         try {
-            // 请求并获得响应结果
             httpResponse = httpClient.execute(httpGet);
             HttpEntity httpEntity = httpResponse.getEntity();
             results = EntityUtils.toString(httpEntity);
@@ -61,8 +57,11 @@ public class HttpClientImpl implements HTTP {
         return results;
     }
 
+    @Override
     public String doGet(String url) {
-        return httpGet(url);
+        Map<String, String> header = new HashMap<>();
+        header.put("Connection", "keep-alive");
+        return httpGet(url, header);
     }
 
     private URIBuilder getURIBuilder (String url) {
@@ -85,8 +84,11 @@ public class HttpClientImpl implements HTTP {
         return uriBuilder.toString();
     }
 
+    @Override
     public String doGet(String url, Map<String, ?> params) {
-        return httpGet(transformMap2String(url, params));
+        Map<String, String> header = new HashMap<>();
+        header.put("Connection", "keep-alive");
+        return httpGet(transformMap2String(url, params), header);
     }
 
     private String transformObject2String (String url, Object obj) {
@@ -119,51 +121,23 @@ public class HttpClientImpl implements HTTP {
         return uriBuilder.toString();
     }
 
-//    private Map<String, ?> transformObject2Map (String url, Object obj) {
-//        Map<String, String> uriBuilder = getURIBuilder(url);
-//        Field[] fields = obj.getClass().getDeclaredFields();
-//        for(int i = 0; i < fields.length; i++) {
-//            // 对于每个属性，获取属性名
-//            String varName = fields[i].getName();
-//            try {
-//                // 获取原来的访问控制权限
-//                boolean accessFlag = fields[i].isAccessible();
-//                // 修改访问控制权限
-//                fields[i].setAccessible(true);
-//                // 获取在对象f中属性fields[i]对应的对象中的变量
-//                Object o;
-//                try {
-//                    o = fields[i].get(obj);
-//                    if (o != null) {
-//                        uriBuilder.setParameter(varName, o.toString());
-//                    }
-//                } catch (IllegalAccessException e) {
-//                    e.printStackTrace();
-//                }
-//                // 恢复访问控制权限
-//                fields[i].setAccessible(accessFlag);
-//            } catch (IllegalArgumentException ex) {
-//                ex.printStackTrace();
-//            }
-//        }
-//        return uriBuilder.toString();
-//    }
-
-    public String doGet(String url, Object params) {
-        return httpGet(transformObject2String(url, params));
+    @Override
+    public String doGet(String url, Map<String, ?> params, Map<String, String> header) {
+//        Map<String, String> header = new HashMap<>();
+//        header.put("Connection", "keep-alive");
+        return httpGet(transformObject2String(url, params), header);
     }
 
-    private String httpPost(String url, String jsonData) {
+    private String httpPost(String url, String jsonData, Map<String, String> header) {
         // 创建 HttpClient 客户端
 
         CloseableHttpClient httpClient = HttpClients.createDefault();
         String result = null;
         // 创建 HttpPost 请求
         HttpPost httpPost = new HttpPost(url);
-        // 设置长连接
-        httpPost.setHeader("Connection", "keep-alive");
-        httpPost.setHeader("userId", "101");
-
+        for (String key : header.keySet()) {
+            httpPost.setHeader(key, header.get(key));
+        }
         CloseableHttpResponse httpResponse = null;
         StringEntity stringEntity = null;
         try {
@@ -172,7 +146,6 @@ public class HttpClientImpl implements HTTP {
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
-
         try {
             // 设置 HttpPost 参数
             httpPost.setEntity(stringEntity);
@@ -187,16 +160,8 @@ public class HttpClientImpl implements HTTP {
             e.printStackTrace();
         } finally {
             try {
-                if (httpResponse != null) {
-                    httpResponse.close();
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            try {
-                if (httpClient != null) {
-                    httpClient.close();
-                }
+                httpResponse.close();
+                httpClient.close();
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -211,7 +176,21 @@ public class HttpClientImpl implements HTTP {
 
     @Override
     public String doPost(String url, Object data) {
+        Map<String, String> header = new HashMap<>();
+        header.put("Connection", "keep-alive");
         String jsonData = JSON.toJSONString(data);
-        return httpPost(url, jsonData);
+        return httpPost(url, jsonData, header);
+    }
+
+    @Override
+    public String doPost(String url, Object data, Map<String, String> header) {
+        String jsonData = JSON.toJSONString(data);
+        return httpPost(url, jsonData, header);
+    }
+
+    @Override
+    public String doPost(String url, Object data, Map<String, String> header, Map<String, ?> params) {
+        String jsonData = JSON.toJSONString(data);
+        return httpPost(transformMap2String(url, params), jsonData, header);
     }
 }

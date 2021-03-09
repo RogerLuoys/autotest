@@ -1,12 +1,7 @@
 package hello;
 
 import com.alibaba.fastjson.JSON;
-import connect.HttpClient;
-import connect.JdbcConnect;
-import connect.TestJAVA;
 import connect.UserBO;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.Assert;

@@ -1,10 +1,10 @@
 package demo.testBase;
 
 import base.Auto;
-import base.SupperTestBase;
+import base.FullAutoAPI;
 
 public class TestBase {
-    public Auto auto = new Auto();
+    public FullAutoAPI auto = new FullAutoAPI();
 
     void test(){
         auto.http.doGet("");
