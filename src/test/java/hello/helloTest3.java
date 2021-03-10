@@ -29,9 +29,13 @@ public class helloTest3 {
 //    }
     @Test
     void Test1() {
-//        JDBC
-//        JdbcTemplate jdbcTemplate = new JdbcTemplate();
-//        jdbcTemplate.u
+        String sql = "Update dzb_wechat_follow_user SET is_delete=1 WHERe external_user_id='wmNEBPCQAAtnySdraxIhuc1ZvAI1pd7A';";
+        int endIndex = sql.toLowerCase().indexOf(" set ");
+        String tableName = sql.substring(7, endIndex);
+        int startIndex = sql.toLowerCase().indexOf(" where ");
+        String condition = sql.substring(startIndex);
+        String selectSql = "select " + tableName + condition;
+        System.out.println(selectSql);
     }
 
 }
