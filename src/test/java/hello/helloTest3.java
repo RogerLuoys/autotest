@@ -1,9 +1,6 @@
 package hello;
 
 //import com.luoys.upgrade.uc.api.service.UserService;
-import connect.DubboUtil;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 public class helloTest3 {
@@ -30,7 +27,7 @@ public class helloTest3 {
     @Test
     void Test1() {
         String sql = "Update dzb_wechat_follow_user SET is_delete=1 WHERe external_user_id='wmNEBPCQAAtnySdraxIhuc1ZvAI1pd7A';";
-        int endIndex = sql.toLowerCase().indexOf(" set ");
+        int endIndex = sql.toLowerCase().indexOf("12234");
         String tableName = sql.substring(7, endIndex);
         int startIndex = sql.toLowerCase().indexOf(" where ");
         String condition = sql.substring(startIndex);

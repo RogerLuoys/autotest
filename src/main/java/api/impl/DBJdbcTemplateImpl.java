@@ -74,11 +74,6 @@ public class DBJdbcTemplateImpl implements DB {
     }
 
     @Override
-    public Double sum(String sql) {
-        return null;
-    }
-
-    @Override
     public Integer count(String sql) {
         String executeSql = sql.replace(";", "") + ";";
         if (!checkSqlType(sql, COUNT)) {
@@ -106,6 +101,11 @@ public class DBJdbcTemplateImpl implements DB {
         return jdbcTemplate.queryForList(executeSql).get(0);
     }
 
+    /**
+     * 把更新sql转换称查询sql，查询sql以更新sql的条件为条件
+     * @param updateSql
+     * @return
+     */
     private String transformUpdate2Select(String updateSql) {
         int endIndex = updateSql.toLowerCase().indexOf(" set ");
         String tableName = updateSql.substring(7, endIndex);
@@ -152,16 +152,19 @@ public class DBJdbcTemplateImpl implements DB {
     }
 
     /**
-     * 默认按ID倒序，最多查10条
+     * 加默认查询规则，默认按ID倒序，最多查10条，避免没必要的全表查询
      * @param sql 完整的sql
      * @return 拼接默认查询规则后的sql
      */
     private String addSelectDefault(String sql) {
         String defaultSql = sql.replace(";", "");
-        if (!defaultSql.toLowerCase().contains("order by")) {
+        // 截取sql后缀，避免字符串中有同样的值
+        int startIndex = Math.max(defaultSql.indexOf("\""), defaultSql.indexOf("'"));
+        String suffixSql = defaultSql.substring(startIndex).toLowerCase();
+        if (!suffixSql.contains(" order by ")) {
             defaultSql = defaultSql + DEFAULT_ORDER;
         }
-        if (!defaultSql.toLowerCase().contains("limit")) {
+        if (!suffixSql.contains(" limit ")) {
             defaultSql = defaultSql + DEFAULT_LIMIT;
         }
         return defaultSql + ";";
