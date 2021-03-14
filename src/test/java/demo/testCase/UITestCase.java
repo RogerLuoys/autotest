@@ -16,19 +16,24 @@ public class UITestCase {
     @Test
     void Test1() throws InterruptedException {
         WebDriver driver = new ChromeDriver();
+
+        driver.get("http://www.baidu.com/");
+        Thread.sleep(10000);
         driver.get("http://www.upgradeflag.top/");
-//        WebElement we = driver.findElement(By.tagName(""));
-//        we.
-        System.out.println(new Date());
-        WebDriverWait wait = new WebDriverWait(driver, 30);
-        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//span[text()='使用访客账号']")));
-        System.out.println(new Date());
-        Thread.sleep(30000);
-        Actions actions = new Actions(driver);
-//        actions.contextClick(driver.findElement(By.xpath("//span[text()='使用访客账号']")));
-        driver.findElement(By.xpath("//span[text()='使用访客账号']")).click();
-        System.out.println(new Date());
-        System.out.println("登录成功");
+
+//        System.out.println(new Date());
+//        WebDriverWait wait = new WebDriverWait(driver, 30);
+//        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//span[text()='使用访客账号']")));
+//        System.out.println(new Date());
+////        Thread.sleep(30000);
+//        WebElement we = driver.findElement(By.xpath("//span[text()='使用访客账号']"));
+////        we.
+//        Actions actions = new Actions(driver);
+//        actions.click(driver.findElement(By.xpath("//span[text()='使用访客账号']")));
+//        actions.perform();
+////        driver.findElement(By.xpath("//span[text()='使用访客账号']")).click();
+//        System.out.println(new Date());
+//        System.out.println("登录成功");
         Thread.sleep(30000);
         System.out.println(new Date());
         driver.close();
