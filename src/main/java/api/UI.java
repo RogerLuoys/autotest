@@ -4,17 +4,21 @@ import org.openqa.selenium.By;
 
 public interface UI {
 
-    void init();
+    void init(String url);
 
-    void setTimeout(int second);
+    void quit();
+
+    void forceWait(Long second);
+
+    void setTimeout(Long second);
 
     void click(By locator);
 
     void clickByXpath(String xpath);
 
-    void sendKey(By locator);
+    void sendKey(By locator, CharSequence key);
 
-    void sendKeyByXpath(String xpath);
+    void sendKeyByXpath(String xpath, CharSequence key);
 
     void moveToElement(By locator);
 
