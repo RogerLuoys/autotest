@@ -23,4 +23,8 @@ public interface UI {
     void moveToElement(By locator);
 
     void moveToElementByXpath(String xpath);
+
+    void moveAndClick(By locator);
+
+    void moveAndClickXpath(String xpath);
 }

@@ -1,10 +1,8 @@
-package demo.testCase;
+package old.demo.testCase;
 
 import com.alibaba.fastjson.JSON;
 import com.luoys.upgrade.uc.share.service.UserService;
-import connect.UserBO;
-import demo.testBase.TestBase;
-import org.testng.Assert;
+import old.demo.testBase.TestBase;
 import org.testng.annotations.Test;
 
 import java.util.HashMap;

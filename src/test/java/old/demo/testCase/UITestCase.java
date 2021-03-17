@@ -1,6 +1,6 @@
-package demo.testCase;
+package old.demo.testCase;
 
-import demo.testBase.TestBase;
+import old.demo.testBase.TestBase;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;

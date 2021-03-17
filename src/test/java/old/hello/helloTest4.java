@@ -1,4 +1,4 @@
-package hello;
+package old.hello;
 
 import org.testng.annotations.Test;
 

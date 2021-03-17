@@ -1,4 +1,4 @@
-package hello;
+package old.hello;
 
 //import com.luoys.upgrade.uc.api.service.UserService;
 import org.testng.annotations.Test;

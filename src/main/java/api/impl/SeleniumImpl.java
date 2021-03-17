@@ -21,7 +21,6 @@ public class SeleniumImpl implements UI {
         this.driver = new ChromeDriver();
         this.driver.get(url);
         this.driver.manage().window().maximize();
-
     }
 
     @Override
@@ -81,11 +80,33 @@ public class SeleniumImpl implements UI {
 
     @Override
     public void moveToElement(By locator) {
-
+        forceWait(forceTimeOut);
+        WebElement webElement = driver.findElement(locator);
+        WebDriverWait webDriverWait = new WebDriverWait(driver, DEFAULT_WAIT_TIME);
+        webDriverWait.until(ExpectedConditions.visibilityOf(webElement));
+        Actions actions = new Actions(driver);
+        actions.moveToElement(webElement);
+        actions.perform();
     }
 
     @Override
     public void moveToElementByXpath(String xpath) {
+        moveToElement(By.xpath(xpath));
+    }
 
+    @Override
+    public void moveAndClick(By locator) {
+        forceWait(forceTimeOut);
+        WebElement webElement = driver.findElement(locator);
+        WebDriverWait webDriverWait = new WebDriverWait(driver, DEFAULT_WAIT_TIME);
+        webDriverWait.until(ExpectedConditions.elementToBeClickable(webElement));
+        Actions actions = new Actions(driver);
+        actions.moveToElement(webElement).click();
+        actions.perform();
+    }
+
+    @Override
+    public void moveAndClickXpath(String xpath) {
+        moveAndClick(By.xpath(xpath));
     }
 }

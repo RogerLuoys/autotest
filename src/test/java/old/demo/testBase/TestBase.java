@@ -1,6 +1,5 @@
-package demo.testBase;
+package old.demo.testBase;
 
-import base.Auto;
 import base.FullAutoAPI;
 
 public class TestBase {
