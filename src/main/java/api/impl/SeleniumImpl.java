@@ -12,7 +12,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 public class SeleniumImpl implements UI {
 
 
-    private static final Long DEFAULT_WAIT_TIME = 30L;
+    private final Long DEFAULT_WAIT_TIME = 30L;
     private WebDriver driver = null;
     private Long forceTimeOut = 1L;
 
@@ -21,6 +21,11 @@ public class SeleniumImpl implements UI {
         this.driver = new ChromeDriver();
         this.driver.get(url);
         this.driver.manage().window().maximize();
+    }
+
+    @Override
+    public void refresh(String url) {
+        this.driver.get(url);
     }
 
     @Override

@@ -6,6 +6,8 @@ public interface UI {
 
     void init(String url);
 
+    void refresh(String url);
+
     void quit();
 
     void forceWait(Long second);
