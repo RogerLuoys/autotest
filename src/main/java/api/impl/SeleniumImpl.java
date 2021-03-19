@@ -9,6 +9,8 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.util.List;
+
 public class SeleniumImpl implements UI {
 
 
@@ -52,6 +54,20 @@ public class SeleniumImpl implements UI {
     }
 
     @Override
+    public WebElement getElement(By locator) {
+        forceWait(forceTimeOut);
+        WebElement webElement = driver.findElement(locator);
+        return webElement;
+    }
+
+    @Override
+    public List<WebElement> getElements(By locator) {
+        forceWait(forceTimeOut);
+        List<WebElement> webElementList = driver.findElements(locator);
+        return webElementList;
+    }
+
+    @Override
     public void click(By locator) {
         forceWait(forceTimeOut);
         WebElement webElement = driver.findElement(locator);
@@ -59,6 +75,16 @@ public class SeleniumImpl implements UI {
         webDriverWait.until(ExpectedConditions.elementToBeClickable(webElement));
         Actions actions = new Actions(driver);
         actions.click(webElement);
+        actions.perform();
+    }
+
+    @Override
+    public void click(WebElement element) {
+        forceWait(forceTimeOut);
+        WebDriverWait webDriverWait = new WebDriverWait(driver, DEFAULT_WAIT_TIME);
+        webDriverWait.until(ExpectedConditions.elementToBeClickable(element));
+        Actions actions = new Actions(driver);
+        actions.click(element);
         actions.perform();
     }
 
@@ -75,6 +101,16 @@ public class SeleniumImpl implements UI {
         webDriverWait.until(ExpectedConditions.visibilityOf(webElement));
         Actions actions = new Actions(driver);
         actions.sendKeys(webElement, key);
+        actions.perform();
+    }
+
+    @Override
+    public void sendKey(WebElement element, CharSequence key) {
+        forceWait(forceTimeOut);
+        WebDriverWait webDriverWait = new WebDriverWait(driver, DEFAULT_WAIT_TIME);
+        webDriverWait.until(ExpectedConditions.visibilityOf(element));
+        Actions actions = new Actions(driver);
+        actions.sendKeys(element, key);
         actions.perform();
     }
 

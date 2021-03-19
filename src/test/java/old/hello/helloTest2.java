@@ -17,7 +17,7 @@ public class helloTest2 {
     @Test
     public void Test1() {
         Random rd = new Random();
-        for (int i = 0; i<100; i++) {
+        for (int i = 0; i<10; i++) {
             try {
                 Thread.sleep(1);
             } catch (InterruptedException e) {
