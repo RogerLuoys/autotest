@@ -7,6 +7,12 @@ import supperTestClass.UITestBase;
 
 public class NewFlagTest extends UITestBase {
 
+    @BeforeClass
+    void resetData() {
+        auto.db.delete("de");
+        auto.db.delete("");
+    }
+
     @BeforeMethod
     void prepareEnv() {
         auto.ui.refresh(URL);
@@ -16,7 +22,7 @@ public class NewFlagTest extends UITestBase {
 
     @AfterMethod
     void resetEnv() {
-        auto.ui.forceWait(10L);
+        auto.ui.forceWait(3L);
     }
 
     @Test

@@ -46,4 +46,6 @@ public interface DB {
      */
     Integer updateNoLimit(String sql);
 
+    Integer delete(String sql);
+
 }
