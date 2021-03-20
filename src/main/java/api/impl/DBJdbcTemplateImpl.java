@@ -114,8 +114,9 @@ public class DBJdbcTemplateImpl implements DB {
     private String addSelectDefault(String sql) {
         String defaultSql = sql.replace(";", "");
         // 截取sql后缀，避免字符串中有同样的值
-        int startIndex = Math.max(defaultSql.indexOf("\""), defaultSql.indexOf("'"));
+        int startIndex = Math.max(defaultSql.lastIndexOf("\""), defaultSql.lastIndexOf("'"));
         String suffixSql = defaultSql.substring(startIndex).toLowerCase();
+
         if (!suffixSql.contains(" order by ")) {
             defaultSql = defaultSql + DEFAULT_ORDER;
         }
