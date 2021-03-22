@@ -9,8 +9,8 @@ public class NewFlagTest extends UITestBase {
 
     @BeforeClass
     void resetData() {
-        auto.db.delete("de");
-        auto.db.delete("");
+        auto.db.delete("delete from flag_bind where flag_id in (select flag_id from flag where flag_name = '自动化新增FLAG测试');");
+        auto.db.delete("delete from flag where flag_name = '自动化新增FLAG测试');");
     }
 
     @BeforeMethod
@@ -19,7 +19,6 @@ public class NewFlagTest extends UITestBase {
         auto.ui.forceWait(3L);
     }
 
-
     @AfterMethod
     void resetEnv() {
         auto.ui.forceWait(3L);
@@ -27,17 +26,16 @@ public class NewFlagTest extends UITestBase {
 
     @Test
     void newFlag() {
-        auto.ui.clickByXpath("//span[contains(string(), '新增FLAG')]");
-//        WebElement element = auto.ui.getElements(By.xpath("//input[@placeholder='请输入名称']")).get(2);
-        auto.ui.sendKeyByXpath("//div[@class='el-dialog__body']//input[@placeholder='请输入名称']", "自动化新增FLAG测试");
-        auto.ui.clickByXpath("//span[text()='确 定']");
+        auto.ui.click("//span[contains(string(), '新增FLAG')]");
+        auto.ui.sendKey("//div[@class='el-dialog__body']//input[@placeholder='请输入名称']", "自动化新增FLAG测试");
+        auto.ui.click("//span[text()='确 定']");
     }
 
     @Test
     void newHabit() {
-        auto.ui.clickByXpath("//div[text()='习惯养成']");
-        auto.ui.clickByXpath("//span[contains(string(), '新增习惯')]");
-        auto.ui.sendKeyByXpath("//div[@class='el-dialog__body']//input[@placeholder='请输入名称']", "自动化新增习惯测试");
+        auto.ui.click("//div[text()='习惯养成']");
+        auto.ui.click("//span[contains(string(), '新增习惯')]");
+        auto.ui.sendKey("//div[@class='el-dialog__body']//input[@placeholder='请输入名称']", "自动化新增习惯测试");
         auto.ui.click(auto.ui.getElements(By.xpath("//span[text()='确 定']")).get(1));
     }
 }

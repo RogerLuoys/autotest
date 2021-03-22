@@ -42,7 +42,7 @@ public class UITestCase extends TestBase {
     void Test2() throws InterruptedException {
         auto.ui.init("http://118.24.117.181/#/");
         System.out.println(new Date());
-        auto.ui.clickByXpath("//span[text()='使用访客账号']");
+        auto.ui.click("//span[text()='使用访客账号']");
         System.out.println(new Date());
         Thread.sleep(30000);
         System.out.println(new Date());
@@ -52,9 +52,9 @@ public class UITestCase extends TestBase {
     @Test
     void Test3() throws InterruptedException {
         auto.ui.init("http://118.24.117.181/#/");
-        auto.ui.sendKeyByXpath("//input[@placeholder='请输入账号']", "tester");
-        auto.ui.sendKeyByXpath("//input[@placeholder='请输入密码']", "123456");
-        auto.ui.clickByXpath("//span[text()='登录']");
+        auto.ui.sendKey("//input[@placeholder='请输入账号']", "tester");
+        auto.ui.sendKey("//input[@placeholder='请输入密码']", "123456");
+        auto.ui.click("//span[text()='登录']");
         Thread.sleep(30000);
         auto.ui.quit();
     }
@@ -62,13 +62,13 @@ public class UITestCase extends TestBase {
     @Test
     void Test4() throws InterruptedException {
         auto.ui.init("http://118.24.117.181/#/");
-        auto.ui.sendKeyByXpath("//input[@placeholder='请输入账号']", "autoTester");
-        auto.ui.sendKeyByXpath("//input[@placeholder='请输入密码']", "123456");
-        auto.ui.clickByXpath("//span[text()='登录']");
+        auto.ui.sendKey("//input[@placeholder='请输入账号']", "autoTester");
+        auto.ui.sendKey("//input[@placeholder='请输入密码']", "123456");
+        auto.ui.click("//span[text()='登录']");
         Thread.sleep(10000);
-        auto.ui.moveAndClickXpath("//span[contains(string(), '新增FLAG')]");
+        auto.ui.moveAndClick("//span[contains(string(), '新增FLAG')]");
         Thread.sleep(3000);
-        auto.ui.sendKeyByXpath("//input[@placeholder='请输入名称']", "自动化新增FLAG测试");
+        auto.ui.sendKey("//input[@placeholder='请输入名称']", "自动化新增FLAG测试");
         Thread.sleep(10000);
         auto.ui.refresh("http://118.24.117.181/");
         Thread.sleep(10000);

@@ -89,7 +89,7 @@ public class SeleniumImpl implements UI {
     }
 
     @Override
-    public void clickByXpath(String xpath) {
+    public void click(String xpath) {
         click(By.xpath(xpath));
     }
 
@@ -115,7 +115,7 @@ public class SeleniumImpl implements UI {
     }
 
     @Override
-    public void sendKeyByXpath(String xpath, CharSequence key) {
+    public void sendKey(String xpath, CharSequence key) {
         sendKey(By.xpath(xpath), key);
     }
 
@@ -131,7 +131,7 @@ public class SeleniumImpl implements UI {
     }
 
     @Override
-    public void moveToElementByXpath(String xpath) {
+    public void moveToElement(String xpath) {
         moveToElement(By.xpath(xpath));
     }
 
@@ -147,7 +147,18 @@ public class SeleniumImpl implements UI {
     }
 
     @Override
-    public void moveAndClickXpath(String xpath) {
+    public void moveAndClick(String xpath) {
         moveAndClick(By.xpath(xpath));
+    }
+
+    @Override
+    public Boolean isElementExist(By locator) {
+        List<WebElement> webElementList = getElements(locator);
+        return webElementList.size() > 0;
+    }
+
+    @Override
+    public Boolean isElementExist(String xpath) {
+        return isElementExist(By.xpath(xpath));
     }
 }

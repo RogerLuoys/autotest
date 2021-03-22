@@ -8,6 +8,10 @@ import java.util.Map;
 
 public interface DB {
 
+    /**
+     * 会更改数据库连接信息，慎用
+     * @param dataSource 数据库信息
+     */
     @Deprecated
     void init(DriverManagerDataSource dataSource);
 
@@ -21,7 +25,7 @@ public interface DB {
     /**
      * 可查询多行，默认上限10行，可通过limit自定义行数
      * @param sql 完整的查询sql
-     * @return
+     * @return Map中的Key对应列名、Value对应该列的某一个数据
      */
     List<Map<String, Object>> selectMultiRow(String sql);
 
@@ -46,6 +50,11 @@ public interface DB {
      */
     Integer updateNoLimit(String sql);
 
+    /**
+     * 删除-影响行数不能超过5条
+     * @param sql 完整的删除sql
+     * @return
+     */
     Integer delete(String sql);
 
 }

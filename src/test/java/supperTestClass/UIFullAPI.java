@@ -16,9 +16,9 @@ public class UIFullAPI {
 
     public class Task {
         public void login(String userName, String password) {
-            ui.sendKeyByXpath("//input[@placeholder='请输入账号']", userName);
-            ui.sendKeyByXpath("//input[@placeholder='请输入密码']", password);
-            ui.clickByXpath("//span[text()='登录']");
+            ui.sendKey("//input[@placeholder='请输入账号']", userName);
+            ui.sendKey("//input[@placeholder='请输入密码']", password);
+            ui.click("//span[text()='登录']");
             ui.forceWait(5L);
         }
     }

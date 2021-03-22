@@ -145,6 +145,7 @@ public class DBJdbcTemplateImpl implements DB {
             System.out.println("-------->一次更新超过10行，请确认sql条件是否正确");
             return null;
         }
+        System.out.println("最终执行sql：" + executeSql);
         return jdbcTemplate.update(executeSql);
     }
 
@@ -160,6 +161,7 @@ public class DBJdbcTemplateImpl implements DB {
             System.out.println("-------->一次更新超过100行，请确认sql条件是否正确");
             return null;
         }
+        System.out.println("最终执行sql：" + executeSql);
         return jdbcTemplate.update(executeSql);
     }
 
@@ -170,6 +172,7 @@ public class DBJdbcTemplateImpl implements DB {
             return null;
         }
         Map<String, Object> result = jdbcTemplate.queryForMap(executeSql);
+        System.out.println("最终执行sql：" + sql);
         return Integer.valueOf(result.get(COUNT).toString());
     }
 
@@ -179,6 +182,7 @@ public class DBJdbcTemplateImpl implements DB {
             return null;
         }
         String executeSql = addSelectDefault(sql);
+        System.out.println("最终执行sql：" + executeSql);
         return jdbcTemplate.queryForList(executeSql);
     }
 
@@ -188,6 +192,7 @@ public class DBJdbcTemplateImpl implements DB {
             return null;
         }
         String executeSql = addSelectDefault(sql);
+        System.out.println("最终执行sql：" + executeSql);
         return jdbcTemplate.queryForList(executeSql).get(0);
     }
 
@@ -203,6 +208,7 @@ public class DBJdbcTemplateImpl implements DB {
             System.out.println("-------->一次删除超过5行，请确认sql条件是否正确");
             return null;
         }
+        System.out.println("最终执行sql：" + executeSql);
         return jdbcTemplate.update(executeSql);
     }
 }
