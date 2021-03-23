@@ -1,4 +1,4 @@
-package supperTestClass;
+package supperTestClass.flag;
 
 import base.FullAutoAPI;
 

@@ -48,7 +48,7 @@ public class DBJdbcTemplateImpl implements DB {
         String tableName = updateSql.substring(7, endIndex);
         int startIndex = updateSql.toLowerCase().indexOf(" where ");
         String condition = updateSql.substring(startIndex);
-        String selectSql = "select count(1) " + tableName + condition;
+        String selectSql = "select count(1) from " + tableName + condition;
         return selectSql;
     }
 
@@ -115,7 +115,7 @@ public class DBJdbcTemplateImpl implements DB {
         String defaultSql = sql.replace(";", "");
         // 截取sql后缀，避免字符串中有同样的值
         int startIndex = Math.max(defaultSql.lastIndexOf("\""), defaultSql.lastIndexOf("'"));
-        String suffixSql = defaultSql.substring(startIndex).toLowerCase();
+        String suffixSql = defaultSql.substring(startIndex != -1 ? startIndex : 0).toLowerCase();
 
         if (!suffixSql.contains(" order by ")) {
             defaultSql = defaultSql + DEFAULT_ORDER;
@@ -145,7 +145,7 @@ public class DBJdbcTemplateImpl implements DB {
             System.out.println("-------->一次更新超过10行，请确认sql条件是否正确");
             return null;
         }
-        System.out.println("最终执行sql：" + executeSql);
+        System.out.println("-------->最终执行sql：" + executeSql);
         return jdbcTemplate.update(executeSql);
     }
 
@@ -171,8 +171,8 @@ public class DBJdbcTemplateImpl implements DB {
         if (!checkSqlType(sql, COUNT)) {
             return null;
         }
+        System.out.println("-------->最终执行sql：" + executeSql);
         Map<String, Object> result = jdbcTemplate.queryForMap(executeSql);
-        System.out.println("最终执行sql：" + sql);
         return Integer.valueOf(result.get(COUNT).toString());
     }
 
@@ -192,7 +192,7 @@ public class DBJdbcTemplateImpl implements DB {
             return null;
         }
         String executeSql = addSelectDefault(sql);
-        System.out.println("最终执行sql：" + executeSql);
+        System.out.println("-------->最终执行sql：" + executeSql);
         return jdbcTemplate.queryForList(executeSql).get(0);
     }
 
@@ -208,7 +208,7 @@ public class DBJdbcTemplateImpl implements DB {
             System.out.println("-------->一次删除超过5行，请确认sql条件是否正确");
             return null;
         }
-        System.out.println("最终执行sql：" + executeSql);
+        System.out.println("-------->最终执行sql：" + executeSql);
         return jdbcTemplate.update(executeSql);
     }
 }

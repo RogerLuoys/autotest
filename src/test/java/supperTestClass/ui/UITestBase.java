@@ -1,9 +1,8 @@
-package supperTestClass;
+package supperTestClass.ui;
 
-import base.FullAutoAPI;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeSuite;
+import org.testng.annotations.BeforeMethod;
 
 public class UITestBase {
     public final static UIFullAPI auto = new UIFullAPI();
@@ -12,7 +11,7 @@ public class UITestBase {
     @BeforeClass
     public void startBrowser() {
         auto.ui.init(URL);
-        auto.ui.forceWait(10L);
+        auto.ui.forceWait(3L);
         auto.task.login("autoTester", "123456");
     }
 
