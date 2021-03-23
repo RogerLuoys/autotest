@@ -18,7 +18,7 @@ public class QueryByUserIdTestCase extends UserCenterTestBase {
         System.out.println("----------------->data: " + test);
         int count = auto.ucDB.count("select count(1) from user");
         System.out.println("----------------->count: " + count);
-        auto.ucDB.delete("delete from flag_bind where flag_id in (select flag_id from flag where flag_name = '自动化新增FLAG测试');");
-        auto.ucDB.delete("delete from flag where flag_name = '自动化新增FLAG测试';");
+//        auto.ucDB.delete("delete from flag_bind where flag_id in (select flag_id from flag where flag_name = '自动化新增FLAG测试');");
+//        auto.ucDB.delete("delete from flag where flag_name = '自动化新增FLAG测试';");
     }
 }
