@@ -15,7 +15,6 @@ public class FlagStatusTest extends UITestBase {
         auto.flagDB.update("update flag set is_delete=0 where flag_id='116164847059855';");
         auto.flagDB.update("update flag_bind set is_delete=0 where flag_id='116164847059855';");
         auto.ui.refresh(URL);
-        auto.ui.forceWait(3L);
     }
 
     @Test
@@ -31,7 +30,7 @@ public class FlagStatusTest extends UITestBase {
         auto.ui.forceWait(2L);
         //更改状态为进行中
         auto.ui.click("//span[text()='开始']");
-        auto.ui.click(auto.ui.getElements(By.xpath("//div[@class='el-popconfirm']//span[contains(string(),'确定')]")).get(1));
+        auto.ui.click(auto.ui.getElements(By.xpath("//div[@class='el-popconfirm']//span[contains(text(),'确定')]")).get(1));
         //校验更改结果
         Assert.assertTrue(auto.ui.isElementExist("//span[text()='进行中']"), "判断标签是否更改");
     }
@@ -49,7 +48,7 @@ public class FlagStatusTest extends UITestBase {
         auto.ui.forceWait(2L);
         //更改状态为进行中
         auto.ui.click("//span[text()='完成']");
-        auto.ui.click(auto.ui.getElements(By.xpath("//div[@class='el-popconfirm']//span[contains(string(),'确定')]")).get(1));
+        auto.ui.click(auto.ui.getElements(By.xpath("//div[@class='el-popconfirm']//span[contains(text(),'确定')]")).get(1));
         //校验更改结果
         Assert.assertTrue(auto.ui.isElementExist("//span[text()='已完成']"), "判断标签是否更改");
     }
@@ -67,7 +66,7 @@ public class FlagStatusTest extends UITestBase {
         auto.ui.forceWait(2L);
         //更改状态为进行中
         auto.ui.click("//span[text()='删除']");
-        auto.ui.click(auto.ui.getElements(By.xpath("//div[@class='el-popconfirm']//span[contains(string(),'确定')]")).get(1));
+        auto.ui.click(auto.ui.getElements(By.xpath("//div[@class='el-popconfirm']//span[contains(text(),'确定')]")).get(1));
         //校验更改结果
         Assert.assertFalse(auto.ui.isElementExist("//div[text()='自动化FLAG状态测试-勿删']"), "判断是否被删除");
     }

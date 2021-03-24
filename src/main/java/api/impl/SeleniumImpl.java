@@ -28,6 +28,7 @@ public class SeleniumImpl implements UI {
     @Override
     public void refresh(String url) {
         this.driver.get(url);
+        forceWait(3L);
     }
 
     @Override

@@ -18,7 +18,6 @@ public class NewFlagTest extends UITestBase {
     @BeforeMethod
     void prepareEnv() {
         auto.ui.refresh(URL);
-        auto.ui.forceWait(3L);
     }
 
     @AfterMethod
@@ -29,7 +28,7 @@ public class NewFlagTest extends UITestBase {
     @Test
     void newFlag() {
         //点新增按钮
-        auto.ui.click("//span[contains(string(), '新增FLAG')]");
+        auto.ui.click("//span[contains(text(), '新增FLAG')]");
         //输入名称，新增flag
         auto.ui.sendKey("//div[@class='el-dialog__body']//input[@placeholder='请输入名称']", "自动化新增FLAG测试");
         auto.ui.click("//span[text()='确 定']");
@@ -43,10 +42,10 @@ public class NewFlagTest extends UITestBase {
         //点新增按钮
         auto.ui.click("//div[text()='习惯养成']");
         //输入名称，新增习惯
-        auto.ui.click("//span[contains(string(), '新增习惯')]");
-
+        auto.ui.click("//span[contains(text(), '新增习惯')]");
         auto.ui.sendKey("//div[@class='el-dialog__body']//input[@placeholder='请输入名称']", "自动化新增习惯测试");
         auto.ui.click(auto.ui.getElements(By.xpath("//span[text()='确 定']")).get(1));
+        //验证习惯是否存在
         Assert.assertTrue(auto.ui.isElementExist("//div[text()='自动化新增习惯测试']"), "验证新增是否成功");
     }
 }

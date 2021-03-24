@@ -20,7 +20,7 @@ public interface UI {
     void refresh(String url);
 
     /**
-     * 关闭浏览器和关闭资源
+     * 关闭浏览器且关闭资源
      */
     void quit();
 
