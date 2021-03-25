@@ -5,7 +5,7 @@ import supperTestClass.userCenter.UserCenterTestBase;
 
 import java.util.Map;
 
-public class QueryByUserIdTestCase extends UserCenterTestBase {
+public class QueryByUserIdTest extends UserCenterTestBase {
 
     private final String serviceURL = dubboURL + "com.luoys.upgrade.uc.share.service.UserService";
 

@@ -121,6 +121,35 @@ public class SeleniumImpl implements UI {
     }
 
     @Override
+    public void sendKeyWithClear(By locator, CharSequence key) {
+        forceWait(forceTimeOut);
+        WebElement webElement = driver.findElement(locator);
+        WebDriverWait webDriverWait = new WebDriverWait(driver, DEFAULT_WAIT_TIME);
+        webDriverWait.until(ExpectedConditions.visibilityOf(webElement));
+        webElement.clear();
+        Actions actions = new Actions(driver);
+        actions.sendKeys(webElement, key);
+        actions.perform();
+    }
+
+    @Override
+    public void sendKeyWithClear(WebElement element, CharSequence key) {
+        forceWait(forceTimeOut);
+        WebDriverWait webDriverWait = new WebDriverWait(driver, DEFAULT_WAIT_TIME);
+        webDriverWait.until(ExpectedConditions.visibilityOf(element));
+        element.clear();
+        Actions actions = new Actions(driver);
+        actions.sendKeys(element, key);
+        actions.perform();
+    }
+
+    @Override
+    public void sendKeyWithClear(String xpath, CharSequence key) {
+        sendKeyWithClear(By.xpath(xpath), key);
+
+    }
+
+    @Override
     public void moveToElement(By locator) {
         forceWait(forceTimeOut);
         WebElement webElement = driver.findElement(locator);

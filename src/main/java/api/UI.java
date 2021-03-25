@@ -90,6 +90,27 @@ public interface UI {
     void sendKey(String xpath, CharSequence key);
 
     /**
+     * 先清除输入框的内容，再往指定元素中输入字符
+     * @param locator 自选元素定位方式
+     * @param key 输入的字符串
+     */
+    void sendKeyWithClear(By locator, CharSequence key);
+
+    /**
+     * 先清除输入框的内容，再往指定元素中输入字符
+     * @param element 元素对象
+     * @param key 输入的字符串
+     */
+    void sendKeyWithClear(WebElement element, CharSequence key);
+
+    /**
+     * 先清除输入框的内容，再往指定元素中输入字符
+     * @param xpath 元素的xpath
+     * @param key 输入的字符串
+     */
+    void sendKeyWithClear(String xpath, CharSequence key);
+
+    /**
      * 鼠标移动到指定元素上
      * @param locator 自选元素定位方式
      */

@@ -115,6 +115,7 @@ public class DBJdbcTemplateImpl implements DB {
         String defaultSql = sql.replace(";", "");
         // 截取sql后缀，避免字符串中有同样的值
         int startIndex = Math.max(defaultSql.lastIndexOf("\""), defaultSql.lastIndexOf("'"));
+        startIndex = Math.max(startIndex, defaultSql.lastIndexOf(")"));
         String suffixSql = defaultSql.substring(startIndex != -1 ? startIndex : 0).toLowerCase();
 
         if (!suffixSql.contains(" order by ")) {

@@ -1,4 +1,4 @@
 package userCenterTestCase.userService;
 
-public class ModifyUserTestCase {
+public class ModifyUserTest {
 }
