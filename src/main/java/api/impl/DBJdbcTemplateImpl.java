@@ -145,6 +145,9 @@ public class DBJdbcTemplateImpl implements DB {
         if (effectRow > 10) {
             System.out.println("-------->一次更新超过10行，请确认sql条件是否正确");
             return null;
+        } else if (effectRow == 0) {
+            System.out.println("-------->查无此类数据，不需要更新");
+            return null;
         }
         System.out.println("-------->最终执行sql：" + executeSql);
         return jdbcTemplate.update(executeSql);
@@ -160,6 +163,9 @@ public class DBJdbcTemplateImpl implements DB {
         int effectRow = count(transformUpdate2Select(executeSql));
         if (effectRow > 100) {
             System.out.println("-------->一次更新超过100行，请确认sql条件是否正确");
+            return null;
+        } else if (effectRow == 0) {
+            System.out.println("-------->查无此类数据，不需要更新");
             return null;
         }
         System.out.println("最终执行sql：" + executeSql);
@@ -207,6 +213,9 @@ public class DBJdbcTemplateImpl implements DB {
         int effectRow = count(transformDelete2Select(executeSql));
         if (effectRow > 5) {
             System.out.println("-------->一次删除超过5行，请确认sql条件是否正确");
+            return null;
+        } else if (effectRow == 0) {
+            System.out.println("-------->查无此类数据，不需要更新");
             return null;
         }
         System.out.println("-------->最终执行sql：" + executeSql);

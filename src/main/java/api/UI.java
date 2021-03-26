@@ -51,6 +51,13 @@ public interface UI {
     List<WebElement> getElements(By locator);
 
     /**
+     * 获取同类别的自动化元素列表
+     * @param xpath 元素的xpath
+     * @return 所有符合条件的元素
+     */
+    List<WebElement> getElements(String xpath);
+
+    /**
      * 鼠标点击指定元素
      * @param locator 自选元素定位方式
      */

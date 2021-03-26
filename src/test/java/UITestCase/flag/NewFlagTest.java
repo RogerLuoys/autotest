@@ -15,16 +15,6 @@ public class NewFlagTest extends UITestBase {
         auto.flagDB.delete("delete from flag where flag_name = '自动化新增习惯测试';");
     }
 
-    @BeforeMethod
-    void prepareEnv() {
-        auto.ui.refresh(URL);
-    }
-
-    @AfterMethod
-    void resetEnv() {
-        auto.ui.forceWait(3L);
-    }
-
     @Test
     void newFlag() {
         //点新增按钮

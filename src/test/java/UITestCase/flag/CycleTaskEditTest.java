@@ -11,7 +11,6 @@ public class CycleTaskEditTest extends UITestBase {
     @BeforeMethod
     void prepareEnv() {
         auto.flagDB.update("update task set task_name='自动化编辑任务测试-勿删', description=null, point=1, cycle='1' where task_id='216166577939354';");
-        auto.ui.refresh(URL);
     }
 
     @Test

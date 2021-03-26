@@ -14,7 +14,6 @@ public class FlagStatusTest extends UITestBase {
     void prepareEnv() {
         auto.flagDB.update("update flag set is_delete=0 where flag_id='116164847059855';");
         auto.flagDB.update("update flag_bind set is_delete=0 where flag_id='116164847059855';");
-        auto.ui.refresh(URL);
     }
 
     @Test

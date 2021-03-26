@@ -69,6 +69,11 @@ public class SeleniumImpl implements UI {
     }
 
     @Override
+    public List<WebElement> getElements(String xpath) {
+        return getElements(By.xpath(xpath));
+    }
+
+    @Override
     public void click(By locator) {
         forceWait(forceTimeOut);
         WebElement webElement = driver.findElement(locator);

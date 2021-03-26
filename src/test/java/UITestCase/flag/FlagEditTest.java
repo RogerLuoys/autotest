@@ -8,11 +8,6 @@ import supperTestClass.ui.UITestBase;
 
 public class FlagEditTest extends UITestBase {
 
-    @BeforeMethod
-    void prepareEnv() {
-        auto.ui.refresh(URL);
-    }
-
     @Test
     void editBasic() {
         //还原数据
