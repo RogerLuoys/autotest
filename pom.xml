@@ -54,11 +54,11 @@
             <version>5.1.5.RELEASE</version>
         </dependency>
 
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-core</artifactId>
-            <version>5.1.5.RELEASE</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.springframework</groupId>-->
+<!--            <artifactId>spring-core</artifactId>-->
+<!--            <version>5.1.5.RELEASE</version>-->
+<!--        </dependency>-->
 
         <!-- 引入fastjson  https://mvnrepository.com/artifact/com.alibaba/fastjson -->
         <dependency>
@@ -112,6 +112,11 @@
             <version>2.7.1</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi</artifactId>
+            <version>5.0.0</version>
+        </dependency>
 
         <dependency>
             <groupId>com.luoys.upgrade</groupId>
