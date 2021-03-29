@@ -1,4 +1,4 @@
-package UITestCase.task;
+package uiTestCase.task;
 
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;

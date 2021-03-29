@@ -1,4 +1,4 @@
-package UITestCase.report;
+package uiTestCase.report;
 
 import org.testng.Assert;
 import org.testng.annotations.Test;

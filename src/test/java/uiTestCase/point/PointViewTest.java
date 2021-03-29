@@ -1,4 +1,4 @@
-package UITestCase.point;
+package uiTestCase.point;
 
 import org.testng.Assert;
 import org.testng.annotations.Test;

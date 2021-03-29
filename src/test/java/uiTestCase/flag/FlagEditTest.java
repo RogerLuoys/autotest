@@ -1,4 +1,4 @@
-package UITestCase.flag;
+package uiTestCase.flag;
 
 import org.testng.Assert;
 import org.testng.annotations.Test;

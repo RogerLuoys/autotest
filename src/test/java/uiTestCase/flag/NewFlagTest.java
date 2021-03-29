@@ -1,4 +1,4 @@
-package UITestCase.flag;
+package uiTestCase.flag;
 
 import org.openqa.selenium.By;
 import org.testng.Assert;
