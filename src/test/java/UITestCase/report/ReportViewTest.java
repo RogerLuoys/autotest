@@ -1,8 +1,8 @@
-package UITestCase.flag;
+package UITestCase.report;
 
 import org.testng.Assert;
 import org.testng.annotations.Test;
-import supperTestClass.ui.UITestBase;
+import testBase.ui.UITestBase;
 
 public class ReportViewTest extends UITestBase {
 

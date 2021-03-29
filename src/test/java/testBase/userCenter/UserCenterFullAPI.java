@@ -1,4 +1,4 @@
-package supperTestClass.userCenter;
+package testBase.userCenter;
 
 import api.DB;
 import api.HTTP;

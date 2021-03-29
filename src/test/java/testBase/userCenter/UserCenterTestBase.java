@@ -1,4 +1,4 @@
-package supperTestClass.userCenter;
+package testBase.userCenter;
 
 public class UserCenterTestBase {
     public static final String URL = "dubbo://118.24.117.181:20881/";

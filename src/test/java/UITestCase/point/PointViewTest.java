@@ -1,8 +1,8 @@
-package UITestCase.flag;
+package UITestCase.point;
 
 import org.testng.Assert;
 import org.testng.annotations.Test;
-import supperTestClass.ui.UITestBase;
+import testBase.ui.UITestBase;
 
 public class PointViewTest extends UITestBase {
 

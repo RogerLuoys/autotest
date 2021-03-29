@@ -1,4 +1,4 @@
-package supperTestClass.ui;
+package testBase.ui;
 
 import api.DB;
 import api.UI;

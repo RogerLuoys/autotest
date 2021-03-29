@@ -3,7 +3,7 @@ package UITestCase.flag;
 import org.openqa.selenium.By;
 import org.testng.Assert;
 import org.testng.annotations.*;
-import supperTestClass.ui.UITestBase;
+import testBase.ui.UITestBase;
 
 public class NewFlagTest extends UITestBase {
 

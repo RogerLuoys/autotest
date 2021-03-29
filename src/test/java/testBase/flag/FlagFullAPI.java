@@ -1,4 +1,4 @@
-package supperTestClass.flag;
+package testBase.flag;
 
 import api.DB;
 import api.HTTP;

@@ -1,4 +1,4 @@
-package supperTestClass.ui;
+package testBase.ui;
 
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;

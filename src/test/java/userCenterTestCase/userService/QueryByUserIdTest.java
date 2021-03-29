@@ -1,10 +1,8 @@
 package userCenterTestCase.userService;
 
-import com.alibaba.fastjson.JSON;
-import com.luoys.upgrade.uc.share.dto.UserDTO;
 import com.luoys.upgrade.uc.share.service.UserService;
 import org.testng.annotations.Test;
-import supperTestClass.userCenter.UserCenterTestBase;
+import testBase.userCenter.UserCenterTestBase;
 
 import java.util.Map;
 

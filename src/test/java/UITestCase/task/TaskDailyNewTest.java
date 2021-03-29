@@ -1,10 +1,9 @@
-package UITestCase.flag;
+package UITestCase.task;
 
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import supperTestClass.ui.UITestBase;
+import testBase.ui.UITestBase;
 
 import java.util.Date;
 
