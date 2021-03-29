@@ -24,11 +24,13 @@ public class QueryByUserIdTest extends UserCenterTestBase {
 
     }
 
-    @Test
+    @Test(description = "查询正常用户信息")
     void Test2() {
-        String var = "{\"code\":1,\"data\":{\"test\":[{\"loginName\":\"autoTester\"},{\"loginName\":\"autoTester2\"}],\"loginName\":\"autoTester\",\"password\":\"123456\",\"status\":1,\"type\":2,\"userId\":\"416160586979148\",\"userName\":\"新干旗人\"},\"message\":\"成功\",\"success\":true}";
-        String result = auto.util.getJSONData(var, "data");
+        String var = "{\"code\":1,\"data\":{\"message\":[{\"loginName\":\"autoTester\"},{\"loginName\":\"autoTester2\"}],\"loginName\":\"autoTester\",\"password\":\"123456\",\"status\":1,\"type\":2,\"userId\":\"416160586979148\",\"userName\":\"新干旗人\"},\"message\":\"成功\",\"success\":true}";
+        String result = auto.util.getJSONData(var, "message");
+        result = auto.util.getJSONBaseData(var, "data");
         System.out.println("------>"+var);
         System.out.println("------>"+result);
+
     }
 }
