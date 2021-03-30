@@ -4,6 +4,7 @@ import com.luoys.upgrade.uc.share.dto.UserDTO;
 import com.luoys.upgrade.uc.share.service.UserService;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import testBase.userCenter.UserCenterTestBase;
 
@@ -17,6 +18,11 @@ public class ModifyUserTest extends UserCenterTestBase {
         auto.ucDB.update("update user set user_name='干旗人' where user_id='416170902167365';");
     }
 
+    @BeforeMethod
+    void prepare() throws InterruptedException {
+        Thread.sleep(3000L);
+    }
+
     @Test(description = "正常修改名称")
     void test1() {
         UserDTO userDTO = new UserDTO();
@@ -26,7 +32,6 @@ public class ModifyUserTest extends UserCenterTestBase {
         String userName = auto.ucDB.selectOneCell("select user_name from user where user_id='416170902167365';");
         Assert.assertEquals(userName, "这是修改后的名字", "验证修改用户名字结果");
     }
-
 
     @Test(description = "不传userId")
     void test2() {

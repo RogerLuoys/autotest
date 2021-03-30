@@ -177,6 +177,11 @@ public class JsonUTILImpl implements JsonUTIL {
         }
         int startIndex = getNodeStart(json, jsonName);
         String goHead = json.substring(startIndex);
-        return getFirstData(goHead);
+        String jsonResult = getFirstData(goHead);
+        if (jsonResult.startsWith("\"")) {
+            jsonResult = jsonResult.substring(1, jsonResult.length()-1);
+        }
+        LOGGER.info("\n====>获取到的json节点值为：{}", jsonResult);
+        return jsonResult;
     }
 }
