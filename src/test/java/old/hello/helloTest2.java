@@ -1,6 +1,5 @@
 package old.hello;
 
-import connect.UserBO;
 import org.apache.http.client.utils.URIBuilder;
 import org.testng.annotations.Test;
 
@@ -51,37 +50,37 @@ public class helloTest2 {
         System.out.println(result);
     }
 
-    @Test
-    public void Test3() {
-        UserBO obj = new UserBO();
-        obj.setUserid("user12345");
-        obj.setPassword("pw12345");
-        obj.setUserid("id1234");
-
-        Field[] fields = obj.getClass().getDeclaredFields();
-        for(int i = 0; i < fields.length; i++) {
-            // 对于每个属性，获取属性名
-            String varName = fields[i].getName();
-            try {
-                // 获取原来的访问控制权限
-                boolean accessFlag = fields[i].isAccessible();
-                // 修改访问控制权限
-                fields[i].setAccessible(true);
-                // 获取在对象f中属性fields[i]对应的对象中的变量
-                Object o;
-                try {
-                    o = fields[i].get(obj);
-                    System.err.println("传入的对象中包含一个如下的变量：" + varName + " = " + o.toString());
-                } catch (IllegalAccessException e) {
-                    e.printStackTrace();
-                }
-                // 恢复访问控制权限
-                fields[i].setAccessible(accessFlag);
-            } catch (IllegalArgumentException ex) {
-                ex.printStackTrace();
-            }
-        }
-    }
+//    @Test
+//    public void Test3() {
+//        UserBO obj = new UserBO();
+//        obj.setUserid("user12345");
+//        obj.setPassword("pw12345");
+//        obj.setUserid("id1234");
+//
+//        Field[] fields = obj.getClass().getDeclaredFields();
+//        for(int i = 0; i < fields.length; i++) {
+//            // 对于每个属性，获取属性名
+//            String varName = fields[i].getName();
+//            try {
+//                // 获取原来的访问控制权限
+//                boolean accessFlag = fields[i].isAccessible();
+//                // 修改访问控制权限
+//                fields[i].setAccessible(true);
+//                // 获取在对象f中属性fields[i]对应的对象中的变量
+//                Object o;
+//                try {
+//                    o = fields[i].get(obj);
+//                    System.err.println("传入的对象中包含一个如下的变量：" + varName + " = " + o.toString());
+//                } catch (IllegalAccessException e) {
+//                    e.printStackTrace();
+//                }
+//                // 恢复访问控制权限
+//                fields[i].setAccessible(accessFlag);
+//            } catch (IllegalArgumentException ex) {
+//                ex.printStackTrace();
+//            }
+//        }
+//    }
 
     private String transformObject2String (String url, Object obj) {
         Field[] fields = obj.getClass().getDeclaredFields();

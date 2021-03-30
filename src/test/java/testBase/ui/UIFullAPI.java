@@ -1,13 +1,13 @@
 package testBase.ui;
 
-import api.DB;
-import api.UI;
-import api.impl.DBJdbcTemplateImpl;
-import api.impl.SeleniumImpl;
+import db.DB;
+import ui.UI;
+import db.impl.DBJdbcTemplateImpl;
 import org.openqa.selenium.By;
+import ui.impl.UISeleniumImpl;
 
 public class UIFullAPI {
-    public final UI ui = new SeleniumImpl();
+    public final UI ui = new UISeleniumImpl();
     public final DB flagDB = new DBJdbcTemplateImpl(
             "com.mysql.cj.jdbc.Driver",
             "jdbc:mysql://118.24.117.181:3306/onepiece?useUnicode=true&characterEncoding=UTF-8&userSSL=false&serverTimezone=Asia/Shanghai",

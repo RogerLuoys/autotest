@@ -1,9 +1,9 @@
 package testBase.flag;
 
-import api.DB;
+import db.DB;
 import api.HTTP;
 import api.RPC;
-import api.impl.DBJdbcTemplateImpl;
+import db.impl.DBJdbcTemplateImpl;
 import api.impl.HttpClientImpl;
 import api.impl.RPCDubboImpl;
 

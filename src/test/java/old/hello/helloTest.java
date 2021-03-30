@@ -1,7 +1,6 @@
 package old.hello;
 
 import com.alibaba.fastjson.JSON;
-import connect.UserBO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.Assert;
@@ -25,17 +24,8 @@ public class helloTest {
 //        String t1 = test1.funcation1("String");
 //        System.out.println(test1.funcation1(11122L));
 
-        UserBO user1 = new UserBO();
-        user1.setUserid("123");
-        user1.setUsername("tester");
-//        user1.setUserpw("321");
-        String t1 = JSON.toJSONString(user1);
-        String t2 = JSON.toJSONString("this is a string");
-        System.out.println(t1);
-        System.out.println(t2);
 
-
-        logger.info("info log:{},other:{}",t1,t1);
+        logger.info("info log:{},other:{}");
         logger.error("error log");
         logger.warn("warning log");
         logger.trace("trace logs");
