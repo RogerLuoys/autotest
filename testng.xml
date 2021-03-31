@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<suite name="Simple HTML-XML Suite">
+    <listeners>
+        <listener class-name="org.testng.MyListener" />
+        <listener class-name="com.example.MyMethodInterceptor" />
+    </listeners>
+    <test name="Simple HTML-XML test">
+        <classes>
+            <class name="testCaseUserCenter.userService.QueryByUserIdTest" />
+        </classes>
+    </test>
+</suite>

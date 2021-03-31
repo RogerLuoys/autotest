@@ -6,7 +6,7 @@ import org.apache.dubbo.config.ReferenceConfig;
 
 public class RPCDubboImpl implements RPC {
 
-    private final String DEFAULT_NAME = "AutomationTester";
+    private static final String DEFAULT_NAME = "AutomationTester";
 
     @Override
     public Object getService(String url, String InterfacePath) {

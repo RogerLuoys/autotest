@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.luoys.upgrade.uc.share.service.UserService;
 import demo.testBase.TestBase;
 import org.testng.Assert;
+import org.testng.Reporter;
 import org.testng.annotations.Test;
 
 public class DUBBOTestCase extends TestBase {
