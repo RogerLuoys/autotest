@@ -112,6 +112,8 @@ public class JsonUTILImpl implements JsonUTIL {
         } else if(jsonData.charAt(0) == '[') {
             typeLeft = "[";
             typeRight = "]";
+        } else if (jsonData.charAt(0) == '\"'){
+            return jsonData.substring(1, jsonData.indexOf(",") -1);
         } else {
             return jsonData.substring(0, jsonData.indexOf(","));
         }
