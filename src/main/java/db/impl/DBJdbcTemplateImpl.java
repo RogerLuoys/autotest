@@ -11,7 +11,7 @@ import java.util.Map;
 
 public class DBJdbcTemplateImpl implements DB {
 
-    private static final Logger LOGGER= LoggerFactory.getLogger(DBJdbcTemplateImpl.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(DBJdbcTemplateImpl.class);
     private final static String SELECT = "select";
     private final static String UPDATE = "update";
     private final static String COUNT = "count(1)";
@@ -22,7 +22,8 @@ public class DBJdbcTemplateImpl implements DB {
     private DriverManagerDataSource dataSource = null;
     private final JdbcTemplate jdbcTemplate = new JdbcTemplate();
 
-    public DBJdbcTemplateImpl() {}
+    public DBJdbcTemplateImpl() {
+    }
 
     public DBJdbcTemplateImpl(DriverManagerDataSource dataSource) {
         this.dataSource = dataSource;
@@ -41,6 +42,7 @@ public class DBJdbcTemplateImpl implements DB {
 
     /**
      * 把更新sql转换称查询sql，查询sql以更新sql的条件为条件
+     *
      * @param updateSql
      * @return
      */
@@ -55,6 +57,7 @@ public class DBJdbcTemplateImpl implements DB {
 
     /**
      * 把删除sql转换称查询sql，查询sql以更新sql的条件为条件
+     *
      * @param deleteSql
      * @return
      */
@@ -67,6 +70,7 @@ public class DBJdbcTemplateImpl implements DB {
 
     /**
      * 检查sql格式是否正确
+     *
      * @param sql
      * @param type
      * @return
@@ -109,6 +113,7 @@ public class DBJdbcTemplateImpl implements DB {
 
     /**
      * 加默认查询规则，默认按ID倒序，最多查10条，避免没必要的全表查询
+     *
      * @param sql 完整的sql
      * @return 拼接默认查询规则后的sql
      */
@@ -131,7 +136,7 @@ public class DBJdbcTemplateImpl implements DB {
     @Deprecated
     @Override
     public void init(DriverManagerDataSource dataSource) {
-        this.dataSource =dataSource;
+        this.dataSource = dataSource;
         this.jdbcTemplate.setDataSource(this.dataSource);
     }
 
@@ -207,7 +212,7 @@ public class DBJdbcTemplateImpl implements DB {
     @Override
     public String selectOneCell(String sql) {
         String[] sqlList = sql.split(" ");
-        if (!sqlList[2].equalsIgnoreCase("from") ) {
+        if (!sqlList[2].equalsIgnoreCase("from")) {
             LOGGER.warn("查询单格数据的sql不正确：" + sql);
             return null;
         }

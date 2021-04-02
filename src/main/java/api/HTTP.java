@@ -6,6 +6,7 @@ public interface HTTP {
 
     /**
      * 执行http get请求
+     *
      * @param url 完整的url地址-http://ip:port/path
      * @return 返回json格式
      */
@@ -13,7 +14,8 @@ public interface HTTP {
 
     /**
      * 执行http get请求
-     * @param url 完整的url地址-http://ip:port/path
+     *
+     * @param url    完整的url地址-http://ip:port/path
      * @param params Key必须是字符串，Value只能是基本数据类型的包装类型
      * @return 返回json格式
      */
@@ -21,7 +23,8 @@ public interface HTTP {
 
     /**
      * 执行http get请求
-     * @param url 完整的url地址-http://ip:port/path
+     *
+     * @param url    完整的url地址-http://ip:port/path
      * @param params Key必须是字符串，Value只能是基本数据类型的包装类型
      * @param header 请求头
      * @return 返回json格式
@@ -30,6 +33,7 @@ public interface HTTP {
 
     /**
      * 执行http delete请求
+     *
      * @param url 完整的url地址-http://ip:port/path
      * @return 返回json格式
      */
@@ -37,7 +41,8 @@ public interface HTTP {
 
     /**
      * 执行http delete请求
-     * @param url 完整的url地址-http://ip:port/path
+     *
+     * @param url    完整的url地址-http://ip:port/path
      * @param params Key必须是字符串，Value只能是基本数据类型的包装类型
      * @return 返回json格式
      */
@@ -45,7 +50,8 @@ public interface HTTP {
 
     /**
      * 执行http delete请求
-     * @param url 完整的url地址-http://ip:port/path
+     *
+     * @param url    完整的url地址-http://ip:port/path
      * @param params Key必须是字符串，Value只能是基本数据类型的包装类型
      * @param header 请求头
      * @return 返回json格式
@@ -54,7 +60,8 @@ public interface HTTP {
 
     /**
      * 执行http post请求
-     * @param url 完整的url地址-http://ip:port/path
+     *
+     * @param url  完整的url地址-http://ip:port/path
      * @param data 接口对应的POJO对象或Map对象，传入body中，application/json格式
      * @return 返回json格式
      */
@@ -62,8 +69,9 @@ public interface HTTP {
 
     /**
      * 执行http post请求
-     * @param url 完整的url地址-http://ip:port/path
-     * @param data 接口对应的POJO对象或Map对象，传入body中，application/json格式
+     *
+     * @param url    完整的url地址-http://ip:port/path
+     * @param data   接口对应的POJO对象或Map对象，传入body中，application/json格式
      * @param header 请求头
      * @return 返回json格式
      */
@@ -71,8 +79,9 @@ public interface HTTP {
 
     /**
      * 执行http post请求
-     * @param url 完整的url地址-http://ip:port/path
-     * @param data 接口对应的POJO对象或Map对象，传入body中，application/json格式
+     *
+     * @param url    完整的url地址-http://ip:port/path
+     * @param data   接口对应的POJO对象或Map对象，传入body中，application/json格式
      * @param header 请求头
      * @param params url参数，key必须是字符串，value只能是基本数据类型的包装类型
      * @return
@@ -82,7 +91,8 @@ public interface HTTP {
 
     /**
      * 执行http put请求
-     * @param url 完整的url地址-http://ip:port/path
+     *
+     * @param url  完整的url地址-http://ip:port/path
      * @param data 接口对应的POJO对象或Map对象，传入body中，application/json格式
      * @return 返回json格式
      */
@@ -90,8 +100,9 @@ public interface HTTP {
 
     /**
      * 执行http put请求
-     * @param url 完整的url地址-http://ip:port/path
-     * @param data 接口对应的POJO对象或Map对象，传入body中，application/json格式
+     *
+     * @param url    完整的url地址-http://ip:port/path
+     * @param data   接口对应的POJO对象或Map对象，传入body中，application/json格式
      * @param header 请求头
      * @return 返回json格式
      */
@@ -99,8 +110,9 @@ public interface HTTP {
 
     /**
      * 执行http put请求
-     * @param url 完整的url地址-http://ip:port/path
-     * @param data 接口对应的POJO对象或Map对象，传入body中，application/json格式
+     *
+     * @param url    完整的url地址-http://ip:port/path
+     * @param data   接口对应的POJO对象或Map对象，传入body中，application/json格式
      * @param header 请求头
      * @param params url参数，key必须是字符串，value只能是基本数据类型的包装类型
      * @return

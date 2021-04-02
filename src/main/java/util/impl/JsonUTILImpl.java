@@ -7,10 +7,11 @@ import util.JsonUTIL;
 
 public class JsonUTILImpl implements JsonUTIL {
 
-    private static final Logger LOGGER= LoggerFactory.getLogger(JsonUTILImpl.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(JsonUTILImpl.class);
 
     /**
      * 判断json字符串的格式是否正常
+     *
      * @param json json字符串
      * @return -
      */
@@ -18,10 +19,10 @@ public class JsonUTILImpl implements JsonUTIL {
         if (!json.startsWith("{\"") || !json.endsWith("}")) {
             LOGGER.warn("JSON字符串格式不对");
             return false;
-        }else if (countByString(json, "\"") % 2 != 0) {
+        } else if (countByString(json, "\"") % 2 != 0) {
             LOGGER.warn("JSON字符串格式不对");
             return false;
-        } else if(countByString(json, "{") != countByString(json, "}")) {
+        } else if (countByString(json, "{") != countByString(json, "}")) {
             LOGGER.warn("JSON字符串格式不对");
             return false;
         } else if (countByString(json, "[") != countByString(json, "]")) {
@@ -34,6 +35,7 @@ public class JsonUTILImpl implements JsonUTIL {
 
     /**
      * 查询某关键字在字符串中出现的次数
+     *
      * @param var 字符串
      * @param key 关键字
      * @return 关键字出现的次数
@@ -54,8 +56,9 @@ public class JsonUTILImpl implements JsonUTIL {
 
     /**
      * 通过递归的方式，计算某关键字在字符串中出现的次数
-     * @param var 字符串
-     * @param key 关键字
+     *
+     * @param var   字符串
+     * @param key   关键字
      * @param count 出现次数，填0
      * @return 出现的总次数
      */
@@ -63,14 +66,15 @@ public class JsonUTILImpl implements JsonUTIL {
         if (!var.contains(key)) {
             return count;
         } else {
-            return countByString(var.substring(var.indexOf(key) + key.length()), key, count+1);
+            return countByString(var.substring(var.indexOf(key) + key.length()), key, count + 1);
         }
     }
 
     /**
      * 查询某节点的数据在JSON字符串中的起始位置
      * 内部对象或数组中的节点不计入
-     * @param json 完整json字符串
+     *
+     * @param json     完整json字符串
      * @param jsonName 某节点的名称
      * @return 名称对应值在json字符串中的起始位置，在‘：’后
      */
@@ -81,10 +85,10 @@ public class JsonUTILImpl implements JsonUTIL {
         for (int i = 0; i < 100; i++) {
             startIndex = json.indexOf(jsonName, startIndex) + jsonName.length();
             leftJSON = json.substring(0, startIndex);
-            if (countByString(leftJSON, "{")-1 != countByString(leftJSON,"}")) {
+            if (countByString(leftJSON, "{") - 1 != countByString(leftJSON, "}")) {
                 LOGGER.warn("非根节点，继续查找");
                 continue;
-            } else if (countByString(leftJSON, "[") != countByString(leftJSON,"]")) {
+            } else if (countByString(leftJSON, "[") != countByString(leftJSON, "]")) {
                 LOGGER.warn("非根节点，继续查找");
                 continue;
             } else if (startIndex > json.length()) {
@@ -99,6 +103,7 @@ public class JsonUTILImpl implements JsonUTIL {
 
     /**
      * 取json字符串的第一个节点，需先把节点左侧字符去掉，不能单独使用
+     *
      * @param jsonData 需要处理的字符串
      * @return 字符串中的第一个节点
      */
@@ -109,11 +114,11 @@ public class JsonUTILImpl implements JsonUTIL {
         if (jsonData.charAt(0) == '{') {
             typeLeft = "{";
             typeRight = "}";
-        } else if(jsonData.charAt(0) == '[') {
+        } else if (jsonData.charAt(0) == '[') {
             typeLeft = "[";
             typeRight = "]";
-        } else if (jsonData.charAt(0) == '\"'){
-            return jsonData.substring(1, jsonData.indexOf(",") -1);
+        } else if (jsonData.charAt(0) == '\"') {
+            return jsonData.substring(1, jsonData.indexOf(",") - 1);
         } else {
             return jsonData.substring(0, jsonData.indexOf(","));
         }
@@ -122,7 +127,7 @@ public class JsonUTILImpl implements JsonUTIL {
         int endIndex;
         for (int i = 0; i < 100; i++) {
             endIndex = jsonData.indexOf(typeRight, indexFrom);
-            subVar = jsonData.substring(0,  endIndex + 1);
+            subVar = jsonData.substring(0, endIndex + 1);
             //当左右符合相等时，获得完整最外层节点值
             if (countByString(subVar, typeLeft) == countByString(subVar, typeRight)) {
                 return subVar;
@@ -161,7 +166,7 @@ public class JsonUTILImpl implements JsonUTIL {
         String goHead = json.substring(startIndex);
         String jsonResult = getFirstData(goHead);
         if (jsonResult.startsWith("\"")) {
-            jsonResult = jsonResult.substring(1, jsonResult.length()-1);
+            jsonResult = jsonResult.substring(1, jsonResult.length() - 1);
         }
         LOGGER.info("\n====>获取到的json节点值为：{}", jsonResult);
         return jsonResult;
@@ -181,7 +186,7 @@ public class JsonUTILImpl implements JsonUTIL {
         String goHead = json.substring(startIndex);
         String jsonResult = getFirstData(goHead);
         if (jsonResult.startsWith("\"")) {
-            jsonResult = jsonResult.substring(1, jsonResult.length()-1);
+            jsonResult = jsonResult.substring(1, jsonResult.length() - 1);
         }
         LOGGER.info("\n====>获取到的json节点值为：{}", jsonResult);
         return jsonResult;

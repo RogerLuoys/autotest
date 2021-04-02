@@ -12,6 +12,8 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -26,9 +28,10 @@ import java.util.*;
 //4 发送请求
 public class HttpClientImpl implements HTTP {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(HttpClientImpl.class);
+
 
     /**
-     *
      * @param url
      * @param header
      * @return
@@ -36,7 +39,7 @@ public class HttpClientImpl implements HTTP {
     private String httpGet(String url, Map<String, String> header) {
         // 创建 HttpClient 客户端
         CloseableHttpClient httpClient = HttpClients.createDefault();
-        String results = null;
+        String result = null;
         HttpGet httpGet = new HttpGet(url);
         // 设置请求头
         for (String key : header.keySet()) {
@@ -46,7 +49,7 @@ public class HttpClientImpl implements HTTP {
         try {
             httpResponse = httpClient.execute(httpGet);
             HttpEntity httpEntity = httpResponse.getEntity();
-            results = EntityUtils.toString(httpEntity);
+            result = EntityUtils.toString(httpEntity);
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
@@ -57,11 +60,11 @@ public class HttpClientImpl implements HTTP {
                 e.printStackTrace();
             }
         }
-        return results;
+        LOGGER.info("\n====>执行get请求成功：{}", result);
+        return result;
     }
 
     /**
-     *
      * @param url
      * @param header
      * @return
@@ -93,11 +96,11 @@ public class HttpClientImpl implements HTTP {
                 e.printStackTrace();
             }
         }
+        LOGGER.info("\n====>执行delete请求成功：{}", result);
         return result;
     }
 
     /**
-     *
      * @param url
      * @param jsonData
      * @param header
@@ -140,12 +143,12 @@ public class HttpClientImpl implements HTTP {
                 e.printStackTrace();
             }
         }
+        LOGGER.info("\n====>执行post请求成功：{}", result);
         return result;
     }
 
 
     /**
-     *
      * @param url
      * @param jsonData
      * @param header
@@ -186,13 +189,14 @@ public class HttpClientImpl implements HTTP {
                 e.printStackTrace();
             }
         }
+        LOGGER.info("\n====>执行put请求成功：{}", result);
         return result;
     }
 
-    private String transformObject2String (String url, Object obj) {
+    private String transformObject2String(String url, Object obj) {
         URIBuilder uriBuilder = getURIBuilder(url);
         Field[] fields = obj.getClass().getDeclaredFields();
-        for(int i = 0; i < fields.length; i++) {
+        for (int i = 0; i < fields.length; i++) {
             // 对于每个属性，获取属性名
             String varName = fields[i].getName();
             try {
@@ -219,7 +223,7 @@ public class HttpClientImpl implements HTTP {
         return uriBuilder.toString();
     }
 
-    private URIBuilder getURIBuilder (String url) {
+    private URIBuilder getURIBuilder(String url) {
         try {
             URIBuilder uriBuilder = new URIBuilder(url);
             return uriBuilder;
@@ -231,20 +235,27 @@ public class HttpClientImpl implements HTTP {
 
     /**
      * 把Map变量转换称http请求头参数
-     * @param url 完整的地址
+     *
+     * @param url    完整的地址
      * @param params 需要往请求头传的参数
      * @return 带参数的完整url地址
      */
-    private String transformMap2String (String url, Map<String, ?> params) {
+    private String transformMap2String(String url, Map<String, ?> params) {
         URIBuilder uriBuilder = getURIBuilder(url);
         Iterator iterator = params.keySet().iterator();
-        while(iterator.hasNext()) {
-            String key = (String)iterator.next();
+        while (iterator.hasNext()) {
+            String key = (String) iterator.next();
             uriBuilder.setParameter(key, params.get(key).toString());
         }
         return uriBuilder.toString();
     }
 
+    /**
+     * 执行http get请求
+     *
+     * @param url 完整的url地址-http://ip:port/path
+     * @return 返回json格式
+     */
     @Override
     public String doGet(String url) {
         Map<String, String> header = new HashMap<>();
@@ -252,6 +263,13 @@ public class HttpClientImpl implements HTTP {
         return httpGet(url, header);
     }
 
+    /**
+     * 执行http get请求
+     *
+     * @param url    完整的url地址-http://ip:port/path
+     * @param params Key必须是字符串，Value只能是基本数据类型的包装类型
+     * @return 返回json格式
+     */
     @Override
     public String doGet(String url, Map<String, ?> params) {
         Map<String, String> header = new HashMap<>();
@@ -259,11 +277,25 @@ public class HttpClientImpl implements HTTP {
         return httpGet(transformMap2String(url, params), header);
     }
 
+    /**
+     * 执行http delete请求
+     *
+     * @param url    完整的url地址-http://ip:port/path
+     * @param params Key必须是字符串，Value只能是基本数据类型的包装类型
+     * @param header 请求头
+     * @return 返回json格式
+     */
     @Override
     public String doDelete(String url, Map<String, ?> params, Map<String, String> header) {
         return httpGet(transformMap2String(url, params), header);
     }
 
+    /**
+     * 执行http delete请求
+     *
+     * @param url 完整的url地址-http://ip:port/path
+     * @return 返回json格式
+     */
     @Override
     public String doDelete(String url) {
         Map<String, String> header = new HashMap<>();
@@ -271,6 +303,13 @@ public class HttpClientImpl implements HTTP {
         return httpDelete(url, header);
     }
 
+    /**
+     * 执行http delete请求
+     *
+     * @param url    完整的url地址-http://ip:port/path
+     * @param params Key必须是字符串，Value只能是基本数据类型的包装类型
+     * @return 返回json格式
+     */
     @Override
     public String doDelete(String url, Map<String, ?> params) {
         Map<String, String> header = new HashMap<>();
@@ -278,11 +317,26 @@ public class HttpClientImpl implements HTTP {
         return httpDelete(transformMap2String(url, params), header);
     }
 
+    /**
+     * 执行http get请求
+     *
+     * @param url    完整的url地址-http://ip:port/path
+     * @param params Key必须是字符串，Value只能是基本数据类型的包装类型
+     * @param header 请求头
+     * @return 返回json格式
+     */
     @Override
     public String doGet(String url, Map<String, ?> params, Map<String, String> header) {
         return httpDelete(transformMap2String(url, params), header);
     }
 
+    /**
+     * 执行http post请求
+     *
+     * @param url  完整的url地址-http://ip:port/path
+     * @param data 接口对应的POJO对象或Map对象，传入body中，application/json格式
+     * @return 返回json格式
+     */
     @Override
     public String doPost(String url, Object data) {
         Map<String, String> header = new HashMap<>();
@@ -291,18 +345,42 @@ public class HttpClientImpl implements HTTP {
         return httpPost(url, jsonData, header);
     }
 
+    /**
+     * 执行http post请求
+     *
+     * @param url    完整的url地址-http://ip:port/path
+     * @param data   接口对应的POJO对象或Map对象，传入body中，application/json格式
+     * @param header 请求头
+     * @return 返回json格式
+     */
     @Override
     public String doPost(String url, Object data, Map<String, String> header) {
         String jsonData = JSON.toJSONString(data);
         return httpPost(url, jsonData, header);
     }
 
+    /**
+     * 执行http post请求
+     *
+     * @param url    完整的url地址-http://ip:port/path
+     * @param data   接口对应的POJO对象或Map对象，传入body中，application/json格式
+     * @param header 请求头
+     * @param params url参数，key必须是字符串，value只能是基本数据类型的包装类型
+     * @return
+     */
     @Override
     public String doPost(String url, Object data, Map<String, String> header, Map<String, ?> params) {
         String jsonData = JSON.toJSONString(data);
         return httpPost(transformMap2String(url, params), jsonData, header);
     }
 
+    /**
+     * 执行http put请求
+     *
+     * @param url  完整的url地址-http://ip:port/path
+     * @param data 接口对应的POJO对象或Map对象，传入body中，application/json格式
+     * @return 返回json格式
+     */
     @Override
     public String doPut(String url, Object data) {
         Map<String, String> header = new HashMap<>();
@@ -311,12 +389,29 @@ public class HttpClientImpl implements HTTP {
         return httpPut(url, jsonData, header);
     }
 
+    /**
+     * 执行http put请求
+     *
+     * @param url    完整的url地址-http://ip:port/path
+     * @param data   接口对应的POJO对象或Map对象，传入body中，application/json格式
+     * @param header 请求头
+     * @return 返回json格式
+     */
     @Override
     public String doPut(String url, Object data, Map<String, String> header) {
         String jsonData = JSON.toJSONString(data);
         return httpPut(url, jsonData, header);
     }
 
+    /**
+     * 执行http put请求
+     *
+     * @param url    完整的url地址-http://ip:port/path
+     * @param data   接口对应的POJO对象或Map对象，传入body中，application/json格式
+     * @param header 请求头
+     * @param params url参数，key必须是字符串，value只能是基本数据类型的包装类型
+     * @return
+     */
     @Override
     public String doPut(String url, Object data, Map<String, String> header, Map<String, ?> params) {
         String jsonData = JSON.toJSONString(data);
