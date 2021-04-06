@@ -40,6 +40,7 @@ public class HttpClientImpl implements HTTP {
         // 创建 HttpClient 客户端
         CloseableHttpClient httpClient = HttpClients.createDefault();
         String result = null;
+        LOGGER.info("\n====>执行get请求：{}", url);
         HttpGet httpGet = new HttpGet(url);
         // 设置请求头
         for (String key : header.keySet()) {

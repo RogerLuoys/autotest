@@ -153,6 +153,12 @@
             <version>1.0.2-SNAPSHOT</version>
         </dependency>
 
+        <dependency>
+            <groupId>com.luoys.upgrade.flag</groupId>
+            <artifactId>flag-api</artifactId>
+            <version>1.0.1-SNAPSHOT</version>
+        </dependency>
+
     </dependencies>
 
 <!--    <build>-->
