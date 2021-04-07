@@ -10,7 +10,7 @@ public class QueryFlagDetailTest extends FlagTestBase {
     @Test(description = "查询包含周期任务的正常flag详情")
     void Test1() {
         Reporter.log("调用查询接口");
-        String result = auto.http.doGet(URL + "flag/queryFlagDetail?flagId=116176887323460");
+        String result = auto.http.get(URL + "flag/queryFlagDetail?flagId=116176887323460");
 
         Reporter.log("验证返回值");
         String flagName = auto.jsonUtil.getData(result, "flagName");
@@ -23,7 +23,7 @@ public class QueryFlagDetailTest extends FlagTestBase {
     @Test(description = "查询不存在的flag详情")
     void Test2() {
         Reporter.log("调用查询接口");
-        String result = auto.http.doGet(URL + "flag/queryFlagDetail?flagId=123123");
+        String result = auto.http.get(URL + "flag/queryFlagDetail?flagId=123123");
 
         Reporter.log("验证返回值");
         String message = auto.jsonUtil.getData(result, "message");

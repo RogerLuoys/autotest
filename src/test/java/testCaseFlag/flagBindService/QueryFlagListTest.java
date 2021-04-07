@@ -16,7 +16,7 @@ public class QueryFlagListTest extends FlagTestBase {
         flagQueryBO.setOwnerId("416176799148282");
 
         Reporter.log("调用接口");
-        String result = auto.http.doPost(URL + "flagBind/queryFlagList", flagQueryBO);
+        String result = auto.http.post(URL + "flagBind/queryFlagList", flagQueryBO);
 
         Reporter.log("验证结果");
         int total = Integer.parseInt(auto.jsonUtil.getData(result, "total"));
@@ -31,7 +31,7 @@ public class QueryFlagListTest extends FlagTestBase {
         flagQueryBO.setOwnerId("416176799148282");
 
         Reporter.log("调用接口");
-        String result = auto.http.doPost(URL + "flagBind/queryFlagList", flagQueryBO);
+        String result = auto.http.post(URL + "flagBind/queryFlagList", flagQueryBO);
 
         Reporter.log("验证结果");
         int total = Integer.parseInt(auto.jsonUtil.getData(result, "total"));

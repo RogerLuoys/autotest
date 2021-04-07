@@ -10,7 +10,7 @@ public class QueryPointSummaryTest extends FlagTestBase {
     @Test
     void Test1() {
         Reporter.log("调用接口");
-        String result = auto.http.doGet(URL + "point/queryPointSummary?ownerId=416176799148282");
+        String result = auto.http.get(URL + "point/queryPointSummary?ownerId=416176799148282");
 
         Reporter.log("验证数据");
         String pointId = auto.jsonUtil.getData(result, "pointId");

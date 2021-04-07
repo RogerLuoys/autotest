@@ -11,7 +11,7 @@ public class HTTPTestCase extends TestBase {
 
 //    @Test
     void test1(){
-        String result = auto.http.doGet(HTTP_URL + "api/flag/queryFlagDetail/116149450801523");
+        String result = auto.http.get(HTTP_URL + "api/flag/queryFlagDetail/116149450801523");
 //        Assert.assertTrue(result.contains("***"), "******");
     }
 
@@ -20,7 +20,7 @@ public class HTTPTestCase extends TestBase {
         Map<String, Object> params = new HashMap<>();
         params.put("pageIndex", 1);
         params.put("type", 1);
-        String result = auto.http.doPost(HTTP_URL + "api/flag/queryFlagList", params);
+        String result = auto.http.post(HTTP_URL + "api/flag/queryFlagList", params);
 //        Assert.assertTrue(result.contains("***"), "******");
     }
 

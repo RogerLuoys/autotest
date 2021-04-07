@@ -52,13 +52,19 @@ public class HttpClientImpl implements HTTP {
             HttpEntity httpEntity = httpResponse.getEntity();
             result = EntityUtils.toString(httpEntity);
         } catch (IOException e) {
-            e.printStackTrace();
+            LOGGER.error("\n====>执行get请求失败！");
+//            e.printStackTrace();
         } finally {
             try {
-                httpResponse.close();
-                httpClient.close();
+                if (httpResponse != null) {
+                    httpResponse.close();
+                }
+                if (httpClient != null) {
+                    httpClient.close();
+                }
             } catch (IOException e) {
-                e.printStackTrace();
+                LOGGER.error("\n====>关闭请求失败！");
+//                e.printStackTrace();
             }
         }
         LOGGER.info("\n====>执行get请求成功：{}", result);
@@ -83,18 +89,20 @@ public class HttpClientImpl implements HTTP {
             httpResponse = httpClient.execute(httpDelete);
             HttpEntity httpEntity = httpResponse.getEntity();
             result = EntityUtils.toString(httpEntity);
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        } catch (ClientProtocolException e) {
-            e.printStackTrace();
         } catch (IOException e) {
+            LOGGER.error("\n====>执行delete请求失败！");
             e.printStackTrace();
         } finally {
             try {
-                httpResponse.close();
-                httpClient.close();
+                if (httpResponse != null) {
+                    httpResponse.close();
+                }
+                if (httpClient != null) {
+                    httpClient.close();
+                }
             } catch (IOException e) {
-                e.printStackTrace();
+                LOGGER.error("\n====>关闭请求失败！");
+//                e.printStackTrace();
             }
         }
         LOGGER.info("\n====>执行delete请求成功：{}", result);
@@ -122,7 +130,8 @@ public class HttpClientImpl implements HTTP {
             stringEntity = new StringEntity(jsonData);
             stringEntity.setContentType("application/json");
         } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
+            LOGGER.error("\n====>设置post请求参数失败！");
+//            e.printStackTrace();
         }
         try {
             // 设置 HttpPost 参数
@@ -130,18 +139,20 @@ public class HttpClientImpl implements HTTP {
             httpResponse = httpClient.execute(httpPost);
             HttpEntity httpEntity = httpResponse.getEntity();
             result = EntityUtils.toString(httpEntity);
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        } catch (ClientProtocolException e) {
-            e.printStackTrace();
         } catch (IOException e) {
-            e.printStackTrace();
+            LOGGER.error("\n====>执行post请求失败！");
+//            e.printStackTrace();
         } finally {
             try {
-                httpResponse.close();
-                httpClient.close();
+                if (httpResponse != null) {
+                    httpResponse.close();
+                }
+                if (httpClient != null) {
+                    httpClient.close();
+                }
             } catch (IOException e) {
-                e.printStackTrace();
+                LOGGER.error("\n====>关闭请求失败！");
+//                e.printStackTrace();
             }
         }
         LOGGER.info("\n====>执行post请求成功：{}", result);
@@ -169,25 +180,28 @@ public class HttpClientImpl implements HTTP {
             stringEntity = new StringEntity(jsonData);
             stringEntity.setContentType("application/json");
         } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
+            LOGGER.error("\n====>设置put请求参数失败！");
+//            e.printStackTrace();
         }
         try {
             httpPut.setEntity(stringEntity);
             httpResponse = httpClient.execute(httpPut);
             HttpEntity httpEntity = httpResponse.getEntity();
             result = EntityUtils.toString(httpEntity);
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        } catch (ClientProtocolException e) {
-            e.printStackTrace();
         } catch (IOException e) {
-            e.printStackTrace();
+            LOGGER.error("\n====>执行put请求失败！");
+//            e.printStackTrace();
         } finally {
             try {
-                httpResponse.close();
-                httpClient.close();
+                if (httpResponse != null) {
+                    httpResponse.close();
+                }
+                if (httpClient != null) {
+                    httpClient.close();
+                }
             } catch (IOException e) {
-                e.printStackTrace();
+                LOGGER.error("\n====>关闭请求失败！");
+//                e.printStackTrace();
             }
         }
         LOGGER.info("\n====>执行put请求成功：{}", result);
@@ -258,7 +272,7 @@ public class HttpClientImpl implements HTTP {
      * @return 返回json格式
      */
     @Override
-    public String doGet(String url) {
+    public String get(String url) {
         Map<String, String> header = new HashMap<>();
         header.put("Connection", "keep-alive");
         return httpGet(url, header);
@@ -272,7 +286,7 @@ public class HttpClientImpl implements HTTP {
      * @return 返回json格式
      */
     @Override
-    public String doGet(String url, Map<String, ?> params) {
+    public String get(String url, Map<String, ?> params) {
         Map<String, String> header = new HashMap<>();
         header.put("Connection", "keep-alive");
         return httpGet(transformMap2String(url, params), header);
@@ -287,7 +301,7 @@ public class HttpClientImpl implements HTTP {
      * @return 返回json格式
      */
     @Override
-    public String doDelete(String url, Map<String, ?> params, Map<String, String> header) {
+    public String delete(String url, Map<String, ?> params, Map<String, String> header) {
         return httpGet(transformMap2String(url, params), header);
     }
 
@@ -298,7 +312,7 @@ public class HttpClientImpl implements HTTP {
      * @return 返回json格式
      */
     @Override
-    public String doDelete(String url) {
+    public String delete(String url) {
         Map<String, String> header = new HashMap<>();
         header.put("Connection", "keep-alive");
         return httpDelete(url, header);
@@ -312,7 +326,7 @@ public class HttpClientImpl implements HTTP {
      * @return 返回json格式
      */
     @Override
-    public String doDelete(String url, Map<String, ?> params) {
+    public String delete(String url, Map<String, ?> params) {
         Map<String, String> header = new HashMap<>();
         header.put("Connection", "keep-alive");
         return httpDelete(transformMap2String(url, params), header);
@@ -327,7 +341,7 @@ public class HttpClientImpl implements HTTP {
      * @return 返回json格式
      */
     @Override
-    public String doGet(String url, Map<String, ?> params, Map<String, String> header) {
+    public String get(String url, Map<String, ?> params, Map<String, String> header) {
         return httpDelete(transformMap2String(url, params), header);
     }
 
@@ -339,7 +353,7 @@ public class HttpClientImpl implements HTTP {
      * @return 返回json格式
      */
     @Override
-    public String doPost(String url, Object data) {
+    public String post(String url, Object data) {
         Map<String, String> header = new HashMap<>();
         header.put("Connection", "keep-alive");
         String jsonData = JSON.toJSONString(data);
@@ -355,7 +369,7 @@ public class HttpClientImpl implements HTTP {
      * @return 返回json格式
      */
     @Override
-    public String doPost(String url, Object data, Map<String, String> header) {
+    public String post(String url, Object data, Map<String, String> header) {
         String jsonData = JSON.toJSONString(data);
         return httpPost(url, jsonData, header);
     }
@@ -370,7 +384,7 @@ public class HttpClientImpl implements HTTP {
      * @return
      */
     @Override
-    public String doPost(String url, Object data, Map<String, String> header, Map<String, ?> params) {
+    public String post(String url, Object data, Map<String, String> header, Map<String, ?> params) {
         String jsonData = JSON.toJSONString(data);
         return httpPost(transformMap2String(url, params), jsonData, header);
     }
@@ -383,7 +397,7 @@ public class HttpClientImpl implements HTTP {
      * @return 返回json格式
      */
     @Override
-    public String doPut(String url, Object data) {
+    public String put(String url, Object data) {
         Map<String, String> header = new HashMap<>();
         header.put("Connection", "keep-alive");
         String jsonData = JSON.toJSONString(data);
@@ -399,7 +413,7 @@ public class HttpClientImpl implements HTTP {
      * @return 返回json格式
      */
     @Override
-    public String doPut(String url, Object data, Map<String, String> header) {
+    public String put(String url, Object data, Map<String, String> header) {
         String jsonData = JSON.toJSONString(data);
         return httpPut(url, jsonData, header);
     }
@@ -414,7 +428,7 @@ public class HttpClientImpl implements HTTP {
      * @return
      */
     @Override
-    public String doPut(String url, Object data, Map<String, String> header, Map<String, ?> params) {
+    public String put(String url, Object data, Map<String, String> header, Map<String, ?> params) {
         String jsonData = JSON.toJSONString(data);
         return httpPut(transformMap2String(url, params), jsonData, header);
     }

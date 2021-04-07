@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<suite name="flag all test case Suite">
+    <listeners>
+        <listener class-name="org.uncommons.reportng.HTMLReporter"/>
+    </listeners>
+    <test name="flag all test case test">
+        <packages>
+            <package name="testCaseFlag.*" />
+        </packages>
+    </test>
+</suite>
