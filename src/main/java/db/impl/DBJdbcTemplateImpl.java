@@ -196,7 +196,8 @@ public class DBJdbcTemplateImpl implements DB {
         }
         String executeSql = addSelectDefault(sql);
         LOGGER.info("\n====>最终执行sql：" + executeSql);
-        return jdbcTemplate.queryForList(executeSql).get(0);
+        List<Map<String, Object>> result = jdbcTemplate.queryForList(executeSql);
+        return result.size() == 0 ? null : result.get(0);
     }
 
     @Override

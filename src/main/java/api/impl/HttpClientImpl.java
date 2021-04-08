@@ -20,6 +20,8 @@ import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Field;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 //1 创建HttpClient客户端
@@ -73,6 +75,52 @@ public class HttpClientImpl implements HTTP {
 
     /**
      * @param url
+     * @param jsonData
+     * @param header
+     * @return
+     */
+    private String httpPost(String url, String jsonData, Map<String, String> header) {
+        // 创建 HttpClient 客户端
+        CloseableHttpClient httpClient = HttpClients.createDefault();
+        String result = null;
+        // 创建 HttpPost 请求
+        HttpPost httpPost = new HttpPost(url);
+        for (String key : header.keySet()) {
+            httpPost.setHeader(key, header.get(key));
+        }
+        CloseableHttpResponse httpResponse = null;
+        StringEntity stringEntity = null;
+        stringEntity = new StringEntity(jsonData, StandardCharsets.UTF_8);
+        stringEntity.setContentType("application/json");
+        try {
+            // 设置 HttpPost 参数
+            httpPost.setEntity(stringEntity);
+            httpResponse = httpClient.execute(httpPost);
+            HttpEntity httpEntity = httpResponse.getEntity();
+            result = EntityUtils.toString(httpEntity);
+        } catch (IOException e) {
+            LOGGER.error("\n====>执行post请求失败！");
+//            e.printStackTrace();
+        } finally {
+            try {
+                if (httpResponse != null) {
+                    httpResponse.close();
+                }
+                if (httpClient != null) {
+                    httpClient.close();
+                }
+            } catch (IOException e) {
+                LOGGER.error("\n====>关闭请求失败！");
+//                e.printStackTrace();
+            }
+        }
+        LOGGER.info("\n====>执行post请求成功：{}", result);
+        return result;
+    }
+
+
+    /**
+     * @param url
      * @param header
      * @return
      */
@@ -115,57 +163,6 @@ public class HttpClientImpl implements HTTP {
      * @param header
      * @return
      */
-    private String httpPost(String url, String jsonData, Map<String, String> header) {
-        // 创建 HttpClient 客户端
-        CloseableHttpClient httpClient = HttpClients.createDefault();
-        String result = null;
-        // 创建 HttpPost 请求
-        HttpPost httpPost = new HttpPost(url);
-        for (String key : header.keySet()) {
-            httpPost.setHeader(key, header.get(key));
-        }
-        CloseableHttpResponse httpResponse = null;
-        StringEntity stringEntity = null;
-        try {
-            stringEntity = new StringEntity(jsonData);
-            stringEntity.setContentType("application/json");
-        } catch (UnsupportedEncodingException e) {
-            LOGGER.error("\n====>设置post请求参数失败！");
-//            e.printStackTrace();
-        }
-        try {
-            // 设置 HttpPost 参数
-            httpPost.setEntity(stringEntity);
-            httpResponse = httpClient.execute(httpPost);
-            HttpEntity httpEntity = httpResponse.getEntity();
-            result = EntityUtils.toString(httpEntity);
-        } catch (IOException e) {
-            LOGGER.error("\n====>执行post请求失败！");
-//            e.printStackTrace();
-        } finally {
-            try {
-                if (httpResponse != null) {
-                    httpResponse.close();
-                }
-                if (httpClient != null) {
-                    httpClient.close();
-                }
-            } catch (IOException e) {
-                LOGGER.error("\n====>关闭请求失败！");
-//                e.printStackTrace();
-            }
-        }
-        LOGGER.info("\n====>执行post请求成功：{}", result);
-        return result;
-    }
-
-
-    /**
-     * @param url
-     * @param jsonData
-     * @param header
-     * @return
-     */
     private String httpPut(String url, String jsonData, Map<String, String> header) {
         // 创建 HttpClient 客户端
         CloseableHttpClient httpClient = HttpClients.createDefault();
@@ -176,13 +173,8 @@ public class HttpClientImpl implements HTTP {
         }
         CloseableHttpResponse httpResponse = null;
         StringEntity stringEntity = null;
-        try {
-            stringEntity = new StringEntity(jsonData);
-            stringEntity.setContentType("application/json");
-        } catch (UnsupportedEncodingException e) {
-            LOGGER.error("\n====>设置put请求参数失败！");
-//            e.printStackTrace();
-        }
+        stringEntity = new StringEntity(jsonData, StandardCharsets.UTF_8);
+        stringEntity.setContentType("application/json");
         try {
             httpPut.setEntity(stringEntity);
             httpResponse = httpClient.execute(httpPut);

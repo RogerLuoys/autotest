@@ -28,6 +28,7 @@
             <artifactId>httpclient</artifactId>
             <version>4.5.5</version>
         </dependency>
+        <!--http接口调用-->
 
         <!--selenium自动化-->
         <dependency>
@@ -35,8 +36,9 @@
             <artifactId>selenium-java</artifactId>
             <version>3.141.59</version>
         </dependency>
+        <!--selenium自动化-->
 
-        <!--引入jdbc template相关的包-->
+        <!--jdbc template相关的包-->
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
@@ -47,6 +49,7 @@
             <artifactId>spring-jdbc</artifactId>
             <version>5.1.5.RELEASE</version>
         </dependency>
+        <!--jdbc template相关的包-->
 
         <dependency>
             <groupId>org.springframework</groupId>
@@ -128,36 +131,47 @@
         </dependency>
         <!--reportng 相关包-->
 
-
+        <!--dubbo 相关包-->
         <dependency>
             <groupId>org.apache.dubbo</groupId>
             <artifactId>dubbo</artifactId>
             <version>2.7.1</version>
         </dependency>
+        <!--dubbo 相关包-->
 
+        <!--excel 相关包-->
         <dependency>
             <groupId>org.apache.poi</groupId>
             <artifactId>poi</artifactId>
             <version>5.0.0</version>
         </dependency>
-
         <dependency>
             <groupId>org.apache.poi</groupId>
             <artifactId>poi-ooxml</artifactId>
             <version>4.1.2</version>
         </dependency>
+        <!--excel 相关包-->
 
+        <!--接口调用 相关包-->
         <dependency>
             <groupId>com.luoys.upgrade</groupId>
             <artifactId>user-center-share</artifactId>
             <version>1.0.2-SNAPSHOT</version>
         </dependency>
-
         <dependency>
             <groupId>com.luoys.upgrade.flag</groupId>
             <artifactId>flag-api</artifactId>
             <version>1.0.1-SNAPSHOT</version>
         </dependency>
+        <!--接口调用 相关包-->
+
+
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.7</version>
+        </dependency>
+
 
     </dependencies>
 
