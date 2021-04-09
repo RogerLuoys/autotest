@@ -8,6 +8,8 @@ import testBase.flag.FlagTestBase;
 
 public class QueryFlagListTest extends FlagTestBase {
 
+    private final String FullURL = URL + "flagBind/queryFlagList";
+
     @Test(description = "正常查看列表")
     void test1() {
         Reporter.log("准备入参");
@@ -16,7 +18,7 @@ public class QueryFlagListTest extends FlagTestBase {
         flagQueryBO.setOwnerId("416176799148282");
 
         Reporter.log("调用接口");
-        String result = auto.http.post(URL + "flagBind/queryFlagList", flagQueryBO);
+        String result = auto.http.post(FullURL, flagQueryBO);
 
         Reporter.log("验证结果");
         int total = Integer.parseInt(auto.jsonUtil.getData(result, "total"));
@@ -31,10 +33,10 @@ public class QueryFlagListTest extends FlagTestBase {
         flagQueryBO.setOwnerId("416176799148282");
 
         Reporter.log("调用接口");
-        String result = auto.http.post(URL + "flagBind/queryFlagList", flagQueryBO);
+        String result = auto.http.post(FullURL, flagQueryBO);
 
         Reporter.log("验证结果");
         int total = Integer.parseInt(auto.jsonUtil.getData(result, "total"));
-        Assert.assertTrue(total == 0, "验证列表总数据量");
+        Assert.assertEquals(total, 0, "验证列表总数据量");
     }
 }

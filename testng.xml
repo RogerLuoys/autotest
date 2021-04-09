@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<suite name="Simple HTML-XML Suite">
+<suite name="All Suite">
     <listeners>
         <listener class-name="org.uncommons.reportng.HTMLReporter"/>
 <!--        <listener class-name="org.uncommons.reportng.JUnitXMLReporter"/>-->
     </listeners>
-    <test name="Simple HTML-XML test">
+    <test name="All test">
         <packages>
-            <package name="testCaseUserCenter.userService" />
+            <package name="testCaseUserCenter.*" />
+            <package name="testCaseFlag.*" />
+            <package name="testCaseUI.*" />
         </packages>
 <!--        <classes>-->
 <!--            <class name="testCaseUserCenter.userService.QueryByUserIdTest" />-->

@@ -10,6 +10,8 @@ import testBase.flag.FlagTestBase;
 
 public class NewTaskDailyTest extends FlagTestBase {
 
+    private final String FullURL = URL + "taskDaily/newTaskDaily";
+
     @BeforeClass
     void resetData() {
         auto.flagDB.delete("delete from flag_bind where flag_id in (select flag_id from task_daily where task_daily_name='???newTaskDaily??')");
@@ -25,7 +27,7 @@ public class NewTaskDailyTest extends FlagTestBase {
         taskDailyBO.setOwnerId("416176799148282");
 
         Reporter.log("调用接口");
-        auto.http.post(URL + "taskDaily/newTaskDaily", taskDailyBO);
+        auto.http.post(FullURL, taskDailyBO);
 
         Reporter.log("验证结果");
         String point = auto.flagDB.selectOneCell("select point from task_daily where task_daily_name='自动化newTaskDaily测试'");

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<suite name="user center all test case Suite">
+    <listeners>
+        <listener class-name="org.uncommons.reportng.HTMLReporter"/>
+    </listeners>
+    <test name="user center all test case test">
+        <packages>
+            <package name="testCaseUserCenter.*" />
+        </packages>
+    </test>
+</suite>

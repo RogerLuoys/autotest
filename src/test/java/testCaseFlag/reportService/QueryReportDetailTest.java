@@ -7,10 +7,12 @@ import testBase.flag.FlagTestBase;
 
 public class QueryReportDetailTest extends FlagTestBase {
 
+    private final String FullURL = URL + "report/queryReportDetail";
+
     @Test(description = "查询正常已结束的flag")
     void test1() {
         Reporter.log("调用接口");
-        String result = auto.http.get(URL + "report/queryReportDetail?flagId=116177766224670");
+        String result = auto.http.get(FullURL + "?flagId=116177766224670");
 
         Reporter.log("验证结果");
         String flagName = auto.jsonUtil.getData(result, "flagName");
