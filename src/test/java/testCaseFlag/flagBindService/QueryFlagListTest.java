@@ -9,7 +9,7 @@ import testBase.flag.FlagTestBase;
 public class QueryFlagListTest extends FlagTestBase {
 
     @Test(description = "正常查看列表")
-    void Test1() {
+    void test1() {
         Reporter.log("准备入参");
         FlagQueryBO flagQueryBO = new FlagQueryBO();
         flagQueryBO.setPageIndex(1);
@@ -24,7 +24,7 @@ public class QueryFlagListTest extends FlagTestBase {
     }
 
     @Test(description = "查看尾页")
-    void Test2() {
+    void test2() {
         Reporter.log("准备入参");
         FlagQueryBO flagQueryBO = new FlagQueryBO();
         flagQueryBO.setPageIndex(100);

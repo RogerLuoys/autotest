@@ -15,7 +15,7 @@ public class UISeleniumImpl implements UI {
 
     private final Long DEFAULT_WAIT_TIME = 30L;
     private WebDriver driver = null;
-    private Long forceTimeOut = 1L;
+    private int forceTimeOut = 1;
 
     @Override
     public void init(String url) {
@@ -27,7 +27,7 @@ public class UISeleniumImpl implements UI {
     @Override
     public void refresh(String url) {
         this.driver.get(url);
-        forceWait(3L);
+        forceWait(3);
     }
 
     @Override
@@ -40,16 +40,16 @@ public class UISeleniumImpl implements UI {
     }
 
     @Override
-    public void forceWait(Long second) {
+    public void forceWait(int second) {
         try {
-            Thread.sleep(second * 1000);
+            Thread.sleep((long) second * 1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
     }
 
     @Override
-    public void setTimeout(Long second) {
+    public void setTimeout(int second) {
         this.forceTimeOut = second;
     }
 

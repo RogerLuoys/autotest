@@ -21,7 +21,7 @@ public class RegisterTest extends UserCenterTestBase {
     }
 
     @Test(description = "正常注册")
-    void Test1() {
+    void test1() {
         Reporter.log("数据准备");
         UserDTO userDTO = new UserDTO();
         userDTO.setUserName("接口自动化注册的用户名");
@@ -38,7 +38,7 @@ public class RegisterTest extends UserCenterTestBase {
 
 
     @Test(description = "注册登录名重复")
-    void Test2() {
+    void test2() {
         Reporter.log("数据准备");
         UserDTO userDTO = new UserDTO();
         userDTO.setUserName("接口自动化注册的用户名");

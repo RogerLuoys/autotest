@@ -13,7 +13,7 @@ public class UITestBase {
     @BeforeClass(description = "启动浏览器并用自动化专用账号登录")
     public void supperBeforeClass() {
         auto.ui.init(URL);
-        auto.ui.forceWait(3L);
+        auto.ui.forceWait(3);
         auto.task.login("autoTester", "123456");
         System.out.println("******************启动浏览器"+new Date());
     }

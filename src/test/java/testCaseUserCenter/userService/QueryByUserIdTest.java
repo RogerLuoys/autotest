@@ -13,7 +13,7 @@ public class QueryByUserIdTest extends UserCenterTestBase {
     private final UserService userService = auto.rpc.getService(serviceURL, UserService.class);
 
     @Test(description = "查询正常用户信息")
-    void Test1() {
+    void test1() {
         Reporter.log("调用queryByUserId方法");
         String result = auto.jsonUtil.toString(userService.queryByUserId("416160586979148"));
 
@@ -24,7 +24,7 @@ public class QueryByUserIdTest extends UserCenterTestBase {
 
 
     @Test(description = "查询不存在的用户")
-    void Test2() {
+    void test2() {
         Reporter.log("调用queryByUserId方法");
         String result = auto.jsonUtil.toString(userService.queryByUserId("10000"));
 

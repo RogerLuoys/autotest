@@ -41,17 +41,19 @@ public class JsonUTILImpl implements JsonUTIL {
      * @return 关键字出现的次数
      */
     private int countByString(String var, String key) {
-        String subVar = var;
-        int counter = 0;
-        for (int i = 0; i < 1000; i++) {
-            if (subVar.contains(key)) {
-                subVar = subVar.substring(subVar.indexOf(key) + key.length());
-                counter++;
-            } else {
-                return counter;
-            }
-        }
-        return counter;
+//        String subVar = var;
+//        int counter = 0;
+//        for (int i = 0; i < 1000; i++) {
+//            if (subVar.contains(key)) {
+//                subVar = subVar.substring(subVar.indexOf(key) + key.length());
+//                counter++;
+//            } else {
+//                return counter;
+//            }
+//        }
+//        return counter;
+
+        return countByString(var, key, 0);
     }
 
     /**
@@ -59,7 +61,7 @@ public class JsonUTILImpl implements JsonUTIL {
      *
      * @param var   字符串
      * @param key   关键字
-     * @param count 出现次数，填0
+     * @param count 出现次数，初始填0
      * @return 出现的总次数
      */
     private int countByString(String var, String key, int count) {

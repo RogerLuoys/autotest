@@ -90,6 +90,7 @@ public class HttpClientImpl implements HTTP {
         }
         CloseableHttpResponse httpResponse = null;
         StringEntity stringEntity = null;
+        //设置编码格式避免中文乱码
         stringEntity = new StringEntity(jsonData, StandardCharsets.UTF_8);
         stringEntity.setContentType("application/json");
         try {

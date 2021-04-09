@@ -8,7 +8,7 @@ import testBase.flag.FlagTestBase;
 public class QueryPointSummaryTest extends FlagTestBase {
 
     @Test
-    void Test1() {
+    void test1() {
         Reporter.log("调用接口");
         String result = auto.http.get(URL + "point/queryPointSummary?ownerId=416176799148282");
 

@@ -17,7 +17,7 @@ public class NewTaskDailyTest extends FlagTestBase {
     }
 
     @Test(description = "新增临时任务")
-    void Test1() {
+    void test1() {
         Reporter.log("准备入参");
         TaskDailyBO taskDailyBO = new TaskDailyBO();
         taskDailyBO.setTaskDailyName("自动化newTaskDaily测试");

@@ -31,14 +31,14 @@ public interface UI {
      *
      * @param second 等待的时间-单位秒
      */
-    void forceWait(Long second);
+    void forceWait(int second);
 
     /**
      * 设置显式等待的统一时间-默认30s
      *
      * @param second 单位秒
      */
-    void setTimeout(Long second);
+    void setTimeout(int second);
 
     /**
      * 获取自动化元素
