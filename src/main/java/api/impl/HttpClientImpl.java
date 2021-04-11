@@ -173,11 +173,13 @@ public class HttpClientImpl implements HTTP {
             httpPut.setHeader(key, header.get(key));
         }
         CloseableHttpResponse httpResponse = null;
-        StringEntity stringEntity = null;
-        stringEntity = new StringEntity(jsonData, StandardCharsets.UTF_8);
-        stringEntity.setContentType("application/json");
-        try {
+        //设置请求体
+        if (jsonData != null) {
+            StringEntity stringEntity = new StringEntity(jsonData, StandardCharsets.UTF_8);
+            stringEntity.setContentType("application/json");
             httpPut.setEntity(stringEntity);
+        }
+        try {
             httpResponse = httpClient.execute(httpPut);
             HttpEntity httpEntity = httpResponse.getEntity();
             result = EntityUtils.toString(httpEntity);
@@ -286,6 +288,19 @@ public class HttpClientImpl implements HTTP {
     }
 
     /**
+     * 执行http get请求
+     *
+     * @param url    完整的url地址-http://ip:port/path
+     * @param params Key必须是字符串，Value只能是基本数据类型的包装类型
+     * @param header 请求头
+     * @return 返回json格式
+     */
+    @Override
+    public String get(String url, Map<String, ?> params, Map<String, String> header) {
+        return httpDelete(transformMap2String(url, params), header);
+    }
+
+    /**
      * 执行http delete请求
      *
      * @param url    完整的url地址-http://ip:port/path
@@ -322,19 +337,6 @@ public class HttpClientImpl implements HTTP {
     public String delete(String url, Map<String, ?> params) {
         Map<String, String> header = new HashMap<>();
         header.put("Connection", "keep-alive");
-        return httpDelete(transformMap2String(url, params), header);
-    }
-
-    /**
-     * 执行http get请求
-     *
-     * @param url    完整的url地址-http://ip:port/path
-     * @param params Key必须是字符串，Value只能是基本数据类型的包装类型
-     * @param header 请求头
-     * @return 返回json格式
-     */
-    @Override
-    public String get(String url, Map<String, ?> params, Map<String, String> header) {
         return httpDelete(transformMap2String(url, params), header);
     }
 
@@ -380,6 +382,13 @@ public class HttpClientImpl implements HTTP {
     public String post(String url, Object data, Map<String, String> header, Map<String, ?> params) {
         String jsonData = JSON.toJSONString(data);
         return httpPost(transformMap2String(url, params), jsonData, header);
+    }
+
+    @Override
+    public String put(String url) {
+        Map<String, String> header = new HashMap<>();
+        header.put("Connection", "keep-alive");
+        return httpPut(url, null, header);
     }
 
     /**

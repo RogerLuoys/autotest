@@ -88,6 +88,13 @@ public interface HTTP {
      */
     String post(String url, Object data, Map<String, String> header, Map<String, ?> params);
 
+    /**
+     * 执行http put请求
+     *
+     * @param url 完整的url地址-http://ip:port/path?param
+     * @return 返回json格式
+     */
+    String put(String url);
 
     /**
      * 执行http put请求
