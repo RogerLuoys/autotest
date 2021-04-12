@@ -14,8 +14,8 @@ public class NewTaskDailyTest extends FlagTestBase {
 
     @BeforeClass
     void resetData() {
-        auto.flagDB.delete("delete from flag_bind where flag_id in (select flag_id from task_daily where task_daily_name='???newTaskDaily??')");
-        auto.flagDB.delete("delete from task_daily where task_daily_name='???newTaskDaily??'");
+        auto.flagDB.delete("delete from flag_bind where flag_id in (select flag_id from task_daily where task_daily_name='自动化newTaskDaily测试')");
+        auto.flagDB.delete("delete from task_daily where task_daily_name='自动化newTaskDaily测试'");
     }
 
     @Test(description = "新增临时任务")

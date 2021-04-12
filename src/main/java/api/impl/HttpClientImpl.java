@@ -165,6 +165,7 @@ public class HttpClientImpl implements HTTP {
      * @return
      */
     private String httpPut(String url, String jsonData, Map<String, String> header) {
+        LOGGER.info("\n====>执行put请求开始：{}", url);
         // 创建 HttpClient 客户端
         CloseableHttpClient httpClient = HttpClients.createDefault();
         String result = null;
@@ -250,7 +251,7 @@ public class HttpClientImpl implements HTTP {
      * @param params 需要往请求头传的参数
      * @return 带参数的完整url地址
      */
-    private String transformMap2String(String url, Map<String, ?> params) {
+    private String transformMap2URL(String url, Map<String, ?> params) {
         URIBuilder uriBuilder = getURIBuilder(url);
         Iterator iterator = params.keySet().iterator();
         while (iterator.hasNext()) {
@@ -284,7 +285,7 @@ public class HttpClientImpl implements HTTP {
     public String get(String url, Map<String, ?> params) {
         Map<String, String> header = new HashMap<>();
         header.put("Connection", "keep-alive");
-        return httpGet(transformMap2String(url, params), header);
+        return httpGet(transformMap2URL(url, params), header);
     }
 
     /**
@@ -297,7 +298,7 @@ public class HttpClientImpl implements HTTP {
      */
     @Override
     public String get(String url, Map<String, ?> params, Map<String, String> header) {
-        return httpDelete(transformMap2String(url, params), header);
+        return httpDelete(transformMap2URL(url, params), header);
     }
 
     /**
@@ -310,7 +311,7 @@ public class HttpClientImpl implements HTTP {
      */
     @Override
     public String delete(String url, Map<String, ?> params, Map<String, String> header) {
-        return httpGet(transformMap2String(url, params), header);
+        return httpGet(transformMap2URL(url, params), header);
     }
 
     /**
@@ -337,7 +338,7 @@ public class HttpClientImpl implements HTTP {
     public String delete(String url, Map<String, ?> params) {
         Map<String, String> header = new HashMap<>();
         header.put("Connection", "keep-alive");
-        return httpDelete(transformMap2String(url, params), header);
+        return httpDelete(transformMap2URL(url, params), header);
     }
 
     /**
@@ -381,7 +382,7 @@ public class HttpClientImpl implements HTTP {
     @Override
     public String post(String url, Object data, Map<String, String> header, Map<String, ?> params) {
         String jsonData = JSON.toJSONString(data);
-        return httpPost(transformMap2String(url, params), jsonData, header);
+        return httpPost(transformMap2URL(url, params), jsonData, header);
     }
 
     @Override
@@ -417,6 +418,10 @@ public class HttpClientImpl implements HTTP {
     @Override
     public String put(String url, Object data, Map<String, String> header) {
         String jsonData = JSON.toJSONString(data);
+        if (header == null) {
+            header = new HashMap<>();
+            header.put("Connection", "keep-alive");
+        }
         return httpPut(url, jsonData, header);
     }
 
@@ -432,7 +437,11 @@ public class HttpClientImpl implements HTTP {
     @Override
     public String put(String url, Object data, Map<String, String> header, Map<String, ?> params) {
         String jsonData = JSON.toJSONString(data);
-        return httpPut(transformMap2String(url, params), jsonData, header);
+        if (header == null) {
+            header = new HashMap<>();
+            header.put("Connection", "keep-alive");
+        }
+        return httpPut(transformMap2URL(url, params), jsonData, header);
     }
 
 }

@@ -41,7 +41,7 @@ public class DBJdbcTemplateImpl implements DB {
 
 
     /**
-     * 把更新sql转换称查询sql，查询sql以更新sql的条件为条件
+     * 把更新sql转换为查询总行数的sql，查询sql以更新sql的条件为条件
      *
      * @param updateSql
      * @return
@@ -56,7 +56,7 @@ public class DBJdbcTemplateImpl implements DB {
     }
 
     /**
-     * 把删除sql转换称查询sql，查询sql以更新sql的条件为条件
+     * 把删除sql转换为查询总行数的sql，查询sql以更新sql的条件为条件
      *
      * @param deleteSql
      * @return
@@ -144,7 +144,7 @@ public class DBJdbcTemplateImpl implements DB {
     public Integer update(String sql) {
         String executeSql = sql.replace(";", "") + ";";
         if (!checkSqlType(executeSql, UPDATE)) {
-            LOGGER.warn("\n---->更新sql格式错误");
+            LOGGER.warn("\n---->更新语句的sql格式错误：{}", sql);
             return null;
         }
         int effectRow = count(transformUpdate2Select(executeSql));
@@ -163,7 +163,7 @@ public class DBJdbcTemplateImpl implements DB {
     public Integer updateNoLimit(String sql) {
         String executeSql = sql.replace(";", "") + ";";
         if (!checkSqlType(executeSql, UPDATE)) {
-            LOGGER.warn("\n---->更新sql格式错误");
+            LOGGER.warn("\n---->更新语句的sql格式错误：{}", sql);
             return null;
         }
         int effectRow = count(transformUpdate2Select(executeSql));
@@ -182,6 +182,7 @@ public class DBJdbcTemplateImpl implements DB {
     public Integer count(String sql) {
         String executeSql = sql.replace(";", "") + ";";
         if (!checkSqlType(sql, COUNT)) {
+            LOGGER.warn("\n---->查总数语句的sql格式错误：{}", sql);
             return null;
         }
         LOGGER.info("\n====>最终执行sql：" + executeSql);
@@ -192,6 +193,7 @@ public class DBJdbcTemplateImpl implements DB {
     @Override
     public Map<String, Object> select(String sql) {
         if (!checkSqlType(sql, SELECT)) {
+            LOGGER.warn("\n---->查询语句的sql格式错误：{}", sql);
             return null;
         }
         String executeSql = addSelectDefault(sql);
@@ -203,6 +205,7 @@ public class DBJdbcTemplateImpl implements DB {
     @Override
     public List<Map<String, Object>> selectMultiRow(String sql) {
         if (!checkSqlType(sql, SELECT)) {
+            LOGGER.warn("\n---->查询语句的sql格式错误：{}", sql);
             return null;
         }
         String executeSql = addSelectDefault(sql);
@@ -213,8 +216,8 @@ public class DBJdbcTemplateImpl implements DB {
     @Override
     public String selectOneCell(String sql) {
         String[] sqlList = sql.split(" ");
-        if (!sqlList[2].equalsIgnoreCase("from")) {
-            LOGGER.warn("查询单格数据的sql不正确：" + sql);
+        if (!sqlList[2].equalsIgnoreCase("from") || sqlList[1].equalsIgnoreCase("*")) {
+            LOGGER.warn("\n---->查询单格数据的sql格式不正确：{}", sql);
             return null;
         }
         Map<String, Object> result = select(sql);
@@ -225,7 +228,7 @@ public class DBJdbcTemplateImpl implements DB {
     public Integer delete(String sql) {
         String executeSql = sql.replace(";", "") + ";";
         if (!checkSqlType(executeSql, DELETE)) {
-            LOGGER.warn("\n---->删除sql格式错误");
+            LOGGER.warn("\n---->删除语句的sql格式错误：{}", sql);
             return null;
         }
         int effectRow = count(transformDelete2Select(executeSql));

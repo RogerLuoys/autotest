@@ -12,7 +12,7 @@ public class UserCenterTestBase {
 
 
     @BeforeMethod
-    void supperBeforeMethod() {
+    public void supperBeforeMethod() {
         auto.rpc.forceWait(1);
     }
 
