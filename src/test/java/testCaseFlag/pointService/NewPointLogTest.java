@@ -14,7 +14,7 @@ public class NewPointLogTest extends FlagTestBase {
 
     @BeforeClass
     void resetData() {
-        auto.flagDB.delete("delete from point_id where description='newPointLog自动化使用'");
+        auto.flagDB.delete("delete from point_log where description='newPointLog自动化使用'");
     }
 
     @Test(description = "正常使用积分")

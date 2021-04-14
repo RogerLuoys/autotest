@@ -24,9 +24,10 @@ public class NewFlagTest extends UITestBase {
         Reporter.log("输入名称新增flag");
         auto.ui.sendKey("//div[@class='el-dialog__body']//input[@placeholder='请输入名称']", "自动化新增FLAG测试");
         auto.ui.click("//span[text()='确 定']");
-        auto.ui.forceWait(3);
 
         Reporter.log("验证新增的flag是否存在");
+        auto.task.searchFlagByName("自动化新增FLAG测试");
+        auto.ui.forceWait(3);
         Assert.assertTrue(auto.ui.isElementExist("//div[text()='自动化新增FLAG测试']"), "验证新增是否成功");
     }
 
@@ -41,6 +42,8 @@ public class NewFlagTest extends UITestBase {
         auto.ui.click(auto.ui.getElements(By.xpath("//span[text()='确 定']")).get(1));
 
         Reporter.log("验证习惯是否存在");
+        auto.task.searchFlagByName("自动化新增习惯测试");
+        auto.ui.forceWait(3);
         Assert.assertTrue(auto.ui.isElementExist("//div[text()='自动化新增习惯测试']"), "验证新增是否成功");
     }
 }
