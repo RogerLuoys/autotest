@@ -1,12 +1,12 @@
 package testCaseUserCenter.adminService;
 
 import com.luoys.upgrade.uc.share.service.AdminService;
-import com.luoys.upgrade.uc.share.service.UserService;
 import org.testng.Assert;
 import org.testng.Reporter;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import testBase.userCenter.UserCenterTestBase;
+
 
 public class RemoveUserTest extends UserCenterTestBase {
 
@@ -25,7 +25,8 @@ public class RemoveUserTest extends UserCenterTestBase {
 
         Reporter.log("验证结果");
         String isUserDelete = auto.ucDB.selectOneCell("select is_delete from user where user_id='416147574006268'");
-        Assert.assertEquals(isUserDelete, "1", "校验是否删除");
+        //数据库tinyint(1)会被jdbcTemplate转换成Boolean类型
+        Assert.assertEquals(isUserDelete, "true", "校验是否删除");
     }
 
 }

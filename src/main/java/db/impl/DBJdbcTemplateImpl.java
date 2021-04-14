@@ -6,6 +6,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
 
@@ -216,12 +219,21 @@ public class DBJdbcTemplateImpl implements DB {
     @Override
     public String selectOneCell(String sql) {
         String[] sqlList = sql.split(" ");
-        if (!sqlList[2].equalsIgnoreCase("from") || sqlList[1].equalsIgnoreCase("*")) {
-            LOGGER.warn("\n---->查询单格数据的sql格式不正确：{}", sql);
+        //查询语句只能查询一列数据
+        if (!sqlList[2].equalsIgnoreCase("from") || sqlList[1].equalsIgnoreCase("*") || sqlList[1].contains(",")) {
+            LOGGER.warn("\n---->查询单格数据的sql格式不合规：{}", sql);
             return null;
         }
         Map<String, Object> result = select(sql);
-        return result.get(sqlList[1]).toString();
+        Object value = result.get(sqlList[1]);
+        //时间格式转换
+        if (value.getClass().getName().equals("java.time.LocalDateTime")) {
+            LocalDateTime time = (LocalDateTime) value;
+            DateTimeFormatter dateTimeFormatter= DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").withZone(ZoneId.of("Asia/Shanghai"));
+            return dateTimeFormatter.format(time);
+        } else {
+            return value.toString();
+        }
     }
 
     @Override
