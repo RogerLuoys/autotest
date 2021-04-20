@@ -14,11 +14,11 @@ public class LoginTest extends UserCenterTestBase {
     @Test(description = "正常登录")
     void test1() {
         Reporter.log("调用login方法");
-        String result = auto.jsonUtil.toString(userService.login("autoTester", null, "123456"));
+        String result = auto.jsonUtil.toString(userService.login("APITester", null, "123456"));
 
         Reporter.log("验证结果");
         String userId = auto.jsonUtil.getData(result,"userId");
-        Assert.assertEquals(userId, "416160586979148", "验证正常登录结果");
+        Assert.assertEquals(userId, "416176799148282", "验证正常登录结果");
     }
 
 
@@ -29,7 +29,7 @@ public class LoginTest extends UserCenterTestBase {
 
         Reporter.log("验证结果");
         String message = auto.jsonUtil.getData(result,"message");
-        Assert.assertEquals(message, "业务异常", "验证密码不对登录结果");
+        Assert.assertEquals(message, "登录名不存在", "验证密码不对登录结果");
     }
 
 }
