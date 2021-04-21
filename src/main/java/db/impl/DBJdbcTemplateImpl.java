@@ -46,37 +46,35 @@ public class DBJdbcTemplateImpl implements DB {
     /**
      * 把更新sql转换为查询总行数的sql，查询sql以更新sql的条件为条件
      *
-     * @param updateSql
-     * @return
+     * @param updateSql 更新sql，注意字段间空格只能有一个
+     * @return select count(1) from 更新的表名 + 更新的条件
      */
     private String transformUpdate2Select(String updateSql) {
         int endIndex = updateSql.toLowerCase().indexOf(" set ");
         String tableName = updateSql.substring(7, endIndex);
         int startIndex = updateSql.toLowerCase().indexOf(" where ");
         String condition = updateSql.substring(startIndex);
-        String selectSql = "select count(1) from " + tableName + condition;
-        return selectSql;
+        return "select count(1) from " + tableName + condition;
     }
 
     /**
      * 把删除sql转换为查询总行数的sql，查询sql以更新sql的条件为条件
      *
-     * @param deleteSql
-     * @return
+     * @param deleteSql 删除sql，注意字段间空格只能有一个
+     * @return select count(1) from 删除的表名 + 删除的条件
      */
     private String transformDelete2Select(String deleteSql) {
         int startIndex = deleteSql.toLowerCase().indexOf(" from ");
         String condition = deleteSql.substring(startIndex);
-        String selectSql = "select count(1) " + condition;
-        return selectSql;
+        return "select count(1) " + condition;
     }
 
     /**
      * 检查sql格式是否正确
      *
-     * @param sql
-     * @param type
-     * @return
+     * @param sql 注意字段间空格只能有一个
+     * @param type -
+     * @return -
      */
     private boolean checkSqlType(String sql, String type) {
         String[] sqlArray = sql.toLowerCase().split(" ");

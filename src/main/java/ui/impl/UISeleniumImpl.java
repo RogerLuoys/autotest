@@ -7,11 +7,14 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import ui.UI;
 
 import java.util.List;
 
 public class UISeleniumImpl implements UI {
+    private static final Logger LOGGER = LoggerFactory.getLogger(UISeleniumImpl.class);
 
     private final Long DEFAULT_WAIT_TIME = 30L;
     private WebDriver driver = null;
@@ -44,7 +47,8 @@ public class UISeleniumImpl implements UI {
         try {
             Thread.sleep((long) second * 1000);
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            LOGGER.error("\n---->线程睡眠异常");
+//            e.printStackTrace();
         }
     }
 
@@ -56,15 +60,13 @@ public class UISeleniumImpl implements UI {
     @Override
     public WebElement getElement(By locator) {
         forceWait(forceTimeOut);
-        WebElement webElement = driver.findElement(locator);
-        return webElement;
+        return driver.findElement(locator);
     }
 
     @Override
     public List<WebElement> getElements(By locator) {
         forceWait(forceTimeOut);
-        List<WebElement> webElementList = driver.findElements(locator);
-        return webElementList;
+        return driver.findElements(locator);
     }
 
     @Override

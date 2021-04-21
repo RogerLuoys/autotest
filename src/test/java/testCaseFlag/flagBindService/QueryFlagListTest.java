@@ -29,14 +29,14 @@ public class QueryFlagListTest extends FlagTestBase {
     void test2() {
         Reporter.log("准备入参");
         FlagQueryBO flagQueryBO = new FlagQueryBO();
-        flagQueryBO.setPageIndex(100);
+        flagQueryBO.setPageIndex(99);
         flagQueryBO.setOwnerId("416176799148282");
 
         Reporter.log("调用接口");
         String result = auto.http.post(FullURL, flagQueryBO);
 
         Reporter.log("验证结果");
-        int total = Integer.parseInt(auto.jsonUtil.getData(result, "total"));
-        Assert.assertEquals(total, 0, "验证列表总数据量");
+        String list = auto.jsonUtil.getData(result, "list");
+        Assert.assertEquals(list, "[]", "验证列表总数据量");
     }
 }

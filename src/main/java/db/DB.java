@@ -52,7 +52,7 @@ public interface DB {
      * 更新数据，影响行数不能超过10行
      *
      * @param sql 完整的更新sql (规则：update 表名 set 更新字段 where 条件)
-     * @return
+     * @return -
      */
     Integer update(String sql);
 
@@ -60,7 +60,7 @@ public interface DB {
      * 更新数据，影响行数不能超过100行
      *
      * @param sql 完整的更新sql (规则：update 表名 set 更新字段 where 条件)
-     * @return
+     * @return -
      */
     Integer updateNoLimit(String sql);
 
@@ -68,7 +68,7 @@ public interface DB {
      * 删除数据，影响行数不能超过5条
      *
      * @param sql 完整的删除sql (规则：delete from 表名 where 条件)
-     * @return
+     * @return -
      */
     Integer delete(String sql);
 

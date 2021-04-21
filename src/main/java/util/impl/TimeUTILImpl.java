@@ -10,7 +10,6 @@ public class TimeUTILImpl implements TimeUTIL {
     @Override
     public Date setDate(int year, int month, int day, int hour, int minute, int second) {
         Calendar calendar = Calendar.getInstance();
-//        calendar.setTime(new Date());
         calendar.set(Calendar.YEAR, year);
         //calendar月份从0开始算！
         calendar.set(Calendar.MONTH, month - 1);
