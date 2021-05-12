@@ -5,13 +5,13 @@
 <!--        <listener class-name="org.uncommons.reportng.JUnitXMLReporter"/>-->
     </listeners>
     <test name="All test">
-        <packages>
-            <package name="testCaseUserCenter.*" />
-            <package name="testCaseFlag.*" />
-            <package name="testCaseUI.*" />
-        </packages>
-<!--        <classes>-->
-<!--            <class name="testCaseUserCenter.userService.QueryByUserIdTest" />-->
-<!--        </classes>-->
+<!--        <packages>-->
+<!--            <package name="testCaseUserCenter.*" />-->
+<!--            <package name="testCaseFlag.*" />-->
+<!--            <package name="testCaseUI.*" />-->
+<!--        </packages>-->
+        <classes>
+            <class name="testCaseUserCenter.userService.QueryByUserIdTest" />
+        </classes>
     </test>
 </suite>
