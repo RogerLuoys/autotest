@@ -194,9 +194,15 @@
                 <version>2.22.2</version>
                 <configuration>
                     <suiteXmlFiles>
-<!--                        <suiteXmlFile>testngUserCenter.xml</suiteXmlFile>-->
                         <suiteXmlFile>${suiteXmlFile}</suiteXmlFile>
                     </suiteXmlFiles>
+                    <properties>
+                        <!--取消默认监听-->
+                        <property>
+                            <name>usedefaultlisteners</name>
+                            <value>false</value>
+                        </property>
+                    </properties>
                 </configuration>
             </plugin>
         </plugins>

@@ -2,6 +2,7 @@
 <suite name="flag all test case Suite">
     <listeners>
         <listener class-name="org.uncommons.reportng.HTMLReporter"/>
+        <listener class-name="org.uncommons.reportng.JUnitXMLReporter"/>
     </listeners>
     <test name="flag all test case test">
         <packages>
