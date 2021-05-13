@@ -11,7 +11,7 @@
 <!--            <package name="testCaseUI.*" />-->
 <!--        </packages>-->
         <classes>
-            <class name="testCaseUserCenter.userService.QueryByUserIdTest" />
+            <class name="testCaseFlag.pointService.QueryPointSummaryTest" />
         </classes>
     </test>
 </suite>
