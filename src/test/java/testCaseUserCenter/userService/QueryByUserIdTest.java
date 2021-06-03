@@ -32,4 +32,12 @@ public class QueryByUserIdTest extends UserCenterTestBase {
         String message = auto.jsonUtil.getBaseData(result, "message");
         Assert.assertEquals(message, "用户不存在", "验证不存在用户的查询结果");
     }
+
+    @Test(description = "泛化调用")
+    void test3() {
+        String result = auto.rpc.invoke(serviceURL, UserService.class.getName(), "queryByUserId", new String[] {"java.lang.String"}, new Object[]{"416160586979148"});
+        String userId = auto.jsonUtil.getData(result, "userId");
+        Assert.assertEquals(userId, "416160586979148", "验证用户的查询结果");
+        System.out.println(result);
+    }
 }
