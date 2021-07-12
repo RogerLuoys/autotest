@@ -11,7 +11,7 @@ import testBase.flag.FlagTestBase;
 
 public class NewFlagTest extends FlagTestBase {
 
-    private final String FullURL = URL + "flag/newFlag";
+    private final String FullURL = auto.config.URL + "flag/newFlag";
 
     @BeforeClass
     void resetData() {

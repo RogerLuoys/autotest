@@ -9,7 +9,7 @@ import testBase.userCenter.UserCenterTestBase;
 
 public class QueryByUserIdTest extends UserCenterTestBase {
 
-    private final String serviceURL = URL + "com.luoys.upgrade.uc.share.service.UserService";
+    private final String serviceURL = auto.config.URL + "com.luoys.upgrade.uc.share.service.UserService";
     private final UserService userService = auto.rpc.getService(serviceURL, UserService.class);
 
     @Test(description = "查询正常用户信息")

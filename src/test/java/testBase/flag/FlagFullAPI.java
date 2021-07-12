@@ -12,6 +12,7 @@ import util.impl.JsonUTILImpl;
 import util.impl.TimeUTILImpl;
 
 public class FlagFullAPI {
+    public final FlagConfig config = new FlagConfig();
     public final HTTP http = new HttpClientImpl();
     public final JsonUTIL jsonUtil = new JsonUTILImpl();
     public final TimeUTIL timeUtil = new TimeUTILImpl();

@@ -7,7 +7,7 @@ import testBase.flag.FlagTestBase;
 
 public class QueryReportListTest extends FlagTestBase {
 
-    private final String FullURL = URL + "flagBind/queryReportList";
+    private final String FullURL = auto.config.URL + "flagBind/queryReportList";
 
     @Test(description = "正常查询成长日记列表")
     void test1() {

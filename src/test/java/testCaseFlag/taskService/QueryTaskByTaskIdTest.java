@@ -7,7 +7,7 @@ import testBase.flag.FlagTestBase;
 
 public class QueryTaskByTaskIdTest extends FlagTestBase {
 
-    private final String FullURL = URL + "task/queryTaskByTaskId";
+    private final String FullURL = auto.config.URL + "task/queryTaskByTaskId";
 
     @Test(description = "查询正常周期任务")
     void test1() {

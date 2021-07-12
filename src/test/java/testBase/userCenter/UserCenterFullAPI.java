@@ -10,6 +10,7 @@ import util.JsonUTIL;
 import util.impl.JsonUTILImpl;
 
 public class UserCenterFullAPI {
+    public final UserCenterConfig config = new UserCenterConfig();
     public final RPC rpc = new RPCDubboImpl();
     public final JsonUTIL jsonUtil = new JsonUTILImpl();
     public final DB ucDB = new DBJdbcTemplateImpl(

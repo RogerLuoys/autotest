@@ -10,7 +10,7 @@ import testBase.userCenter.UserCenterTestBase;
 
 public class RegisterTest extends UserCenterTestBase {
 
-    private final String serviceURL = URL + "com.luoys.upgrade.uc.share.service.UserService";
+    private final String serviceURL = auto.config.URL + "com.luoys.upgrade.uc.share.service.UserService";
     private final UserService userService = auto.rpc.getService(serviceURL, UserService.class);
 
     @BeforeClass

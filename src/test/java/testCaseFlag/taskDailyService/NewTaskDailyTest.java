@@ -10,7 +10,7 @@ import testBase.flag.FlagTestBase;
 
 public class NewTaskDailyTest extends FlagTestBase {
 
-    private final String FullURL = URL + "taskDaily/newTaskDaily";
+    private final String FullURL = auto.config.URL + "taskDaily/newTaskDaily";
 
     @BeforeClass
     void resetData() {

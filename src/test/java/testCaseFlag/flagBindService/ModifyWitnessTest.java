@@ -9,7 +9,7 @@ import testBase.flag.FlagTestBase;
 
 public class ModifyWitnessTest extends FlagTestBase {
 
-    private final String FullURL = URL + "flagBind/modifyWitness";
+    private final String FullURL = auto.config.URL + "flagBind/modifyWitness";
 
     @BeforeClass
     void resetData() {

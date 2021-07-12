@@ -8,7 +8,7 @@ import testBase.flag.FlagTestBase;
 
 public class QueryTaskDailyListTest extends FlagTestBase {
 
-    private final String FullURL = URL + "flagBind/queryTaskDailyList";
+    private final String FullURL = auto.config.URL + "flagBind/queryTaskDailyList";
 
     @Test(description = "正常获取一个月的任务列表数据")
     void test1() {

@@ -7,7 +7,7 @@ import testBase.flag.FlagTestBase;
 
 public class QueryFlagTemplateDetailTest extends FlagTestBase {
 
-    private final String FullURL = URL + "template/queryFlagTemplateDetail";
+    private final String FullURL = auto.config.URL + "template/queryFlagTemplateDetail";
 
     @Test
     void test1() {

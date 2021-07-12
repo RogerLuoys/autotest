@@ -10,7 +10,7 @@ import testBase.flag.FlagTestBase;
 
 public class UseFlagTemplateTest extends FlagTestBase {
 
-    private final String FullURL = URL + "template/useFlagTemplate";
+    private final String FullURL = auto.config.URL + "template/useFlagTemplate";
 
     @BeforeClass
     void resetData() {

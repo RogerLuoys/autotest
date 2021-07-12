@@ -10,7 +10,7 @@ import testBase.flag.FlagTestBase;
 
 public class NewPointLogTest extends FlagTestBase {
 
-    private final String FullURL = URL + "point/newPointLog";
+    private final String FullURL = auto.config.URL + "point/newPointLog";
 
     @BeforeClass
     void resetData() {

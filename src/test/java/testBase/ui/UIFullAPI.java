@@ -7,6 +7,7 @@ import org.openqa.selenium.By;
 import ui.impl.UISeleniumImpl;
 
 public class UIFullAPI {
+    public final UIConfig config = new UIConfig();
     public final UI ui = new UISeleniumImpl();
     public final DB flagDB = new DBJdbcTemplateImpl(
             "com.mysql.cj.jdbc.Driver",

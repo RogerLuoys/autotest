@@ -7,7 +7,7 @@ import testBase.flag.FlagTestBase;
 
 public class QueryPointSummaryTest extends FlagTestBase {
 
-    private final String FullURL = URL + "point/queryPointSummary";
+    private final String FullURL = auto.config.URL + "point/queryPointSummary";
 
     @Test
     void test1() {

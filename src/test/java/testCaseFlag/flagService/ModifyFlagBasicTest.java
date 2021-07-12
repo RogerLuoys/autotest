@@ -9,7 +9,7 @@ import testBase.flag.FlagTestBase;
 
 public class ModifyFlagBasicTest extends FlagTestBase {
 
-    private final String FullURL = URL + "flag/modifyFlagBasic";
+    private final String FullURL = auto.config.URL + "flag/modifyFlagBasic";
 
     @BeforeClass
     void resetData() {

@@ -11,7 +11,7 @@ import java.util.Map;
 
 public class ModifyTaskDailyCommentTest extends FlagTestBase {
 
-    private final String FullURL = URL + "taskDaily/modifyTaskDailyComment";
+    private final String FullURL = auto.config.URL + "taskDaily/modifyTaskDailyComment";
 
     @BeforeClass
     void resetData() {

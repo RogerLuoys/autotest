@@ -8,7 +8,7 @@ import testBase.flag.FlagTestBase;
 
 public class RemoveFlagTest extends FlagTestBase {
 
-    private final String FullURL = URL + "flag/removeFlag";
+    private final String FullURL = auto.config.URL + "flag/removeFlag";
 
     @BeforeClass
     void resetData() {

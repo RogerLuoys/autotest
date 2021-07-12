@@ -8,7 +8,7 @@ import testBase.flag.FlagTestBase;
 
 public class QueryPointLogListTest extends FlagTestBase {
 
-    private final String FullURL = URL + "point/queryPointLogList";
+    private final String FullURL = auto.config.URL + "point/queryPointLogList";
 
     @Test(description = "查询积分使用记录")
     void test1() {

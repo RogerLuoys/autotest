@@ -12,18 +12,17 @@ import java.util.Date;
  */
 public class UITestBase {
     public final static UIFullAPI auto = new UIFullAPI();
-    public final static String URL = "http://118.24.117.181/";
 
     @BeforeClass(description = "启动浏览器并用自动化专用账号登录")
     public void supperBeforeClass() {
-        auto.ui.init(URL);
+        auto.ui.init(auto.config.URL);
         auto.ui.forceWait(3);
         auto.task.login("UITester", "123456");
     }
 
     @BeforeMethod(description = "每次执行用例前刷新到主页")
     public void supperBeforeMethod() {
-        auto.ui.refresh(URL);
+        auto.ui.refresh(auto.config.URL);
     }
 
     @AfterClass(alwaysRun = true, description = "关闭浏览器且关闭驱动进程")
