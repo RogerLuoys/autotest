@@ -45,6 +45,8 @@ public interface RPC {
      */
     String invoke(String url, String interfaceName, String methodName, String[] paramTypeList, Object[] paramList);
 
+    void invoke();
+
     /**
      * 进程睡眠，强制等待
      *
