@@ -91,15 +91,36 @@ public class RPCDubboImpl implements RPC {
         return JSON.toJSONString(result);
     }
 
+//    public void invoke() {
+//        try {
+//            // 引用远程服务
+//            ReferenceConfig<GenericService> reference = new ReferenceConfig<>();
+//            // 弱类型接口名
+//            reference.setInterface("com.luoys.upgrade.uc.share.service.UserService");
+//            reference.setUrl("dubbo://118.24.117.181:20881/com.luoys.upgrade.uc.share.service.UserService");
+//            reference.setRetries(0);
+//            // RpcContext中设置generic=gson
+//            RpcContext.getContext().setAttachment("generic","gson");
+//            // 声明为泛化接口
+//            reference.setGeneric("true");
+//            reference.setCheck(false);
+//            GenericService genericService = ReferenceConfigCache.getCache().get(reference);
+//            // 传递参数对象的json字符串进行一次调用
+//            Object res = genericService.$invoke("queryByUserId", new String[]{"java.lang.String"}, new Object[]{"416160586979148"});
+//            System.out.println("result[setUser]："+JSON.toJSONString(res)); // 响应结果:result[setUser]：{name=Tom, class=com.xxx.api.service.User, age=24}
+//        } catch (Throwable ex) {
+//            ex.printStackTrace();
+//        }
+//    }
+
     public void invoke() {
         try {
             // 引用远程服务
             ReferenceConfig<GenericService> reference = new ReferenceConfig<>();
             // 弱类型接口名
             reference.setInterface("com.luoys.upgrade.uc.share.service.UserService");
-//            reference.setGroup("dev");
-//            reference.setVersion("1.0");
             reference.setUrl("dubbo://118.24.117.181:20881/com.luoys.upgrade.uc.share.service.UserService");
+//            reference.setVersion("1.0");
             reference.setRetries(0);
             // RpcContext中设置generic=gson
             RpcContext.getContext().setAttachment("generic","gson");
@@ -108,13 +129,12 @@ public class RPCDubboImpl implements RPC {
             reference.setCheck(false);
             GenericService genericService = ReferenceConfigCache.getCache().get(reference);
             // 传递参数对象的json字符串进行一次调用
-            Object res = genericService.$invoke("queryByUserId", new String[]{"java.lang.String"}, new Object[]{"416160586979148"});
+            Object res = genericService.$invoke("modifyUser", new String[]{"com.luoys.upgrade.uc.share.dto.UserDTO"}, new Object[]{"{'userId':'416170902167365','userName':'这是修改后的名字'}"});
             System.out.println("result[setUser]："+JSON.toJSONString(res)); // 响应结果:result[setUser]：{name=Tom, class=com.xxx.api.service.User, age=24}
         } catch (Throwable ex) {
             ex.printStackTrace();
         }
     }
-
     /**
      * 进程睡眠，强制等待
      *

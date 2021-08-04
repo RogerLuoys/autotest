@@ -48,19 +48,19 @@ public class QueryByUserIdTest extends UserCenterTestBase {
 
     @Test(description = "泛化调用2")
     void test4() {
-//        auto.rpc.invoke();
-        Integer t1 = 1234455;
-        UserDTO userDTO = new UserDTO();
-        userDTO.setUserName("接口自动化注册的用户名");
-        userDTO.setLoginName("DUBBOAuto");
-        userDTO.setPassword("auto123456");
-        UserDTO userDTO2 = new UserDTO();
-        userDTO2.setUserName("接口自动化注册的用户名2");
-        userDTO2.setLoginName("DUBBOAuto");
-        userDTO2.setPassword("auto123456");
-        List<UserDTO> list1 = new ArrayList<>();
-        list1.add(userDTO);
-        list1.add(userDTO2);
-        System.out.println(JSON.toJSONString(list1));
+        auto.rpc.invoke();
+//        Integer t1 = 1234455;
+//        UserDTO userDTO = new UserDTO();
+//        userDTO.setUserName("接口自动化注册的用户名");
+//        userDTO.setLoginName("DUBBOAuto");
+//        userDTO.setPassword("auto123456");
+//        UserDTO userDTO2 = new UserDTO();
+//        userDTO2.setUserName("接口自动化注册的用户名2");
+//        userDTO2.setLoginName("DUBBOAuto");
+//        userDTO2.setPassword("auto123456");
+//        List<UserDTO> list1 = new ArrayList<>();
+//        list1.add(userDTO);
+//        list1.add(userDTO2);
+//        System.out.println(JSON.toJSONString(list1));
     }
 }
