@@ -10,6 +10,10 @@ import org.apache.dubbo.config.utils.ReferenceConfigCache;
 import org.apache.dubbo.rpc.RpcContext;
 import org.apache.dubbo.rpc.service.GenericService;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 public class RPCDubboImpl implements RPC {
 
     private static final String DEFAULT_NAME = "AutomationTester";
@@ -127,9 +131,16 @@ public class RPCDubboImpl implements RPC {
             // 声明为泛化接口
             reference.setGeneric("true");
             reference.setCheck(false);
-            GenericService genericService = ReferenceConfigCache.getCache().get(reference);
+            GenericService genericService = reference.get();
+//            GenericService genericService = ReferenceConfigCache.getCache().get(reference);
             // 传递参数对象的json字符串进行一次调用
-            Object res = genericService.$invoke("modifyUser", new String[]{"com.luoys.upgrade.uc.share.dto.UserDTO"}, new Object[]{"{'userId':'416170902167365','userName':'这是修改后的名字'}"});
+
+            Map<String, Object> params = new HashMap<>();
+            params.put("userId", "416170902167365");
+            params.put("userName", "这是修改后的名字");
+
+            // "{\"userId\":\"416170902167365\",\"userName\":\"这是修改后的名字\"}"
+            Object res = genericService.$invoke("modifyUser", new String[]{"com.luoys.upgrade.uc.share.dto.UserDTO"}, new Object[]{params});
             System.out.println("result[setUser]："+JSON.toJSONString(res)); // 响应结果:result[setUser]：{name=Tom, class=com.xxx.api.service.User, age=24}
         } catch (Throwable ex) {
             ex.printStackTrace();

@@ -14,6 +14,7 @@ import util.impl.ExcelUTILHSSFImpl;
 import util.impl.ExcelUTILXSSFImpl;
 import util.impl.JsonUTILImpl;
 
+// 代理类
 public class FullAPI {
     public final RPC rpc = new RPCDubboImpl();
     public final HTTP http = new HttpClientImpl();
