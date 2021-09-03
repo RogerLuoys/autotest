@@ -2,8 +2,8 @@ package testBase.flag;
 
 import api.HTTPHttpClient;
 import db.DBJdbcTemplate;
-import util.impl.JsonUtil;
-import util.impl.TimeUtil;
+import util.JsonUtil;
+import util.TimeUtil;
 
 public class FlagCommonProxy {
 
