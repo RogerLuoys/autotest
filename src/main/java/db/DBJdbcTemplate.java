@@ -1,6 +1,6 @@
-package db.impl;
+package db;
 
-import db.DB;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -12,9 +12,9 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
 
-public class DBJdbcTemplateImpl implements DB {
+@Slf4j
+public class DBJdbcTemplate {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(DBJdbcTemplateImpl.class);
     private final static String SELECT = "select";
     private final static String UPDATE = "update";
     private final static String COUNT = "count(1)";
@@ -25,15 +25,15 @@ public class DBJdbcTemplateImpl implements DB {
     private DriverManagerDataSource dataSource = null;
     private final JdbcTemplate jdbcTemplate = new JdbcTemplate();
 
-    public DBJdbcTemplateImpl() {
+    public DBJdbcTemplate() {
     }
 
-    public DBJdbcTemplateImpl(DriverManagerDataSource dataSource) {
+    public DBJdbcTemplate(DriverManagerDataSource dataSource) {
         this.dataSource = dataSource;
         this.jdbcTemplate.setDataSource(this.dataSource);
     }
 
-    public DBJdbcTemplateImpl(String driver, String url, String userName, String password) {
+    public DBJdbcTemplate(String driver, String url, String userName, String password) {
         this.dataSource = new DriverManagerDataSource();
         this.dataSource.setDriverClassName(driver);
         this.dataSource.setUrl(url);
@@ -81,29 +81,29 @@ public class DBJdbcTemplateImpl implements DB {
         switch (type) {
             case SELECT:
                 if (!sqlArray[0].equals(SELECT)) {
-                    LOGGER.warn("\n---->查询sql类型不匹配");
+                    log.warn("\n---->查询sql类型不匹配");
                     return false;
                 }
                 return true;
             case UPDATE:
                 if (!sqlArray[0].equals(UPDATE)) {
-                    LOGGER.warn("\n---->更新sql类型不匹配");
+                    log.warn("\n---->更新sql类型不匹配");
                     return false;
                 }
                 return true;
             case COUNT:
                 if (!sqlArray[0].equals(SELECT)) {
-                    LOGGER.warn("\n---->查行数sql类型不匹配");
+                    log.warn("\n---->查行数sql类型不匹配");
                     return false;
                 }
                 if (!sqlArray[1].equals(COUNT)) {
-                    LOGGER.warn("\n---->查行数sql类型未包含count(1)");
+                    log.warn("\n---->查行数sql类型未包含count(1)");
                     return false;
                 }
                 return true;
             case DELETE:
                 if (!sqlArray[0].equals(DELETE)) {
-                    LOGGER.warn("\n---->更新sql类型不匹配");
+                    log.warn("\n---->更新sql类型不匹配");
                     return false;
                 }
                 return true;
@@ -134,92 +134,126 @@ public class DBJdbcTemplateImpl implements DB {
         return defaultSql + ";";
     }
 
+    /**
+     * 会更改数据库连接信息，慎用
+     *
+     * @param dataSource 数据库信息
+     */
     @Deprecated
-    @Override
     public void init(DriverManagerDataSource dataSource) {
         this.dataSource = dataSource;
         this.jdbcTemplate.setDataSource(this.dataSource);
     }
 
-    @Override
+    /**
+     * 更新数据，影响行数不能超过10行
+     *
+     * @param sql 完整的更新sql (规则：update 表名 set 更新字段 where 条件)
+     * @return -
+     */
     public Integer update(String sql) {
         String executeSql = sql.replace(";", "") + ";";
         if (!checkSqlType(executeSql, UPDATE)) {
-            LOGGER.warn("\n---->更新语句的sql格式错误：{}", sql);
+            log.warn("\n---->更新语句的sql格式错误：{}", sql);
             return null;
         }
         int effectRow = count(transformUpdate2Select(executeSql));
         if (effectRow > 10) {
-            LOGGER.warn("\n---->一次更新超过10行，请确认sql条件是否正确");
+            log.warn("\n---->一次更新超过10行，请确认sql条件是否正确");
             return null;
         } else if (effectRow == 0) {
-            LOGGER.warn("\n---->查无此类数据，不需要更新");
+            log.warn("\n---->查无此类数据，不需要更新");
             return null;
         }
-        LOGGER.info("\n====>最终执行sql：" + executeSql);
+        log.info("\n====>最终执行sql：" + executeSql);
         return jdbcTemplate.update(executeSql);
     }
 
-    @Override
+    /**
+     * 更新数据，影响行数不能超过100行
+     *
+     * @param sql 完整的更新sql (规则：update 表名 set 更新字段 where 条件)
+     * @return -
+     */
     public Integer updateNoLimit(String sql) {
         String executeSql = sql.replace(";", "") + ";";
         if (!checkSqlType(executeSql, UPDATE)) {
-            LOGGER.warn("\n---->更新语句的sql格式错误：{}", sql);
+            log.warn("\n---->更新语句的sql格式错误：{}", sql);
             return null;
         }
         int effectRow = count(transformUpdate2Select(executeSql));
         if (effectRow > 100) {
-            LOGGER.warn("\n---->一次更新超过100行，请确认sql条件是否正确");
+            log.warn("\n---->一次更新超过100行，请确认sql条件是否正确");
             return null;
         } else if (effectRow == 0) {
-            LOGGER.warn("\n---->查无此类数据，不需要更新");
+            log.warn("\n---->查无此类数据，不需要更新");
             return null;
         }
-        LOGGER.info("\n====>最终执行sql：" + executeSql);
+        log.info("\n====>最终执行sql：" + executeSql);
         return jdbcTemplate.update(executeSql);
     }
 
-    @Override
+    /**
+     * 查询行数，需使用count(1)
+     *
+     * @param sql 完整的查询sql (规则：select count(1) from 表名 where 条件)
+     * @return 行数
+     */
     public Integer count(String sql) {
         String executeSql = sql.replace(";", "") + ";";
         if (!checkSqlType(sql, COUNT)) {
-            LOGGER.warn("\n---->查总数语句的sql格式错误：{}", sql);
+            log.warn("\n---->查总数语句的sql格式错误：{}", sql);
             return null;
         }
-        LOGGER.info("\n====>最终执行sql：" + executeSql);
+        log.info("\n====>最终执行sql：" + executeSql);
         Map<String, Object> result = jdbcTemplate.queryForMap(executeSql);
         return Integer.valueOf(result.get(COUNT).toString());
     }
 
-    @Override
+    /**
+     * 默认按ID倒序，如果查询到多行数据，则只返回第一行
+     *
+     * @param sql 完整的查询sql (规则：select 需要的列 from 表名 where 条件)
+     * @return key=列名，value=数据
+     */
     public Map<String, Object> select(String sql) {
         if (!checkSqlType(sql, SELECT)) {
-            LOGGER.warn("\n---->查询语句的sql格式错误：{}", sql);
+            log.warn("\n---->查询语句的sql格式错误：{}", sql);
             return null;
         }
         String executeSql = addSelectDefault(sql);
-        LOGGER.info("\n====>最终执行sql：" + executeSql);
+        log.info("\n====>最终执行sql：" + executeSql);
         List<Map<String, Object>> result = jdbcTemplate.queryForList(executeSql);
         return result.size() == 0 ? null : result.get(0);
     }
 
-    @Override
+    /**
+     * 可查询多行，默认上限10行，可通过limit自定义行数
+     *
+     * @param sql 完整的查询sql (规则：select 需要的列 from 表名 where 条件)
+     * @return Map中的Key对应列名、Value对应该列的某一个数据
+     */
     public List<Map<String, Object>> selectMultiRow(String sql) {
         if (!checkSqlType(sql, SELECT)) {
-            LOGGER.warn("\n---->查询语句的sql格式错误：{}", sql);
+            log.warn("\n---->查询语句的sql格式错误：{}", sql);
             return null;
         }
         String executeSql = addSelectDefault(sql);
-        LOGGER.info("\n====>最终执行sql：" + executeSql);
+        log.info("\n====>最终执行sql：" + executeSql);
         return jdbcTemplate.queryForList(executeSql);
     }
 
-    @Override
+    /**
+     * 查询单格数据，sql中只能查询一个字段
+     *
+     * @param sql 完整查询sql (规则：select 单个列名 from 表名 where 条件)
+     * @return -
+     */
     public String selectOneCell(String sql) {
         String[] sqlList = sql.split(" ");
         //查询语句只能查询一列数据
         if (!sqlList[2].equalsIgnoreCase("from") || sqlList[1].equalsIgnoreCase("*") || sqlList[1].contains(",")) {
-            LOGGER.warn("\n---->查询单格数据的sql格式不合规：{}", sql);
+            log.warn("\n---->查询单格数据的sql格式不合规：{}", sql);
             return null;
         }
         Map<String, Object> result = select(sql);
@@ -234,22 +268,27 @@ public class DBJdbcTemplateImpl implements DB {
         }
     }
 
-    @Override
+    /**
+     * 删除数据，影响行数不能超过5条
+     *
+     * @param sql 完整的删除sql (规则：delete from 表名 where 条件)
+     * @return -
+     */
     public Integer delete(String sql) {
         String executeSql = sql.replace(";", "") + ";";
         if (!checkSqlType(executeSql, DELETE)) {
-            LOGGER.warn("\n---->删除语句的sql格式错误：{}", sql);
+            log.warn("\n---->删除语句的sql格式错误：{}", sql);
             return null;
         }
         int effectRow = count(transformDelete2Select(executeSql));
         if (effectRow > 5) {
-            LOGGER.warn("\n---->一次删除超过5行，请确认sql条件是否正确");
+            log.warn("\n---->一次删除超过5行，请确认sql条件是否正确");
             return null;
         } else if (effectRow == 0) {
-            LOGGER.warn("\n---->查无此类数据，不需要更新");
+            log.warn("\n---->查无此类数据，不需要更新");
             return null;
         }
-        LOGGER.info("\n====>最终执行sql：" + executeSql);
+        log.info("\n====>最终执行sql：" + executeSql);
         return jdbcTemplate.update(executeSql);
     }
 }

@@ -1,11 +1,9 @@
-package util.impl;
-
-import util.FileUTIL;
+package util;
 
 import java.io.File;
 import java.io.IOException;
 
-public class FileUTILImpl implements FileUTIL {
+public class FileUtil {
     private File file = null;
 
     /**
@@ -14,7 +12,6 @@ public class FileUTILImpl implements FileUTIL {
      * @param filePath - 包含完整路径和文件名
      * @return 创建成功返回true，否则返回false
      */
-    @Override
     public boolean createFile(String filePath) {
         int nameIndex = filePath.lastIndexOf("\\") + 1;
         String directory = filePath.substring(0, nameIndex);
@@ -45,7 +42,6 @@ public class FileUTILImpl implements FileUTIL {
      * @param filePath - 包含完整路径和文件名
      * @return 创建成功返回true，否则返回false
      */
-    @Override
     public boolean deleteFile(String filePath) {
         File file = new File(filePath);
         if (file.exists()) {

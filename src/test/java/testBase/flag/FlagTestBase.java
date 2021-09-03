@@ -6,6 +6,6 @@ package testBase.flag;
  */
 public class FlagTestBase {
 
-    public final static FlagFullAPI auto = new FlagFullAPI();
+    public final static FlagCommonProxy auto = new FlagCommonProxy();
 
 }

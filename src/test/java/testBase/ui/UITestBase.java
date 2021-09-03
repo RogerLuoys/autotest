@@ -11,7 +11,7 @@ import java.util.Date;
  * 账号userId： 416160586979148
  */
 public class UITestBase {
-    public final static UIFullAPI auto = new UIFullAPI();
+    public final static UICommonProxy auto = new UICommonProxy();
 
     @BeforeClass(description = "启动浏览器并用自动化专用账号登录")
     public void supperBeforeClass() {

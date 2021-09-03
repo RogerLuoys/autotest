@@ -1,13 +1,12 @@
 package util.impl;
 
 import com.alibaba.fastjson.JSON;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import util.JsonUTIL;
 
-public class JsonUTILImpl implements JsonUTIL {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(JsonUTILImpl.class);
+@Slf4j
+public class JsonUtil {
 
     /**
      * 判断json字符串的格式是否正常
@@ -17,16 +16,16 @@ public class JsonUTILImpl implements JsonUTIL {
      */
     private Boolean checkFormat(String json) {
         if (!json.startsWith("{\"") || !json.endsWith("}")) {
-            LOGGER.warn("JSON字符串格式不对");
+            log.warn("JSON字符串格式不对");
             return false;
         } else if (countByString(json, "\"") % 2 != 0) {
-            LOGGER.warn("JSON字符串格式不对");
+            log.warn("JSON字符串格式不对");
             return false;
         } else if (countByString(json, "{") != countByString(json, "}")) {
-            LOGGER.warn("JSON字符串格式不对");
+            log.warn("JSON字符串格式不对");
             return false;
         } else if (countByString(json, "[") != countByString(json, "]")) {
-            LOGGER.warn("JSON字符串格式不对");
+            log.warn("JSON字符串格式不对");
             return false;
         } else {
             return true;
@@ -87,13 +86,13 @@ public class JsonUTILImpl implements JsonUTIL {
 //            startIndex = json.indexOf(jsonName, startIndex) + jsonName.length();
 //            leftJSON = json.substring(0, startIndex);
 //            if (countByString(leftJSON, "{") - 1 != countByString(leftJSON, "}")) {
-//                LOGGER.warn("非根节点，继续查找");
+//                log.warn("非根节点，继续查找");
 //                continue;
 //            } else if (countByString(leftJSON, "[") != countByString(leftJSON, "]")) {
-//                LOGGER.warn("非根节点，继续查找");
+//                log.warn("非根节点，继续查找");
 //                continue;
 //            } else if (startIndex > json.length()) {
-//                LOGGER.warn("无此根节点");
+//                log.warn("无此根节点");
 //                continue;
 //            } else {
 //                return startIndex;
@@ -116,13 +115,13 @@ public class JsonUTILImpl implements JsonUTIL {
     private int getNodeStart(String json, String jsonName, int startIndex) {
         int nextStartIndex = json.indexOf(jsonName, startIndex) + jsonName.length();
         if (nextStartIndex == jsonName.length() - 1 || nextStartIndex >= json.length()) {
-            LOGGER.warn("无此根节点");
+            log.warn("无此根节点");
             return -1;
         }
         String leftJSON = json.substring(0, nextStartIndex);
         if (countByString(leftJSON, "{") - 1 == countByString(leftJSON, "}")
                 && countByString(leftJSON, "[") == countByString(leftJSON, "]")) {
-//            LOGGER.info("节点数据起始位置查询成功");
+//            log.info("节点数据起始位置查询成功");
             return nextStartIndex;
         } else {
             return getNodeStart(json, jsonName, nextStartIndex);
@@ -172,7 +171,7 @@ public class JsonUTILImpl implements JsonUTIL {
         //获取最近一个}或]的位置
         int nextEndIndex = json.indexOf(typeRight, endIndex) + 1;
         if (nextEndIndex >= json.length()) {
-            LOGGER.warn("节点值不规范");
+            log.warn("节点值不规范");
             return -1;
         }  else if (countByString(json.substring(startIndex, nextEndIndex), typeLeft)
                 == countByString(json.substring(startIndex, nextEndIndex), typeRight)) {
@@ -220,26 +219,46 @@ public class JsonUTILImpl implements JsonUTIL {
 //        return null;
 //    }
 
-    @Override
+    /**
+     * 把POJO对象转换成JSON字符串
+     *
+     * @param object POJO对象
+     * @return JSON格式的字符串
+     */
     public String toString(Object object) {
         String json = JSON.toJSONString(object);
-        LOGGER.info("\n====>转换后的json字符串为：{}", json);
+        log.info("\n====>转换后的json字符串为：{}", json);
         return json;
     }
 
-    @Override
+    /**
+     * 根据JSON字符串中的节点名，取出对应的值；如果同名节点有多个，则只取第一个
+     * 如JSON中包含数组或对象，也纳入取值
+     *
+     * @param json 完整的json字符串
+     * @param name json字符串中的节点名
+     * @return 名称对应的值
+     */
     public String getData(String json, String name) {
         return getData(json, name, 1);
     }
 
-    @Override
+    /**
+     * 根据JSON字符串中的节点名，取出对应的值；如果同名节点有多个，则只取第 index 个
+     * 如JSON中包含数组或对象，也纳入取值
+     *
+     * @param json  完整的json字符串
+     * @param name  json字符串中的节点名
+     * @param index 从左往右同名节点的序号，从1开始
+     * @return 名称对应的值
+     */
     public String getData(String json, String name, int index) {
         String jsonName = "\"" + name + "\":";
         if (!checkFormat(json)) {
-            LOGGER.warn("格式不对");
+            log.warn("格式不对");
             return null;
         } else if (countByString(json, jsonName) < index) {
-            LOGGER.warn("节点不存在，或超出数量");
+            log.warn("节点不存在，或超出数量");
             return null;
         }
         int startIndex = 0;
@@ -254,18 +273,24 @@ public class JsonUTILImpl implements JsonUTIL {
         if (jsonResult.startsWith("\"")) {
             jsonResult = jsonResult.substring(1, jsonResult.length() - 1);
         }
-        LOGGER.info("\n====>获取到的json节点值为：{}", jsonResult);
+        log.info("\n====>获取到的json节点值为：{}", jsonResult);
         return jsonResult;
     }
 
-    @Override
+    /**
+     * 根据JSON字符串中的节点名，取出对应的值
+     *
+     * @param json 完整的json字符串
+     * @param name json字符串中的节点名
+     * @return 名称对应的值
+     */
     public String getBaseData(String json, String name) {
         String jsonName = "\"" + name + "\":";
         if (!checkFormat(json)) {
-            LOGGER.warn("格式不对");
+            log.warn("格式不对");
             return null;
         } else if (countByString(json, jsonName) < 1) {
-            LOGGER.warn("节点不存在");
+            log.warn("节点不存在");
             return null;
         }
         int startIndex = getNodeStart(json, jsonName);
@@ -277,7 +302,8 @@ public class JsonUTILImpl implements JsonUTIL {
         if (jsonResult.startsWith("\"")) {
             jsonResult = jsonResult.substring(1, jsonResult.length() - 1);
         }
-        LOGGER.info("\n====>获取到的json节点值为：{}", jsonResult);
+        log.info("\n====>获取到的json节点值为：{}", jsonResult);
         return jsonResult;
     }
 }
+

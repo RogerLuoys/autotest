@@ -8,7 +8,7 @@ public class UserCenterTestBase {
     //本地
 //    public static final String URL = "dubbo://10.201.10.183:20881/";
 
-    public static final UserCenterFullAPI auto = new UserCenterFullAPI();
+    public static final UserCenterCommonProxy auto = new UserCenterCommonProxy();
 
 
     @BeforeMethod

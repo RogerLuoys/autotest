@@ -5,14 +5,13 @@ import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.CellType;
-import util.ExcelUTIL;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
 
-public class ExcelUTILHSSFImpl implements ExcelUTIL {
+public class ExcelUtil {
 
     private InputStream inputStream;
     private HSSFWorkbook workbook;
@@ -94,7 +93,12 @@ public class ExcelUTILHSSFImpl implements ExcelUTIL {
         return max;
     }
 
-    @Override
+    /**
+     * 获取excel工作表的名字
+     *
+     * @param filePath 带文件名和文件后缀的完整路径
+     * @return 返回所有名字列表
+     */
     public ArrayList<String> getWorksheetNames(String filePath) {
         initExcel(filePath);
         ArrayList<String> sheets = new ArrayList<String>();
@@ -107,7 +111,13 @@ public class ExcelUTILHSSFImpl implements ExcelUTIL {
         return sheets;
     }
 
-    @Override
+    /**
+     * 将二维列表转换成excel表格数据，并导出文件至 filePath
+     *
+     * @param value     二维list，value.get(0)表示第一行数据
+     * @param filePath  带文件名和文件后缀的完整路径
+     * @param sheetName 工作表名
+     */
     public void exportValueToExcel(ArrayList<ArrayList<String>> value, String filePath, String sheetName) {
         HSSFWorkbook wb = new HSSFWorkbook();
         HSSFSheet sheet = wb.createSheet(sheetName);
@@ -128,7 +138,15 @@ public class ExcelUTILHSSFImpl implements ExcelUTIL {
         }
     }
 
-    @Override
+    /**
+     * 获取 从指定开始行和开始列起，到最后一行最后一列 的数据
+     * 默认第一个工作表
+     *
+     * @param filePath    带文件名和文件后缀的完整路径
+     * @param startLine   开始行
+     * @param startColumn 开始列
+     * @return 二维列表数据
+     */
     public ArrayList<ArrayList<String>> getBlockContent(String filePath, int startLine, int startColumn) {
         initExcel(filePath);
         ArrayList<ArrayList<String>> componentsBlock = new ArrayList<ArrayList<String>>();
@@ -160,7 +178,14 @@ public class ExcelUTILHSSFImpl implements ExcelUTIL {
         return componentsBlock;
     }
 
-    @Override
+    /**
+     * 获取指定列的一列数据
+     * 默认第一个工作表
+     *
+     * @param filePath 带文件名和文件后缀的完整路径
+     * @param column   指定第几列，从1开始
+     * @return -
+     */
     public ArrayList<String> getColumnContent(String filePath, int column) {
         initExcel(filePath);
         ArrayList<String> componentsBlock = new ArrayList<String>();
@@ -184,8 +209,14 @@ public class ExcelUTILHSSFImpl implements ExcelUTIL {
         return componentsBlock;
     }
 
-    // Get excel content by index row
-    @Override
+    /**
+     * 获取指定行的一行数据
+     * 默认第一个工作表
+     *
+     * @param filePath  带文件名和文件后缀的完整路径
+     * @param rowNumber 指定第几行，从1开始
+     * @return -
+     */
     public ArrayList<String> getRowContent(String filePath, int rowNumber) {
         initExcel(filePath);
         ArrayList<String> componentsBlock = new ArrayList<String>();
@@ -208,8 +239,15 @@ public class ExcelUTILHSSFImpl implements ExcelUTIL {
         return componentsBlock;
     }
 
-    // Get the format style of one cell
-    @Override
+    /**
+     * 获取指定单元格的数据
+     * 默认第一个工作表
+     *
+     * @param filePath 带文件名和文件后缀的完整路径
+     * @param rowIndex 指定行，从1开始
+     * @param colIndex 指定列，从1开始
+     * @return -
+     */
     public String getCellContent(String filePath, int rowIndex, int colIndex) {
         initExcel(filePath);
         String cellContent;
@@ -222,3 +260,4 @@ public class ExcelUTILHSSFImpl implements ExcelUTIL {
     }
 
 }
+

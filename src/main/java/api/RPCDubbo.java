@@ -1,20 +1,17 @@
-package api.impl;
+package api;
 
-import api.RPC;
 import com.alibaba.fastjson.JSON;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.dubbo.config.ApplicationConfig;
 import org.apache.dubbo.config.ReferenceConfig;
-import org.apache.dubbo.config.RegistryConfig;
-import org.apache.dubbo.config.bootstrap.DubboBootstrap;
-import org.apache.dubbo.config.utils.ReferenceConfigCache;
 import org.apache.dubbo.rpc.RpcContext;
 import org.apache.dubbo.rpc.service.GenericService;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
-public class RPCDubboImpl implements RPC {
+@Slf4j
+public class RPCDubbo {
 
     private static final String DEFAULT_NAME = "AutomationTester";
 
@@ -25,7 +22,6 @@ public class RPCDubboImpl implements RPC {
      * @param InterfacePath 服务对应的接口路径
      * @return 可直接进行RPC调用的对象，需强制类型转换成对应的接口类型
      */
-    @Override
     public Object getService(String url, String InterfacePath) {
         // 此实例很重，封装了与注册中心的连接以及与提供者的连接，请自行缓存，否则可能造成内存和连接泄漏
         ReferenceConfig<?> reference = new ReferenceConfig();
@@ -46,7 +42,6 @@ public class RPCDubboImpl implements RPC {
      * @param <T>   -
      * @return 可直接进行RPC调用的对象，于clazz对应的接口类型一致
      */
-    @Override
     public <T> T getService(String url, Class<T> clazz) {
         ReferenceConfig<T> reference = new ReferenceConfig();
         reference.setUrl(url);
@@ -62,7 +57,6 @@ public class RPCDubboImpl implements RPC {
      * @param interfaceName 服务接口对应的名称(如：UserService.class.getName())
      * @return 泛化接口
      */
-    @Override
     public GenericService getGenericService(String url, String interfaceName) {
         ReferenceConfig<GenericService> reference = new ReferenceConfig();
         reference.setUrl(url);
@@ -82,7 +76,6 @@ public class RPCDubboImpl implements RPC {
      * @param paramList     目标方法入参列表(如：new Object[]{"入参一"},...)
      * @return 调用结果的json字符串
      */
-    @Override
     public String invoke(String url, String interfaceName, String methodName, String[] paramTypeList, Object[] paramList) {
         ReferenceConfig<GenericService> reference = new ReferenceConfig();
         reference.setUrl(url);
@@ -151,7 +144,6 @@ public class RPCDubboImpl implements RPC {
      *
      * @param second 等待的时间-单位秒
      */
-    @Override
     public void forceWait(int second) {
         try {
             Thread.sleep((long) second * 1000);

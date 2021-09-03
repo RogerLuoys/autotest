@@ -1,5 +1,6 @@
-package ui.impl;
+package ui;
 
+import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -7,33 +8,40 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import ui.UI;
 
 import java.util.List;
 
-public class UISeleniumImpl implements UI {
-    private static final Logger LOGGER = LoggerFactory.getLogger(UISeleniumImpl.class);
+@Slf4j
+public class UISelenium {
 
     private final Long DEFAULT_WAIT_TIME = 30L;
     private WebDriver driver = null;
     private int forceTimeOut = 1;
 
-    @Override
+    /**
+     * 初始化
+     *
+     * @param url 被测网站主页或登录页
+     */
     public void init(String url) {
         this.driver = new ChromeDriver();
         this.driver.get(url);
         this.driver.manage().window().maximize();
     }
 
-    @Override
+    /**
+     * 刷新页面
+     *
+     * @param url 被测网站主页或登录页
+     */
     public void refresh(String url) {
         this.driver.get(url);
         forceWait(3);
     }
 
-    @Override
+    /**
+     * 关闭浏览器且关闭资源
+     */
     public void quit() {
         if (driver == null) {
             return;
@@ -42,39 +50,66 @@ public class UISeleniumImpl implements UI {
         driver.quit();
     }
 
-    @Override
+    /**
+     * 进程睡眠，强制等待
+     *
+     * @param second 等待的时间-单位秒
+     */
     public void forceWait(int second) {
         try {
             Thread.sleep((long) second * 1000);
         } catch (InterruptedException e) {
-            LOGGER.error("\n---->线程睡眠异常");
+            log.error("\n---->线程睡眠异常");
 //            e.printStackTrace();
         }
     }
 
-    @Override
+    /**
+     * 设置显式等待的统一时间-默认30s
+     *
+     * @param second 单位秒
+     */
     public void setTimeout(int second) {
         this.forceTimeOut = second;
     }
 
-    @Override
+    /**
+     * 获取自动化元素
+     *
+     * @param locator 自选元素定位方式
+     * @return 返回一个元素
+     */
     public WebElement getElement(By locator) {
         forceWait(forceTimeOut);
         return driver.findElement(locator);
     }
 
-    @Override
+    /**
+     * 获取同类别的自动化元素列表
+     *
+     * @param locator 自选元素定位方式
+     * @return 所有符合条件的元素
+     */
     public List<WebElement> getElements(By locator) {
         forceWait(forceTimeOut);
         return driver.findElements(locator);
     }
 
-    @Override
+    /**
+     * 获取同类别的自动化元素列表
+     *
+     * @param xpath 元素的xpath
+     * @return 所有符合条件的元素
+     */
     public List<WebElement> getElements(String xpath) {
         return getElements(By.xpath(xpath));
     }
 
-    @Override
+    /**
+     * 鼠标点击指定元素
+     *
+     * @param locator 自选元素定位方式
+     */
     public void click(By locator) {
         forceWait(forceTimeOut);
         WebElement webElement = driver.findElement(locator);
@@ -85,7 +120,11 @@ public class UISeleniumImpl implements UI {
         actions.perform();
     }
 
-    @Override
+    /**
+     * 鼠标点击指定元素
+     *
+     * @param element 元素对象
+     */
     public void click(WebElement element) {
         forceWait(forceTimeOut);
         WebDriverWait webDriverWait = new WebDriverWait(driver, DEFAULT_WAIT_TIME);
@@ -95,12 +134,21 @@ public class UISeleniumImpl implements UI {
         actions.perform();
     }
 
-    @Override
+    /**
+     * 鼠标点击指定元素
+     *
+     * @param xpath 元素的xpath
+     */
     public void click(String xpath) {
         click(By.xpath(xpath));
     }
 
-    @Override
+    /**
+     * 往元素中输入字符
+     *
+     * @param locator 自选元素定位方式
+     * @param key     输入的字符串
+     */
     public void sendKey(By locator, CharSequence key) {
         forceWait(forceTimeOut);
         WebElement webElement = driver.findElement(locator);
@@ -111,7 +159,12 @@ public class UISeleniumImpl implements UI {
         actions.perform();
     }
 
-    @Override
+    /**
+     * 往指定元素中输入字符
+     *
+     * @param element 元素对象
+     * @param key     输入的字符串
+     */
     public void sendKey(WebElement element, CharSequence key) {
         forceWait(forceTimeOut);
         WebDriverWait webDriverWait = new WebDriverWait(driver, DEFAULT_WAIT_TIME);
@@ -121,12 +174,22 @@ public class UISeleniumImpl implements UI {
         actions.perform();
     }
 
-    @Override
+    /**
+     * 往指定元素中输入字符
+     *
+     * @param xpath 元素的xpath
+     * @param key   输入的字符串
+     */
     public void sendKey(String xpath, CharSequence key) {
         sendKey(By.xpath(xpath), key);
     }
 
-    @Override
+    /**
+     * 先清除输入框的内容，再往指定元素中输入字符
+     *
+     * @param locator 自选元素定位方式
+     * @param key     输入的字符串
+     */
     public void sendKeyWithClear(By locator, CharSequence key) {
         forceWait(forceTimeOut);
         WebElement webElement = driver.findElement(locator);
@@ -138,7 +201,12 @@ public class UISeleniumImpl implements UI {
         actions.perform();
     }
 
-    @Override
+    /**
+     * 先清除输入框的内容，再往指定元素中输入字符
+     *
+     * @param element 元素对象
+     * @param key     输入的字符串
+     */
     public void sendKeyWithClear(WebElement element, CharSequence key) {
         forceWait(forceTimeOut);
         WebDriverWait webDriverWait = new WebDriverWait(driver, DEFAULT_WAIT_TIME);
@@ -149,13 +217,22 @@ public class UISeleniumImpl implements UI {
         actions.perform();
     }
 
-    @Override
+    /**
+     * 先清除输入框的内容，再往指定元素中输入字符
+     *
+     * @param xpath 元素的xpath
+     * @param key   输入的字符串
+     */
     public void sendKeyWithClear(String xpath, CharSequence key) {
         sendKeyWithClear(By.xpath(xpath), key);
 
     }
 
-    @Override
+    /**
+     * 鼠标移动到指定元素上
+     *
+     * @param locator 自选元素定位方式
+     */
     public void moveToElement(By locator) {
         forceWait(forceTimeOut);
         WebElement webElement = driver.findElement(locator);
@@ -166,12 +243,19 @@ public class UISeleniumImpl implements UI {
         actions.perform();
     }
 
-    @Override
+    /**
+     * 鼠标移动到指定元素上
+     *
+     * @param xpath 元素的xpath
+     */
     public void moveToElement(String xpath) {
         moveToElement(By.xpath(xpath));
     }
 
-    @Override
+    /**
+     * 先移动到控件位置，再点击
+     * @param locator 元素位置
+     */
     public void moveAndClick(By locator) {
         forceWait(forceTimeOut);
         WebElement webElement = driver.findElement(locator);
@@ -182,18 +266,32 @@ public class UISeleniumImpl implements UI {
         actions.perform();
     }
 
-    @Override
+    /**
+     * 先鼠标移动到指定元素上，然后鼠标点击
+     *
+     * @param xpath 元素的xpath
+     */
     public void moveAndClick(String xpath) {
         moveAndClick(By.xpath(xpath));
     }
 
-    @Override
+    /**
+     * 判断指定元素是否存在，如果找到多个元素，也返回true
+     *
+     * @param locator 自选元素定位方式
+     * @return 存在-true，不存在-false
+     */
     public Boolean isElementExist(By locator) {
         List<WebElement> webElementList = getElements(locator);
         return webElementList.size() > 0;
     }
 
-    @Override
+    /**
+     * 判断指定元素是否存在，如果找到多个元素，也返回true
+     *
+     * @param xpath 元素的xpath
+     * @return 存在-true，不存在-false
+     */
     public Boolean isElementExist(String xpath) {
         return isElementExist(By.xpath(xpath));
     }

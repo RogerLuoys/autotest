@@ -1,13 +1,21 @@
 package util.impl;
 
-import util.TimeUTIL;
-
 import java.util.Calendar;
 import java.util.Date;
 
-public class TimeUTILImpl implements TimeUTIL {
+public class TimeUtil {
 
-    @Override
+    /**
+     * 设置时间
+     *
+     * @param year  年
+     * @param month 月（1-12）
+     * @param day 日（1-31）
+     * @param hour 时（0-23）
+     * @param minute 分（0-59）
+     * @param second 秒（0-59）
+     * @return -
+     */
     public Date setDate(int year, int month, int day, int hour, int minute, int second) {
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.YEAR, year);
@@ -20,17 +28,38 @@ public class TimeUTILImpl implements TimeUTIL {
         return calendar.getTime();
     }
 
-    @Override
+    /**
+     * 设置时间，时分秒都默认为1
+     *
+     * @param year  年
+     * @param month 月（1-12）
+     * @param day 日（1-31）
+     * @return -
+     */
     public Date setDate(int year, int month, int day) {
         return setDate(year, month, day, 1, 1, 1);
     }
 
-    @Override
+    /**
+     * 设置时间，时分秒都默认为0\0\30
+     *
+     * @param year  年
+     * @param month 月（1-12）
+     * @param day 日（1-31）
+     * @return -
+     */
     public Date setDateStart(int year, int month, int day) {
         return setDate(year, month, day, 0, 0, 30);
     }
 
-    @Override
+    /**
+     * 设置时间，时分秒都默认为23/59/30
+     *
+     * @param year  年
+     * @param month 月（1-12）
+     * @param day 日（1-31）
+     * @return -
+     */
     public Date setDateEnd(int year, int month, int day) {
         return setDate(year, month, day, 23, 59, 30);
     }
