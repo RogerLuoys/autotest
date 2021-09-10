@@ -63,4 +63,28 @@ public class TimeUtil {
     public Date setDateEnd(int year, int month, int day) {
         return setDate(year, month, day, 23, 59, 30);
     }
+
+    /**
+     * 根据日期取得星期几
+     * @param date
+     * @return
+     */
+    public int getWeek(Date date){
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        return cal.get(Calendar.DAY_OF_WEEK);
+    }
+    public static Date getSundayOfThisWeek() {
+        Calendar c = Calendar.getInstance();
+        int day_of_week = c.get(Calendar.DAY_OF_WEEK) - 1;
+        if (day_of_week == 0)
+            day_of_week = 7;
+        c.add(Calendar.DATE, -day_of_week + 7);
+        return c.getTime();
+    }
+//    public Date getMonday(Date date) {
+//        Calendar cal = Calendar.getInstance();
+//        cal.setTime(date);
+//        cal.getFirstDayOfWeek();
+//    }
 }
