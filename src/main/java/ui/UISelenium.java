@@ -1,9 +1,7 @@
 package ui;
 
 import lombok.extern.slf4j.Slf4j;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -295,4 +293,37 @@ public class UISelenium {
     public Boolean isElementExist(String xpath) {
         return isElementExist(By.xpath(xpath));
     }
+
+
+    public void execJs(String jsExecString) {
+        ((JavascriptExecutor)this.driver).executeScript(jsExecString, new Object[0]);
+    }
+
+    public void execJs(WebElement webElement, String jsExecString) {
+        ((JavascriptExecutor)this.driver).executeScript(jsExecString, new Object[]{webElement});
+    }
+
+
+    public void deleteCookies() {
+        this.driver.manage().deleteAllCookies();
+    }
+
+    public void addCookie(Cookie cookie) {
+        this.driver.manage().addCookie(cookie);
+    }
+
+    public Cookie getCookieNamed(String cookieName) {
+        return this.driver.manage().getCookieNamed(cookieName);
+    }
+
+    public void refresh() {
+        this.driver.navigate().refresh();
+    }
+
+    public void back() {
+        this.driver.navigate().back();
+    }
+
+
+
 }
