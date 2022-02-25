@@ -4,7 +4,7 @@ import org.testng.Assert;
 import org.testng.Reporter;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-import testBase.ui.UITestBase;
+import testCaseUI.UITestBase;
 
 
 public class TaskDailyNewTest extends UITestBase {

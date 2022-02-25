@@ -1,10 +1,8 @@
-package testBase.ui;
+package testCaseUI;
 
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
-
-import java.util.Date;
 
 /**
  * 专用账号/密码：UITester/123456

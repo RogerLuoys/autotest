@@ -3,7 +3,7 @@ package testCaseUI.point;
 import org.testng.Assert;
 import org.testng.Reporter;
 import org.testng.annotations.Test;
-import testBase.ui.UITestBase;
+import testCaseUI.UITestBase;
 
 public class PointViewTest extends UITestBase {
 
