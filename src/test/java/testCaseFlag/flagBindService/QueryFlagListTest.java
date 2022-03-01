@@ -4,7 +4,7 @@ import com.luoys.upgrade.flag.api.bo.FlagQueryBO;
 import org.testng.Assert;
 import org.testng.Reporter;
 import org.testng.annotations.Test;
-import testBase.flag.FlagTestBase;
+import testCaseFlag.FlagTestBase;
 
 public class QueryFlagListTest extends FlagTestBase {
 

@@ -1,4 +1,4 @@
-package testBase.userCenter;
+package testCaseUserCenter;
 
 import org.testng.annotations.BeforeMethod;
 

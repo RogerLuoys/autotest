@@ -4,10 +4,9 @@ import com.luoys.upgrade.flag.api.bo.FlagBO;
 import com.luoys.upgrade.flag.api.enums.FlagStatusEnum;
 import org.testng.Assert;
 import org.testng.Reporter;
-import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-import testBase.flag.FlagTestBase;
+import testCaseFlag.FlagTestBase;
 
 public class NewFlagTest extends FlagTestBase {
 

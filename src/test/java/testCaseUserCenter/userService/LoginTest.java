@@ -4,7 +4,7 @@ import com.luoys.upgrade.uc.share.service.UserService;
 import org.testng.Assert;
 import org.testng.Reporter;
 import org.testng.annotations.Test;
-import testBase.userCenter.UserCenterTestBase;
+import testCaseUserCenter.UserCenterTestBase;
 
 public class LoginTest extends UserCenterTestBase {
 

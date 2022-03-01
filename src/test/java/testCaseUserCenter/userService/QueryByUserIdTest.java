@@ -1,15 +1,11 @@
 package testCaseUserCenter.userService;
 
-import com.alibaba.fastjson.JSON;
 import com.luoys.upgrade.uc.share.dto.UserDTO;
 import com.luoys.upgrade.uc.share.service.UserService;
 import org.testng.Assert;
 import org.testng.Reporter;
 import org.testng.annotations.Test;
-import testBase.userCenter.UserCenterTestBase;
-
-import java.util.ArrayList;
-import java.util.List;
+import testCaseUserCenter.UserCenterTestBase;
 
 
 public class QueryByUserIdTest extends UserCenterTestBase {

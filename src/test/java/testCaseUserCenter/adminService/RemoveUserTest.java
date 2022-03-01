@@ -5,7 +5,7 @@ import org.testng.Assert;
 import org.testng.Reporter;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-import testBase.userCenter.UserCenterTestBase;
+import testCaseUserCenter.UserCenterTestBase;
 
 
 public class RemoveUserTest extends UserCenterTestBase {

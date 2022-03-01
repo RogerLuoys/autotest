@@ -1,4 +1,4 @@
-package testBase.userCenter;
+package testCaseUserCenter;
 
 public class UserCenterConfig {
     //云服务器

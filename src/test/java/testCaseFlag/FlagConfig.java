@@ -1,4 +1,4 @@
-package testBase.flag;
+package testCaseFlag;
 
 public class FlagConfig {
 

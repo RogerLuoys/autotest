@@ -3,7 +3,7 @@ package testCaseFlag.pointService;
 import org.testng.Assert;
 import org.testng.Reporter;
 import org.testng.annotations.Test;
-import testBase.flag.FlagTestBase;
+import testCaseFlag.FlagTestBase;
 
 public class QueryPointSummaryTest extends FlagTestBase {
 
