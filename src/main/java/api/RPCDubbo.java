@@ -10,6 +10,7 @@ import org.apache.dubbo.rpc.service.GenericService;
 import java.util.HashMap;
 import java.util.Map;
 
+@Deprecated
 @Slf4j
 public class RPCDubbo {
 

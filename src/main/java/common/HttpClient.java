@@ -215,6 +215,23 @@ public class HttpClient {
     }
 
     /**
+     * 判断字符串是否为空(org.apache.dubbo.common.utils的方法)
+     * @param cs 目标字符串
+     * @return 字符串为null || 长度为0 || 只包含空格，则返回true
+     */
+    public static boolean isBlank(CharSequence cs) {
+        int strLen;
+        if (cs != null && (strLen = cs.length()) != 0) {
+            for(int i = 0; i < strLen; ++i) {
+                if (!Character.isWhitespace(cs.charAt(i))) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    /**
      * 把Map变量转换成http的请求头参数
      *
      * @param url    完整的地址
@@ -232,8 +249,11 @@ public class HttpClient {
     }
 
     private Map<String, String> transformJson2Map(String json) {
-        JSONObject jsonObject = JSON.parseObject(json);
         Map<String, String> map = new HashMap<>();
+        if (isBlank(json)) {
+            return map;
+        }
+        JSONObject jsonObject = JSON.parseObject(json);
         for (String key : jsonObject.keySet()) {
             map.put(key, jsonObject.get(key).toString());
         }
@@ -316,6 +336,12 @@ public class HttpClient {
         return httpPost(url, body, header);
     }
 
+    public String post(String url, String body, String header) {
+        Map<String, String> headerMap = transformJson2Map(header);
+        headerMap.put("Connection", "keep-alive");
+        return httpPost(url, body, headerMap);
+    }
+
     /**
      * 执行http put请求
      *
@@ -341,44 +367,38 @@ public class HttpClient {
         return httpPut(url, body, header);
     }
 
+    /**
+     * 执行http put请求
+     *
+     * @param url  完整的url地址-http://ip:port/path
+     * @param body 接口对应的POJO对象或Map对象，传入body中，application/json格式
+     * @param header 请求头，json字符串
+     * @return 返回json格式
+     */
+    public String put(String url, String body, String header) {
+        Map<String, String> headerMap = transformJson2Map(header);
+        headerMap.put("Connection", "keep-alive");
+        return httpPut(url, body, headerMap);
+    }
+
     public String execute(String httpDTOJson) {
-        HttpDTO httpDTO = JSON.parseObject(httpDTOJson, HttpDTO.class);
-        // todo --
+        JSONObject httpDTO = JSON.parseObject(httpDTOJson);
+        String type = httpDTO.getString("type");
+        String url = httpDTO.getString("url");
+        String header = httpDTO.getString("header");
+        String body = httpDTO.getString("body");
+        Map<String, String> headerMap = transformJson2Map(header);
+        headerMap.put("Connection", "keep-alive");
+        if (type.equalsIgnoreCase("get")) {
+            return httpGet(url, headerMap);
+        } else if (type.equalsIgnoreCase("delete")) {
+            return httpDelete(url, headerMap);
+        } else if (type.equalsIgnoreCase("post")) {
+            return httpPost(url, body, headerMap);
+        } else if (type.equalsIgnoreCase("put")) {
+            return httpPost(url, body, headerMap);
+        }
         return null;
     }
 
-    /**
-     * 执行http put请求
-     *
-     * @param url    完整的url地址-http://ip:port/path
-     * @param data   接口对应的POJO对象或Map对象，传入body中，application/json格式
-     * @param header 请求头
-     * @return 返回json格式
-     */
-    public String put(String url, Object data, Map<String, String> header) {
-        String jsonData = JSON.toJSONString(data);
-        if (header == null) {
-            header = new HashMap<>();
-            header.put("Connection", "keep-alive");
-        }
-        return httpPut(url, jsonData, header);
-    }
-
-    /**
-     * 执行http put请求
-     *
-     * @param url    完整的url地址-http://ip:port/path
-     * @param data   接口对应的POJO对象或Map对象，传入body中，application/json格式
-     * @param header 请求头
-     * @param params url参数，key必须是字符串，value只能是基本数据类型的包装类型
-     * @return -
-     */
-    public String put(String url, Object data, Map<String, String> header, Map<String, ?> params) {
-        String jsonData = JSON.toJSONString(data);
-        if (header == null) {
-            header = new HashMap<>();
-            header.put("Connection", "keep-alive");
-        }
-        return httpPut(transformMap2URL(url, params), jsonData, header);
-    }
 }

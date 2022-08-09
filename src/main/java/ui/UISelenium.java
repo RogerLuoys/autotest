@@ -9,6 +9,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.List;
 
+@Deprecated
 @Slf4j
 public class UISelenium {
 

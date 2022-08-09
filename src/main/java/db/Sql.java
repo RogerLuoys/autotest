@@ -6,6 +6,7 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
 /**
  * 试一下
  */
+@Deprecated
 public class Sql {
 
     private DriverManagerDataSource dataSource = null;

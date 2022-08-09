@@ -20,6 +20,7 @@ import java.util.*;
 //2 创建Http请求
 //3 设置
 //4 发送请求
+@Deprecated
 @Slf4j
 public class HTTPHttpClient {
 

@@ -3,6 +3,7 @@ package util;
 import java.util.Calendar;
 import java.util.Date;
 
+@Deprecated
 public class TimeUtil {
 
     /**
