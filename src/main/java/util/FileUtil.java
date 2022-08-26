@@ -3,6 +3,7 @@ package util;
 import java.io.File;
 import java.io.IOException;
 
+@Deprecated
 public class FileUtil {
     private File file = null;
 
