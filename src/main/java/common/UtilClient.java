@@ -130,6 +130,5 @@ public class UtilClient {
         } else {
             return false;
         }
-
     }
 }

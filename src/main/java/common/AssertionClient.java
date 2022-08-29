@@ -11,9 +11,9 @@ public class AssertionClient {
 
     private WebDriver driver = null;
 
-    AssertionClient() {}
+    public AssertionClient() {}
 
-    AssertionClient(WebDriver driver) {
+    public AssertionClient(WebDriver driver) {
         this.driver = driver;
     }
 

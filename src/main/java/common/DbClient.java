@@ -17,10 +17,10 @@ public class DbClient {
     private final JdbcTemplate jdbcTemplate = new JdbcTemplate();
     private DriverManagerDataSource dataSource;
 
-    DbClient() {
+    public DbClient() {
     }
 
-    DbClient(String driver, String url, String username, String password) {
+    public DbClient(String driver, String url, String username, String password) {
         dataSource = new DriverManagerDataSource();
         dataSource.setUrl(url);
         dataSource.setDriverClassName(driver);
