@@ -1,7 +1,6 @@
-package common;
+package oldCode.api;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.*;
@@ -12,17 +11,19 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 
 import java.io.IOException;
+import java.lang.reflect.Field;
 import java.net.URISyntaxException;
 import java.nio.charset.StandardCharsets;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 //1 创建HttpClient客户端
 //2 创建Http请求
 //3 设置
 //4 发送请求
+@Deprecated
 @Slf4j
-public class HttpClient {
+public class HTTPHttpClient {
+
 
     /**
      * 执行http get请求
@@ -48,6 +49,7 @@ public class HttpClient {
             result = EntityUtils.toString(httpEntity);
         } catch (IOException e) {
             log.error("\n====>执行get请求失败！");
+//            e.printStackTrace();
         } finally {
             try {
                 if (httpResponse != null) {
@@ -58,6 +60,7 @@ public class HttpClient {
                 }
             } catch (IOException e) {
                 log.error("\n====>关闭请求失败！");
+//                e.printStackTrace();
             }
         }
         log.info("\n====>执行get请求成功：{}", result);
@@ -95,6 +98,7 @@ public class HttpClient {
             result = EntityUtils.toString(httpEntity);
         } catch (IOException e) {
             log.error("\n====>执行post请求失败！");
+//            e.printStackTrace();
         } finally {
             try {
                 if (httpResponse != null) {
@@ -105,6 +109,7 @@ public class HttpClient {
                 }
             } catch (IOException e) {
                 log.error("\n====>关闭请求失败！");
+//                e.printStackTrace();
             }
         }
         log.info("\n====>执行post请求成功：{}", result);
@@ -113,7 +118,7 @@ public class HttpClient {
 
 
     /**
-     * 执行http delete请求(无请求体)
+     * 执行http delete请求
      *
      * @param url    带入参（如果有）的完整url
      * @param header 请求头
@@ -135,6 +140,7 @@ public class HttpClient {
             result = EntityUtils.toString(httpEntity);
         } catch (IOException e) {
             log.error("\n====>执行delete请求失败！");
+//            e.printStackTrace();
         } finally {
             try {
                 if (httpResponse != null) {
@@ -145,6 +151,7 @@ public class HttpClient {
                 }
             } catch (IOException e) {
                 log.error("\n====>关闭请求失败！");
+//                e.printStackTrace();
             }
         }
         log.info("\n====>执行delete请求成功：{}", result);
@@ -181,6 +188,7 @@ public class HttpClient {
             result = EntityUtils.toString(httpEntity);
         } catch (IOException e) {
             log.error("\n====>执行put请求失败！");
+//            e.printStackTrace();
         } finally {
             try {
                 if (httpResponse != null) {
@@ -191,10 +199,48 @@ public class HttpClient {
                 }
             } catch (IOException e) {
                 log.error("\n====>关闭请求失败！");
+//                e.printStackTrace();
             }
         }
         log.info("\n====>执行put请求成功：{}", result);
         return result;
+    }
+
+    /**
+     * 把对象转换成url请求头入参
+     *
+     * @param url 完整url
+     * @param obj 请求头入参
+     * @return 带入参的完整url
+     */
+    private String transformObject2String(String url, Object obj) {
+        URIBuilder uriBuilder = getURIBuilder(url);
+        Field[] fields = obj.getClass().getDeclaredFields();
+        for (Field field : fields) {
+            // 对于每个属性，获取属性名
+            String varName = field.getName();
+            try {
+                // 获取原来的访问控制权限
+                boolean accessFlag = field.isAccessible();
+                // 修改访问控制权限
+                field.setAccessible(true);
+                // 获取在对象f中属性fields[i]对应的对象中的变量
+                Object o;
+                try {
+                    o = field.get(obj);
+                    if (o != null) {
+                        uriBuilder.setParameter(varName, o.toString());
+                    }
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                }
+                // 恢复访问控制权限
+                field.setAccessible(accessFlag);
+            } catch (IllegalArgumentException ex) {
+                ex.printStackTrace();
+            }
+        }
+        return uriBuilder.toString();
     }
 
     /**
@@ -214,23 +260,6 @@ public class HttpClient {
     }
 
     /**
-     * 判断字符串是否为空(org.apache.dubbo.common.utils的方法)
-     * @param cs 目标字符串
-     * @return 字符串为null || 长度为0 || 只包含空格，则返回true
-     */
-    public static boolean isBlank(CharSequence cs) {
-        int strLen;
-        if (cs != null && (strLen = cs.length()) != 0) {
-            for(int i = 0; i < strLen; ++i) {
-                if (!Character.isWhitespace(cs.charAt(i))) {
-                    return false;
-                }
-            }
-        }
-        return true;
-    }
-
-    /**
      * 把Map变量转换成http的请求头参数
      *
      * @param url    完整的地址
@@ -240,29 +269,15 @@ public class HttpClient {
     private String transformMap2URL(String url, Map<String, ?> params) {
         URIBuilder uriBuilder = getURIBuilder(url);
         for (String key : params.keySet()) {
-            assert uriBuilder != null;
             uriBuilder.setParameter(key, params.get(key).toString());
         }
-        assert uriBuilder != null;
         return uriBuilder.toString();
-    }
-
-    private Map<String, String> transformJson2Map(String json) {
-        Map<String, String> map = new HashMap<>();
-        if (isBlank(json)) {
-            return map;
-        }
-        JSONObject jsonObject = JSON.parseObject(json);
-        for (String key : jsonObject.keySet()) {
-            map.put(key, jsonObject.get(key).toString());
-        }
-        return map;
     }
 
     /**
      * 执行http get请求
      *
-     * @param url  完整的url地址，可带参数-http://ip:port/path?param1=value1
+     * @param url 完整的url地址-http://ip:port/path
      * @return 返回json格式
      */
     public String get(String url) {
@@ -274,20 +289,44 @@ public class HttpClient {
     /**
      * 执行http get请求
      *
-     * @param url  完整的url地址，可带参数-http://ip:port/path?param1=value1
-     * @param header 请求头，需要json格式
+     * @param url    完整的url地址-http://ip:port/path
+     * @param params Key必须是字符串，Value只能是基本数据类型的包装类型
      * @return 返回json格式
      */
-    public String get(String url, String header) {
-        Map<String, String> headerMap = transformJson2Map(header);
-        headerMap.put("Connection", "keep-alive");
-        return httpGet(url, headerMap);
+    public String get(String url, Map<String, ?> params) {
+        Map<String, String> header = new HashMap<>();
+        header.put("Connection", "keep-alive");
+        return httpGet(transformMap2URL(url, params), header);
+    }
+
+    /**
+     * 执行http get请求
+     *
+     * @param url    完整的url地址-http://ip:port/path
+     * @param params Key必须是字符串，Value只能是基本数据类型的包装类型
+     * @param header 请求头
+     * @return 返回json格式
+     */
+    public String get(String url, Map<String, ?> params, Map<String, String> header) {
+        return httpDelete(transformMap2URL(url, params), header);
     }
 
     /**
      * 执行http delete请求
      *
-     * @param url 完整的url地址，可带参数-http://ip:port/path?param1=value1
+     * @param url    完整的url地址-http://ip:port/path
+     * @param params Key必须是字符串，Value只能是基本数据类型的包装类型
+     * @param header 请求头
+     * @return 返回json格式
+     */
+    public String delete(String url, Map<String, ?> params, Map<String, String> header) {
+        return httpGet(transformMap2URL(url, params), header);
+    }
+
+    /**
+     * 执行http delete请求
+     *
+     * @param url 完整的url地址-http://ip:port/path
      * @return 返回json格式
      */
     public String delete(String url) {
@@ -299,54 +338,58 @@ public class HttpClient {
     /**
      * 执行http delete请求
      *
-     * @param url 完整的url地址，可带参数-http://ip:port/path?param1=value1
-     * @param header 请求头，需要json格式
+     * @param url    完整的url地址-http://ip:port/path
+     * @param params Key必须是字符串，Value只能是基本数据类型的包装类型
      * @return 返回json格式
      */
-    public String delete(String url, String header) {
-        Map<String, String> headerMap = transformJson2Map(header);
-        headerMap.put("Connection", "keep-alive");
-        return httpDelete(url, headerMap);
+    public String delete(String url, Map<String, ?> params) {
+        Map<String, String> header = new HashMap<>();
+        header.put("Connection", "keep-alive");
+        return httpDelete(transformMap2URL(url, params), header);
     }
 
     /**
      * 执行http post请求
-     *
-     * @param url  完整的url地址，可带参数-http://ip:port/path?param1=value1
-     * @return 返回json格式
-     */
-    public String post(String url) {
-        Map<String, String> header = new HashMap<>();
-        header.put("Connection", "keep-alive");
-        return httpPost(url, null, header);
-    }
-
-
-    /**
-     * 执行http post请求
-     *
-     * @param url  完整的url地址，可带参数-http://ip:port/path?param1=value1
-     * @param body 接口传入的请求体，application/json格式
-     * @return 返回json格式
-     */
-    public String post(String url, String body) {
-        Map<String, String> header = new HashMap<>();
-        header.put("Connection", "keep-alive");
-        return httpPost(url, body, header);
-    }
-
-    public String post(String url, String body, String header) {
-        Map<String, String> headerMap = transformJson2Map(header);
-        headerMap.put("Connection", "keep-alive");
-        return httpPost(url, body, headerMap);
-    }
-
-    /**
-     * 执行http put请求
      *
      * @param url  完整的url地址-http://ip:port/path
+     * @param data 接口对应的POJO对象或Map对象，传入body中，application/json格式
      * @return 返回json格式
      */
+    public String post(String url, Object data) {
+        Map<String, String> header = new HashMap<>();
+        header.put("Connection", "keep-alive");
+        String jsonData = JSON.toJSONString(data);
+        return httpPost(url, jsonData, header);
+    }
+
+    /**
+     * 执行http post请求
+     *
+     * @param url    完整的url地址-http://ip:port/path
+     * @param data   接口对应的POJO对象或Map对象，传入body中，application/json格式
+     * @param header 请求头
+     * @return 返回json格式
+     */
+    public String post(String url, Object data, Map<String, String> header) {
+        String jsonData = JSON.toJSONString(data);
+        return httpPost(url, jsonData, header);
+    }
+
+    /**
+     * 执行http post请求
+     *
+     * @param url    完整的url地址-http://ip:port/path
+     * @param data   接口对应的POJO对象或Map对象，传入body中，application/json格式
+     * @param header 请求头
+     * @param params url参数，key必须是字符串，value只能是基本数据类型的包装类型
+     * @return -
+     */
+    public String post(String url, Object data, Map<String, String> header, Map<String, ?> params) {
+        String jsonData = JSON.toJSONString(data);
+        return httpPost(transformMap2URL(url, params), jsonData, header);
+    }
+
+
     public String put(String url) {
         Map<String, String> header = new HashMap<>();
         header.put("Connection", "keep-alive");
@@ -357,47 +400,49 @@ public class HttpClient {
      * 执行http put请求
      *
      * @param url  完整的url地址-http://ip:port/path
-     * @param body 接口对应的POJO对象或Map对象，传入body中，application/json格式
+     * @param data 接口对应的POJO对象或Map对象，传入body中，application/json格式
      * @return 返回json格式
      */
-    public String put(String url, String body) {
+    public String put(String url, Object data) {
         Map<String, String> header = new HashMap<>();
         header.put("Connection", "keep-alive");
-        return httpPut(url, body, header);
+        String jsonData = JSON.toJSONString(data);
+        return httpPut(url, jsonData, header);
     }
 
     /**
      * 执行http put请求
      *
-     * @param url  完整的url地址-http://ip:port/path
-     * @param body 接口对应的POJO对象或Map对象，传入body中，application/json格式
-     * @param header 请求头，json字符串
+     * @param url    完整的url地址-http://ip:port/path
+     * @param data   接口对应的POJO对象或Map对象，传入body中，application/json格式
+     * @param header 请求头
      * @return 返回json格式
      */
-    public String put(String url, String body, String header) {
-        Map<String, String> headerMap = transformJson2Map(header);
-        headerMap.put("Connection", "keep-alive");
-        return httpPut(url, body, headerMap);
+    public String put(String url, Object data, Map<String, String> header) {
+        String jsonData = JSON.toJSONString(data);
+        if (header == null) {
+            header = new HashMap<>();
+            header.put("Connection", "keep-alive");
+        }
+        return httpPut(url, jsonData, header);
     }
 
-    public String execute(String httpDTOJson) {
-        JSONObject httpDTO = JSON.parseObject(httpDTOJson);
-        String type = httpDTO.getString("type");
-        String url = httpDTO.getString("url");
-        String header = httpDTO.getString("header");
-        String body = httpDTO.getString("body");
-        Map<String, String> headerMap = transformJson2Map(header);
-        headerMap.put("Connection", "keep-alive");
-        if (type.equalsIgnoreCase("get")) {
-            return httpGet(url, headerMap);
-        } else if (type.equalsIgnoreCase("delete")) {
-            return httpDelete(url, headerMap);
-        } else if (type.equalsIgnoreCase("post")) {
-            return httpPost(url, body, headerMap);
-        } else if (type.equalsIgnoreCase("put")) {
-            return httpPost(url, body, headerMap);
+    /**
+     * 执行http put请求
+     *
+     * @param url    完整的url地址-http://ip:port/path
+     * @param data   接口对应的POJO对象或Map对象，传入body中，application/json格式
+     * @param header 请求头
+     * @param params url参数，key必须是字符串，value只能是基本数据类型的包装类型
+     * @return -
+     */
+    public String put(String url, Object data, Map<String, String> header, Map<String, ?> params) {
+        String jsonData = JSON.toJSONString(data);
+        if (header == null) {
+            header = new HashMap<>();
+            header.put("Connection", "keep-alive");
         }
-        return null;
+        return httpPut(transformMap2URL(url, params), jsonData, header);
     }
 
 }

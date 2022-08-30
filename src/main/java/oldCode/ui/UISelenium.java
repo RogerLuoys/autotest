@@ -1,4 +1,4 @@
-package common;
+package oldCode.ui;
 
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.*;
@@ -9,32 +9,23 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.List;
 
+@Deprecated
 @Slf4j
-public class UiClient {
+public class UISelenium {
 
     private final Long DEFAULT_WAIT_TIME = 30L;
     private WebDriver driver = null;
     private int forceTimeOut = 1;
 
     /**
-     * 返回driver实例
-     * 如果获取时未初始化过，则先初始化再返回
-     */
-    public WebDriver getDriver() {
-        if (driver == null) {
-            this.driver = AutomationBase.getChromeDriver();
-        }
-        return this.driver;
-    }
-
-    /**
      * 初始化
      *
+     * @param url 被测网站主页或登录页
      */
-    public void init() {
-        if (driver == null) {
-            this.driver = AutomationBase.getChromeDriver();
-        }
+    public void init(String url) {
+        this.driver = new ChromeDriver();
+        this.driver.get(url);
+        this.driver.manage().window().maximize();
     }
 
     /**
@@ -42,7 +33,7 @@ public class UiClient {
      *
      * @param url 被测网站主页或登录页
      */
-    public void openUrl(String url) {
+    public void refresh(String url) {
         this.driver.get(url);
         forceWait(3);
     }
@@ -56,7 +47,6 @@ public class UiClient {
         }
         driver.close();
         driver.quit();
-        driver = null;
     }
 
     /**
@@ -71,6 +61,15 @@ public class UiClient {
             log.error("\n---->线程睡眠异常");
 //            e.printStackTrace();
         }
+    }
+
+    /**
+     * 设置显式等待的统一时间-默认30s
+     *
+     * @param second 单位秒
+     */
+    public void setTimeout(int second) {
+        this.forceTimeOut = second;
     }
 
     /**
@@ -325,5 +324,7 @@ public class UiClient {
     public void back() {
         this.driver.navigate().back();
     }
+
+
 
 }

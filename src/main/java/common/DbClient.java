@@ -13,45 +13,52 @@ import java.util.Map;
 @Slf4j
 public class DbClient {
 
-
-    private final JdbcTemplate jdbcTemplate = new JdbcTemplate();
-    private DriverManagerDataSource dataSource;
-
-    public DbClient() {
-    }
-
-    public DbClient(String driver, String url, String username, String password) {
-        dataSource = new DriverManagerDataSource();
-        dataSource.setUrl(url);
-        dataSource.setDriverClassName(driver);
-        dataSource.setUsername(username);
-        dataSource.setPassword(password);
-        jdbcTemplate.setDataSource(dataSource);
-    }
+    private JdbcTemplate jdbcTemplate = null;
+    private DriverManagerDataSource dataSource = null;
 
     /**
-     * 执行sql
+     * 执行sql，有同步锁
      *
-     * @param sql -
+     * @param jdbcDTO -
      * @return 全部执行成功则为true
      */
     public String execute(String sql) {
+        // 初始化数据库链接
         String result;
-        // 根据sql类型选择不同的执行方法
-        // todo select 最多1000条，update必须有条件，delete必须有条件且最多10条
-        if (sql.toLowerCase().contains("select")) {
-            result = select(sql);
-        } else if (sql.toLowerCase().contains("delete")) {
-            result = delete(sql);
-        } else if (sql.toLowerCase().contains("update")) {
-            result = update(sql);
-        } else if (sql.toLowerCase().contains("insert")) {
+        if (sql.toUpperCase().matches("^INSERT INTO .+")) {
             result = insert(sql);
+        } else if (sql.toUpperCase().matches("^DELETE FROM [A-Z0-9_]+ WHERE .+")) {
+            result = delete(sql);
+        } else if (sql.toUpperCase().matches("^UPDATE [A-Z0-9_]+ SET .+ WHERE .+")) {
+            result = update(sql);
+        } else if (sql.toUpperCase().matches("^SELECT .+ FROM [A-Z0-9_]+ WHERE .+")) {
+            result = select(sql);
         } else {
-            result = "不支持sql类型";
+            result = "不支持sql类型 ";
         }
         return result;
     }
+
+
+    /**
+     * 初始化数据源
+     * 如果已初始化，则跳过
+     *
+     */
+    public void init(String driver, String url, String userName, String password) {
+        if (jdbcTemplate == null) {
+            jdbcTemplate = new JdbcTemplate();
+        }
+        if (dataSource == null) {
+            dataSource = new DriverManagerDataSource();
+            dataSource.setDriverClassName(driver);
+            dataSource.setUrl(url);
+            dataSource.setUsername(userName);
+            dataSource.setPassword(password);
+            jdbcTemplate.setDataSource(dataSource);
+        }
+    }
+
 
     /**
      * 把更新sql转换为查询总行数的sql，查询sql以更新sql的条件为条件
@@ -143,18 +150,17 @@ public class DbClient {
         return Integer.valueOf(result.get(COUNT).toString());
     }
 
+    public Map<String, Object> selectOneRow(String sql) {
+        List<Map<String, Object>> result = jdbcTemplate.queryForList(sql);
+        return result.size() == 0 ? null : result.get(0);
+    }
 
-    /**
-     * 查询单格数据，sql中只能查询一个字段
-     *
-     * @param sql 完整查询sql (规则：select 单个列名 from 表名 where 条件)
-     * @return -
-     */
+
     public String selectOneCell(String sql) {
         String[] sqlList = sql.split(" ");
         //查询语句只能查询一列数据
         if (!sqlList[2].equalsIgnoreCase("from") || sqlList[1].equalsIgnoreCase("*") || sqlList[1].contains(",")) {
-            log.warn("\n---->查询单格数据的sql格式不合规：{}", sql);
+            log.warn("---->查询单格数据的sql格式不合规：{}", sql);
             return null;
         }
         Map<String, Object> result = jdbcTemplate.queryForList(sql).get(0);

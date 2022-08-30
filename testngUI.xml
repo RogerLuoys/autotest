@@ -6,7 +6,7 @@
     </listeners>
     <test name="UI all test case test">
         <packages>
-            <package name="testCaseUI.*" />
+            <package name="autotest.oldCode.ui.testCaseUI.*" />
         </packages>
     </test>
 </suite>

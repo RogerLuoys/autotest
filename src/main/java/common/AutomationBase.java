@@ -5,6 +5,9 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.springframework.jdbc.core.JdbcTemplate;
 
+/**
+ * 单例
+ */
 // 主要解决AssertionClient和UIClient要且必须要使用同一个webdriver的问题
 public class AutomationBase {
     // UiClient和AssertionClient使用
@@ -49,13 +52,6 @@ public class AutomationBase {
             driver = new ChromeDriver(chromeOptions);
         }
         return driver;
-    }
-
-    public static JdbcTemplate getJdbcTemplate() {
-        if (jdbcTemplate == null) {
-            jdbcTemplate = new JdbcTemplate();
-        }
-        return jdbcTemplate;
     }
 
 }

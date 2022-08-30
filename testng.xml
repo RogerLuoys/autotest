@@ -6,12 +6,12 @@
     </listeners>
     <test name="All test">
 <!--        <packages>-->
-<!--            <package name="testCaseUserCenter.*" />-->
-<!--            <package name="testCaseFlag.*" />-->
-<!--            <package name="testCaseUI.*" />-->
+<!--            <package name="autotest.rpc.testCaseUserCenter.*" />-->
+<!--            <package name="autotest.http.testCaseFlag.*" />-->
+<!--            <package name="autotest.oldCode.ui.testCaseUI.*" />-->
 <!--        </packages>-->
         <classes>
-            <class name="testCaseFlag.pointService.QueryPointSummaryTest" />
+            <class name="autotest.http.testCaseFlag.pointService.QueryPointSummaryTest" />
         </classes>
     </test>
 </suite>

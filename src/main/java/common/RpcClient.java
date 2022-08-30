@@ -36,7 +36,7 @@ public class RpcClient {
 
             // "{\"userId\":\"416170902167365\",\"userName\":\"这是修改后的名字\"}"
             Object res = genericService.$invoke("modifyUser", new String[]{"com.luoys.upgrade.uc.share.dto.UserDTO"}, new Object[]{params});
-            System.out.println("result[setUser]："+ JSON.toJSONString(res)); // 响应结果:result[setUser]：{name=Tom, class=com.xxx.api.service.User, age=24}
+            System.out.println("result[setUser]："+ JSON.toJSONString(res)); // 响应结果:result[setUser]：{name=Tom, class=com.xxx.oldCode.api.service.User, age=24}
         } catch (Throwable ex) {
             ex.printStackTrace();
         }
