@@ -6,7 +6,10 @@ import org.testng.Assert;
 
 import java.util.List;
 
-// 可以继承Assert类
+/**
+ * 自定义断言
+ * 也可以继承Assert类
+ */
 public class CommonAssertion {
 
     CommonUi ui;
@@ -31,12 +34,32 @@ public class CommonAssertion {
         Assert.assertTrue(actual.equals(expect));
     }
 
+    /**
+     * 判断指定元素是否存在 (UI专用)
+     * 如果找到多个元素，也算成功
+     *
+     * @param xpath 元素的xpath
+     */
     public void isElementExist(String xpath) {
+        if (ui.getDriver() == null) {
+            Assert.fail("未启动webDriver");
+            return;
+        }
         List<WebElement> webElements = ui.getDriver().findElements(By.xpath(xpath));
         Assert.assertTrue(webElements.size() > 0);
     }
 
+    /**
+     * 判断指定元素是否存在 (UI专用)
+     * xpath格式不对导致找不到，也算成功
+     *
+     * @param xpath 元素的xpath
+     */
     public void isElementNotExist(String xpath) {
+        if (ui.getDriver() == null) {
+            Assert.fail("未启动webDriver");
+            return;
+        }
         List<WebElement> webElements = ui.getDriver().findElements(By.xpath(xpath));
         Assert.assertTrue(webElements.size() == 0);
     }

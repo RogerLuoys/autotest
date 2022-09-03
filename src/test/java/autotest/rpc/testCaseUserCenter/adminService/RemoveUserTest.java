@@ -10,12 +10,12 @@ import autotest.rpc.testCaseUserCenter.UserCenterTestBase;
 
 public class RemoveUserTest extends UserCenterTestBase {
 
-    private final String serviceURL = auto.config.URL + "com.luoys.upgrade.uc.share.service.AdminService";
+    private final String serviceURL = auto.config.UC_URL + "com.luoys.upgrade.uc.share.service.AdminService";
     private final AdminService adminService = auto.rpc.getService(serviceURL, AdminService.class);
 
     @BeforeClass
     void resetData() {
-        auto.ucDB.update("update user set is_delete=0 where user_id='416147574006268'");
+        auto.sql.uc("update user set is_delete=0 where user_id='416147574006268'");
     }
 
     @Test(description = "删除一个用户")

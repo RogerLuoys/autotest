@@ -2,7 +2,6 @@ package common;
 
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.*;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -64,7 +63,7 @@ public class UiClient {
      *
      * @param second 等待的时间-单位秒
      */
-    public void forceWait(int second) {
+    private void forceWait(int second) {
         try {
             Thread.sleep((long) second * 1000);
         } catch (InterruptedException e) {
@@ -141,6 +140,16 @@ public class UiClient {
      */
     public void click(String xpath) {
         click(By.xpath(xpath));
+    }
+
+    /**
+     * 鼠标点击指定元素
+     *
+     * @param xpath 元素的xpath
+     * @param index list下标，从0开始
+     */
+    public void click(String xpath, Integer index) {
+        click(getElements(xpath).get(index));
     }
 
     /**
@@ -281,21 +290,10 @@ public class UiClient {
      * @param locator 自选元素定位方式
      * @return 存在-true，不存在-false
      */
-    public Boolean isElementExist(By locator) {
+    private Boolean isElementExist(By locator) {
         List<WebElement> webElementList = getElements(locator);
         return webElementList.size() > 0;
     }
-
-    /**
-     * 判断指定元素是否存在，如果找到多个元素，也返回true
-     *
-     * @param xpath 元素的xpath
-     * @return 存在-true，不存在-false
-     */
-    public Boolean isElementExist(String xpath) {
-        return isElementExist(By.xpath(xpath));
-    }
-
 
     public void execJs(String jsExecString) {
         ((JavascriptExecutor)this.driver).executeScript(jsExecString, new Object[0]);
@@ -305,7 +303,9 @@ public class UiClient {
         ((JavascriptExecutor)this.driver).executeScript(jsExecString, new Object[]{webElement});
     }
 
-
+    /**
+     * 删除所有cookies
+     */
     public void deleteCookies() {
         this.driver.manage().deleteAllCookies();
     }

@@ -13,6 +13,7 @@ public class RpcClient {
     private static final String DEFAULT_NAME = "AutomationTester";
 
     public void invoke() {
+        forceWait(1);
         try {
             // 引用远程服务
             ReferenceConfig<GenericService> reference = new ReferenceConfig<>();
@@ -46,7 +47,7 @@ public class RpcClient {
      *
      * @param second 等待的时间-单位秒
      */
-    public void forceWait(int second) {
+    private void forceWait(int second) {
         try {
             Thread.sleep((long) second * 1000);
         } catch (InterruptedException e) {

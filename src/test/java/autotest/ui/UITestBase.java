@@ -8,7 +8,11 @@ import org.testng.annotations.*;
  * 账号userId： 416160586979148
  */
 public class UITestBase {
-    public CommonProxy auto;
+
+    /**
+     * 代理类实例，所有公共模块方法通过此实例调用（这里一定要static，因为只实例化一次）
+     */
+    public static CommonProxy auto;
 
     @BeforeSuite(alwaysRun = true, description = "启动webDriver")
     public void supperBeforeSuite() {
