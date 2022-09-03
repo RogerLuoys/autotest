@@ -98,8 +98,8 @@ public class UtilClient {
      * 根据JSON字符串中的节点名，取出对应的值；如果同名节点有多个，则只取第 index 个
      * 如JSON中包含数组或对象，也纳入取值
      *
+     * @param key  json字符串中的节点名
      * @param json  完整的json字符串
-     * @param name  json字符串中的节点名
      * @return 名称对应的值
      */
     public String getFirstValue(String key, String json) {

@@ -1,6 +1,7 @@
 package autotest.rpc.testCaseUserCenter;
 
 import autotest.rpc.RpcTestBase;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 
 public class UserCenterTestBase extends RpcTestBase {
@@ -10,5 +11,9 @@ public class UserCenterTestBase extends RpcTestBase {
 //    public static final String URL = "dubbo://10.201.10.183:20881/";
 
 
+    @BeforeClass
+    public void beforeClass() {
+
+    }
 
 }

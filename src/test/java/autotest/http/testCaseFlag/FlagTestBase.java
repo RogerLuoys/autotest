@@ -9,5 +9,9 @@ import org.testng.annotations.BeforeClass;
  */
 public class FlagTestBase extends HttpTestBase {
 
-
+    @BeforeClass
+    public void beforeClass() {
+        // 指定环境
+        auto.http.setBaseURL(auto.config.HTTP_FLAG_URL);
+    }
 }

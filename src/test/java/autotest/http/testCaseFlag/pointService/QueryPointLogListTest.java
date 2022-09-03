@@ -1,22 +1,21 @@
 package autotest.http.testCaseFlag.pointService;
 
-import com.luoys.upgrade.flag.api.enums.PointLogTypeEnum;
-import org.testng.Assert;
 import org.testng.Reporter;
 import org.testng.annotations.Test;
 import autotest.http.testCaseFlag.FlagTestBase;
 
 public class QueryPointLogListTest extends FlagTestBase {
 
-    private final String FullURL = auto.config.URL + "point/queryPointLogList";
+//    private final String FullURL = auto.config.URL + "point/queryPointLogList";
 
     @Test(description = "查询积分使用记录")
     void test1() {
         Reporter.log("调用接口");
-        String result = auto.http.get(FullURL + "?pointId=516176799148478&type=" + PointLogTypeEnum.DECREASE.getCode());
+        String result = auto.http.get("point/queryPointLogList?pointId=516176799148478&type=2");
 
         Reporter.log("验证结果");
-        String data = auto.jsonUtil.getBaseData(result, "data");
-        Assert.assertTrue(data.contains("自动化queryPointLogList测试"), "校验使用记录是否存在");
+        String data = auto.util.getJsonValue("data", result);
+        auto.assertion.isContains(data, "自动化queryPointLogList测试");
+//        Assert.assertTrue(data.contains("自动化queryPointLogList测试"), "校验使用记录是否存在");
     }
 }
