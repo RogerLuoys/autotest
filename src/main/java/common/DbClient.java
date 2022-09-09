@@ -17,14 +17,15 @@ public class DbClient {
     private DriverManagerDataSource dataSource = null;
 
     /**
-     * 执行sql，有同步锁
+     * 执行sql
+     * 支持增删改查，删改查一定要带条件
      *
-     * @param jdbcDTO -
-     * @return 全部执行成功则为true
+     * @param sql 要执行的sql
+     * @return -
      */
     public String execute(String sql) {
-        // 初始化数据库链接
         String result;
+        // 根据sql语句类型，选择不同的方法执行
         if (sql.toUpperCase().matches("^INSERT INTO .+")) {
             result = insert(sql);
         } else if (sql.toUpperCase().matches("^DELETE FROM [A-Z0-9_]+ WHERE .+")) {
@@ -32,7 +33,12 @@ public class DbClient {
         } else if (sql.toUpperCase().matches("^UPDATE [A-Z0-9_]+ SET .+ WHERE .+")) {
             result = update(sql);
         } else if (sql.toUpperCase().matches("^SELECT .+ FROM [A-Z0-9_]+ WHERE .+")) {
-            result = select(sql);
+            // 查询单列
+            if (sql.toUpperCase().matches("^SELECT [^,*]+ FROM [A-Z0-9_]+ WHERE .+")) {
+                result = selectOneCell(sql);
+            } else {
+                result = select(sql);
+            }
         } else {
             result = "不支持sql类型 ";
         }
@@ -150,22 +156,19 @@ public class DbClient {
         return Integer.valueOf(result.get(COUNT).toString());
     }
 
-    public Map<String, Object> selectOneRow(String sql) {
-        List<Map<String, Object>> result = jdbcTemplate.queryForList(sql);
-        return result.size() == 0 ? null : result.get(0);
-    }
-
-
-    public String selectOneCell(String sql) {
-        String[] sqlList = sql.split(" ");
-        //查询语句只能查询一列数据
-        if (!sqlList[2].equalsIgnoreCase("from") || sqlList[1].equalsIgnoreCase("*") || sqlList[1].contains(",")) {
-            log.warn("---->查询单格数据的sql格式不合规：{}", sql);
-            return null;
-        }
+    /**
+     * 查询单列
+     * 时间会转为yyyy-MM-dd HH:mm:ss格式
+     *
+     * @param sql 查询sql
+     * @return 只返回第一行的值，不带列名
+     */
+    private String selectOneCell(String sql) {
+        String[] sqlList = sql.split("[ ]+");
         Map<String, Object> result = jdbcTemplate.queryForList(sql).get(0);
+        // 根据列名取值
         Object value = result.get(sqlList[1]);
-        //时间格式转换
+        //时间格式要转换
         if (value.getClass().getName().equals("java.time.LocalDateTime")) {
             LocalDateTime time = (LocalDateTime) value;
             DateTimeFormatter dateTimeFormatter= DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").withZone(ZoneId.of("Asia/Shanghai"));
