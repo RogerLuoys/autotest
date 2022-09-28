@@ -14,7 +14,7 @@ public class CommonConfig {
     /**
      * http 应用 flag 的服务器域名
      */
-    public final String HTTP_FLAG_URL = "http://118.24.117.181/";
+    public final String HTTP_FLAG_URL = "http://118.24.117.181:9002/";
 
     /**
      * PRC 应用 user center 的服务器域名

@@ -163,6 +163,7 @@ public class UiClient {
         WebElement webElement = driver.findElement(locator);
         WebDriverWait webDriverWait = new WebDriverWait(driver, DEFAULT_WAIT_TIME);
         webDriverWait.until(ExpectedConditions.visibilityOf(webElement));
+        webElement.clear();
         Actions actions = new Actions(driver);
         actions.sendKeys(webElement, key);
         actions.perform();
