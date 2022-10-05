@@ -1,10 +1,10 @@
 package autotest.ui.flag.flag;
 
+import autotest.ui.flag.FlagTestBase;
 import org.testng.Reporter;
 import org.testng.annotations.*;
-import autotest.ui.UITestBase;
 
-public class NewFlagTest extends UITestBase {
+public class NewFlagTest extends FlagTestBase {
 
 //    @BeforeClass
 //    void resetData() {

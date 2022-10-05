@@ -41,7 +41,7 @@ public class CommonFunction {
         ui.click("//div[@id='pane-flag']//i[@class='el-icon-search']");
         forceWait(2);
         //点编辑
-        ui.click(ui.getElements(By.xpath("//div[@id='pane-flag']//span[text()='编辑']")).get(1));
+        ui.click("//div[@id='pane-flag']//span[text()='编辑']", 1);
         forceWait(2);
     }
 

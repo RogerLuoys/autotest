@@ -86,7 +86,7 @@ public class CommonAssertion {
             Assert.fail("未启动webDriver");
             return;
         }
-        List<WebElement> webElements = ui.getDriver().findElements(By.xpath(xpath));
+        List<WebElement> webElements = ui.getElements(xpath);
         Assert.assertTrue(webElements.size() > 0);
     }
 
@@ -101,7 +101,7 @@ public class CommonAssertion {
             Assert.fail("未启动webDriver");
             return;
         }
-        List<WebElement> webElements = ui.getDriver().findElements(By.xpath(xpath));
+        List<WebElement> webElements = ui.getElements(xpath);
         Assert.assertTrue(webElements.size() == 0);
     }
 

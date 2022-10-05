@@ -28,7 +28,7 @@ public class CompleteFlagTest extends FlagTestBase {
         auto.ui.click("//div[@class='el-popconfirm']//span[contains(text(),'确定')]", 1);
 
         Reporter.log("校验更改结果");
-        auto.assertion.isElementExist("//span[text()='已完成']");
+        auto.assertion.isElementExist("//*[text()='已完成']");
 
     }
 

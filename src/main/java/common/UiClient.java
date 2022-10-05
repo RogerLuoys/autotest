@@ -78,9 +78,8 @@ public class UiClient {
      * @param locator 自选元素定位方式
      * @return 返回一个元素
      */
-    public WebElement getElement(By locator) {
-        forceWait(forceTimeOut);
-        return driver.findElement(locator);
+    private WebElement getElement(By locator) {
+        return getElements(locator).get(0);
     }
 
     /**
@@ -89,9 +88,18 @@ public class UiClient {
      * @param locator 自选元素定位方式
      * @return 所有符合条件的元素
      */
-    public List<WebElement> getElements(By locator) {
+    private List<WebElement> getElements(By locator) {
         forceWait(forceTimeOut);
-        return driver.findElements(locator);
+        List<WebElement> elements = null;
+        // 多找几次元素
+        for (int i = 0; i < 3; i++) {
+            elements = driver.findElements(locator);
+            if (elements != null && elements.size() > 0) {
+                return elements;
+            }
+            forceWait(3);
+        }
+        return elements;
     }
 
     /**
@@ -109,9 +117,9 @@ public class UiClient {
      *
      * @param locator 自选元素定位方式
      */
-    public void click(By locator) {
+    private void click(By locator, int index) {
         forceWait(forceTimeOut);
-        WebElement webElement = driver.findElement(locator);
+        WebElement webElement = getElements(locator).get(index);
         WebDriverWait webDriverWait = new WebDriverWait(driver, DEFAULT_WAIT_TIME);
         webDriverWait.until(ExpectedConditions.elementToBeClickable(webElement));
         Actions actions = new Actions(driver);
@@ -119,19 +127,19 @@ public class UiClient {
         actions.perform();
     }
 
-    /**
-     * 鼠标点击指定元素
-     *
-     * @param element 元素对象
-     */
-    public void click(WebElement element) {
-        forceWait(forceTimeOut);
-        WebDriverWait webDriverWait = new WebDriverWait(driver, DEFAULT_WAIT_TIME);
-        webDriverWait.until(ExpectedConditions.elementToBeClickable(element));
-        Actions actions = new Actions(driver);
-        actions.click(element);
-        actions.perform();
-    }
+//    /**
+//     * 鼠标点击指定元素
+//     *
+//     * @param element 元素对象
+//     */
+//    public void click(WebElement element) {
+//        forceWait(forceTimeOut);
+//        WebDriverWait webDriverWait = new WebDriverWait(driver, DEFAULT_WAIT_TIME);
+//        webDriverWait.until(ExpectedConditions.elementToBeClickable(element));
+//        Actions actions = new Actions(driver);
+//        actions.click(element);
+//        actions.perform();
+//    }
 
     /**
      * 鼠标点击指定元素
@@ -139,7 +147,7 @@ public class UiClient {
      * @param xpath 元素的xpath
      */
     public void click(String xpath) {
-        click(By.xpath(xpath));
+        click(By.xpath(xpath), 0);
     }
 
     /**
@@ -149,7 +157,7 @@ public class UiClient {
      * @param index list下标，从0开始
      */
     public void click(String xpath, Integer index) {
-        click(getElements(xpath).get(index));
+        click(By.xpath(xpath), index);
     }
 
     /**
@@ -158,9 +166,9 @@ public class UiClient {
      * @param locator 自选元素定位方式
      * @param key     输入的字符串
      */
-    public void sendKey(By locator, CharSequence key) {
+    private void sendKey(By locator, CharSequence key) {
         forceWait(forceTimeOut);
-        WebElement webElement = driver.findElement(locator);
+        WebElement webElement = getElement(locator);
         WebDriverWait webDriverWait = new WebDriverWait(driver, DEFAULT_WAIT_TIME);
         webDriverWait.until(ExpectedConditions.visibilityOf(webElement));
         webElement.clear();
@@ -169,23 +177,23 @@ public class UiClient {
         actions.perform();
     }
 
-    /**
-     * 往指定元素中输入字符
-     *
-     * @param element 元素对象
-     * @param key     输入的字符串
-     */
-    public void sendKey(WebElement element, CharSequence key) {
-        forceWait(forceTimeOut);
-        WebDriverWait webDriverWait = new WebDriverWait(driver, DEFAULT_WAIT_TIME);
-        webDriverWait.until(ExpectedConditions.visibilityOf(element));
-        Actions actions = new Actions(driver);
-        actions.sendKeys(element, key);
-        actions.perform();
-    }
+//    /**
+//     * 往指定元素中输入字符
+//     *
+//     * @param element 元素对象
+//     * @param key     输入的字符串
+//     */
+//    public void sendKey(WebElement element, CharSequence key) {
+//        forceWait(forceTimeOut);
+//        WebDriverWait webDriverWait = new WebDriverWait(driver, DEFAULT_WAIT_TIME);
+//        webDriverWait.until(ExpectedConditions.visibilityOf(element));
+//        Actions actions = new Actions(driver);
+//        actions.sendKeys(element, key);
+//        actions.perform();
+//    }
 
     /**
-     * 往指定元素中输入字符
+     * 先清除输入框的内容，再往指定元素中输入字符
      *
      * @param xpath 元素的xpath
      * @param key   输入的字符串
@@ -194,56 +202,56 @@ public class UiClient {
         sendKey(By.xpath(xpath), key);
     }
 
-    /**
-     * 先清除输入框的内容，再往指定元素中输入字符
-     *
-     * @param locator 自选元素定位方式
-     * @param key     输入的字符串
-     */
-    public void sendKeyWithClear(By locator, CharSequence key) {
-        forceWait(forceTimeOut);
-        WebElement webElement = driver.findElement(locator);
-        WebDriverWait webDriverWait = new WebDriverWait(driver, DEFAULT_WAIT_TIME);
-        webDriverWait.until(ExpectedConditions.visibilityOf(webElement));
-        webElement.clear();
-        Actions actions = new Actions(driver);
-        actions.sendKeys(webElement, key);
-        actions.perform();
-    }
+//    /**
+//     * 先清除输入框的内容，再往指定元素中输入字符
+//     *
+//     * @param locator 自选元素定位方式
+//     * @param key     输入的字符串
+//     */
+//    public void sendKeyWithClear(By locator, CharSequence key) {
+//        forceWait(forceTimeOut);
+//        WebElement webElement = driver.findElement(locator);
+//        WebDriverWait webDriverWait = new WebDriverWait(driver, DEFAULT_WAIT_TIME);
+//        webDriverWait.until(ExpectedConditions.visibilityOf(webElement));
+//        webElement.clear();
+//        Actions actions = new Actions(driver);
+//        actions.sendKeys(webElement, key);
+//        actions.perform();
+//    }
 
-    /**
-     * 先清除输入框的内容，再往指定元素中输入字符
-     *
-     * @param element 元素对象
-     * @param key     输入的字符串
-     */
-    public void sendKeyWithClear(WebElement element, CharSequence key) {
-        forceWait(forceTimeOut);
-        WebDriverWait webDriverWait = new WebDriverWait(driver, DEFAULT_WAIT_TIME);
-        webDriverWait.until(ExpectedConditions.visibilityOf(element));
-        element.clear();
-        Actions actions = new Actions(driver);
-        actions.sendKeys(element, key);
-        actions.perform();
-    }
+//    /**
+//     * 先清除输入框的内容，再往指定元素中输入字符
+//     *
+//     * @param element 元素对象
+//     * @param key     输入的字符串
+//     */
+//    public void sendKeyWithClear(WebElement element, CharSequence key) {
+//        forceWait(forceTimeOut);
+//        WebDriverWait webDriverWait = new WebDriverWait(driver, DEFAULT_WAIT_TIME);
+//        webDriverWait.until(ExpectedConditions.visibilityOf(element));
+//        element.clear();
+//        Actions actions = new Actions(driver);
+//        actions.sendKeys(element, key);
+//        actions.perform();
+//    }
 
-    /**
-     * 先清除输入框的内容，再往指定元素中输入字符
-     *
-     * @param xpath 元素的xpath
-     * @param key   输入的字符串
-     */
-    public void sendKeyWithClear(String xpath, CharSequence key) {
-        sendKeyWithClear(By.xpath(xpath), key);
-
-    }
+//    /**
+//     * 先清除输入框的内容，再往指定元素中输入字符
+//     *
+//     * @param xpath 元素的xpath
+//     * @param key   输入的字符串
+//     */
+//    public void sendKeyWithClear(String xpath, CharSequence key) {
+//        sendKeyWithClear(By.xpath(xpath), key);
+//
+//    }
 
     /**
      * 鼠标移动到指定元素上
      *
      * @param locator 自选元素定位方式
      */
-    public void moveToElement(By locator) {
+    private void moveToElement(By locator) {
         forceWait(forceTimeOut);
         WebElement webElement = driver.findElement(locator);
         WebDriverWait webDriverWait = new WebDriverWait(driver, DEFAULT_WAIT_TIME);
@@ -266,7 +274,7 @@ public class UiClient {
      * 先移动到控件位置，再点击
      * @param locator 元素位置
      */
-    public void moveAndClick(By locator) {
+    private void moveAndClick(By locator) {
         forceWait(forceTimeOut);
         WebElement webElement = driver.findElement(locator);
         WebDriverWait webDriverWait = new WebDriverWait(driver, DEFAULT_WAIT_TIME);
@@ -285,17 +293,21 @@ public class UiClient {
         moveAndClick(By.xpath(xpath));
     }
 
-    /**
-     * 判断指定元素是否存在，如果找到多个元素，也返回true
-     *
-     * @param locator 自选元素定位方式
-     * @return 存在-true，不存在-false
-     */
-    private Boolean isElementExist(By locator) {
-        List<WebElement> webElementList = getElements(locator);
-        return webElementList.size() > 0;
-    }
+//    /**
+//     * 判断指定元素是否存在，如果找到多个元素，也返回true
+//     *
+//     * @param locator 自选元素定位方式
+//     * @return 存在-true，不存在-false
+//     */
+//    private Boolean isElementExist(By locator) {
+//        List<WebElement> webElementList = getElements(locator);
+//        return webElementList.size() > 0;
+//    }
 
+    /**
+     * 执行java script脚本
+     * @param jsExecString 脚本
+     */
     public void execJs(String jsExecString) {
         ((JavascriptExecutor)this.driver).executeScript(jsExecString, new Object[0]);
     }
@@ -307,7 +319,7 @@ public class UiClient {
     /**
      * 删除所有cookies
      */
-    public void deleteCookies() {
+    public void clearCookies() {
         this.driver.manage().deleteAllCookies();
     }
 

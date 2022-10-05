@@ -46,7 +46,7 @@ public class AutomationBase {
             // 隐藏滚动条
             chromeOptions.addArguments("--hide-scrollbars");
             // 后台运行
-//            chromeOptions.addArguments("--headless");
+            chromeOptions.addArguments("--headless");
             // 去掉Chrome提示受到自动软件控制
             chromeOptions.addArguments("disable-infobars");
             driver = new ChromeDriver(chromeOptions);

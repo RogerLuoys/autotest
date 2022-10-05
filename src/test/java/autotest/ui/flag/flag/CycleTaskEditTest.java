@@ -24,7 +24,7 @@ public class CycleTaskEditTest extends UITestBase {
         auto.ui.click("//span[text()='编辑']");
 
         Reporter.log("编辑并保存");
-        auto.ui.sendKeyWithClear("//input[@placeholder='请输入任务名']", "自动化编辑任务名");
+        auto.ui.sendKey("//input[@placeholder='请输入任务名']", "自动化编辑任务名");
         auto.ui.click("//span[@class='el-input-number__increase']");
         auto.ui.click("//span[contains(text(), '周二')]");
         auto.ui.sendKey("//textarea[@placeholder='请描述你的任务']", "自动化编辑任务描述");
