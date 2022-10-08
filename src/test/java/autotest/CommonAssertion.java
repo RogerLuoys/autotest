@@ -1,6 +1,5 @@
 package autotest;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 
@@ -66,8 +65,8 @@ public class CommonAssertion {
      * @param expect 预期结果，需要是数字字符
      */
     public void isGreater(String actual, String expect) {
-        Double actual1 = Double.valueOf(actual);
-        Double expect1 = Double.valueOf(expect);
+        double actual1 = Double.parseDouble(actual);
+        double expect1 = Double.parseDouble(expect);
         if (actual1 > expect1) {
             Assert.assertTrue(true);
         } else {

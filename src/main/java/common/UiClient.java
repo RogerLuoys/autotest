@@ -7,6 +7,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.List;
+import java.util.Set;
 
 @Slf4j
 public class UiClient {
@@ -93,11 +94,14 @@ public class UiClient {
         List<WebElement> elements = null;
         // 多找几次元素
         for (int i = 0; i < 3; i++) {
+            // 首次寻找不用等待
+            if (i != 0) {
+                forceWait(3);
+            }
             elements = driver.findElements(locator);
             if (elements != null && elements.size() > 0) {
                 return elements;
             }
-            forceWait(3);
         }
         return elements;
     }
@@ -171,6 +175,13 @@ public class UiClient {
         WebElement webElement = getElement(locator);
         WebDriverWait webDriverWait = new WebDriverWait(driver, DEFAULT_WAIT_TIME);
         webDriverWait.until(ExpectedConditions.visibilityOf(webElement));
+        if (key.equals("{ENTER}")) {
+            webElement.sendKeys("\ue007");
+            return;
+        } else if (key.equals("{TAB}")) {
+            webElement.sendKeys("\ue004");
+            return;
+        }
         webElement.clear();
         Actions actions = new Actions(driver);
         actions.sendKeys(webElement, key);
@@ -309,11 +320,31 @@ public class UiClient {
      * @param jsExecString 脚本
      */
     public void execJs(String jsExecString) {
-        ((JavascriptExecutor)this.driver).executeScript(jsExecString, new Object[0]);
+        ((JavascriptExecutor)driver).executeScript(jsExecString, new Object[0]);
     }
 
     public void execJs(WebElement webElement, String jsExecString) {
-        ((JavascriptExecutor)this.driver).executeScript(jsExecString, new Object[]{webElement});
+        ((JavascriptExecutor)driver).executeScript(jsExecString, new Object[]{webElement});
+    }
+
+
+    /**
+     * 切换到最后一个标签页，并关闭其它；
+     * 如果只有一个标签页，则不处理
+     *
+     */
+    public void switchTab() {
+        Set<String> windows = driver.getWindowHandles();
+        if (windows.size() <= 1) {
+            return;
+        }
+        // 先关闭前面所有标签页
+        for (int i = windows.size() - 2; i >= 0; i--) {
+            driver.switchTo().window(windows.toArray()[i].toString());
+            driver.close();
+        }
+        // 再切换至最后标签页
+        driver.switchTo().window(windows.toArray()[windows.size() - 1].toString());
     }
 
     /**

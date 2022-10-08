@@ -12,9 +12,19 @@ public class CommonConfig {
     public final String WEB_FLAG_URL = "http://118.24.117.181/";
 
     /**
+     * 百度网页主域名
+     */
+    public final String WEB_BAIDU_URL = "https://www.baidu.com/";
+
+    /**
      * http 应用 flag 的服务器域名
      */
     public final String HTTP_FLAG_URL = "http://118.24.117.181:9002/";
+
+    /**
+     * http 应用 快递 的服务器域名
+     */
+    public final String HTTP_EXPRESS_URL = "http://www.kuaidi100.com/";
 
     /**
      * PRC 应用 user center 的服务器域名
