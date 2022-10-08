@@ -40,4 +40,9 @@ public class QueryByUserIdTest extends UserCenterTestBase {
 //        System.out.println(result);
 //    }
 
+    @Test
+    public void test() {
+        auto.rpc.invoke();
+    }
+
 }
