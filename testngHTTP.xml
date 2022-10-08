@@ -1,12 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<suite name="flag all test case Suite">
+<suite name="HTTP all case" verbose="1" parallel="classes" thread-count="1" configfailurepolicy="continue">
     <listeners>
         <listener class-name="org.uncommons.reportng.HTMLReporter"/>
         <listener class-name="org.uncommons.reportng.JUnitXMLReporter"/>
     </listeners>
-    <test name="flag all test case test">
+    <test name="flag">
         <packages>
-            <package name="autotest.http.*" />
+            <package name="autotest.http.flag.*" />
+        </packages>
+    </test>
+    <test name="express">
+        <packages>
+            <package name="autotest.http.express.*" />
         </packages>
     </test>
 </suite>

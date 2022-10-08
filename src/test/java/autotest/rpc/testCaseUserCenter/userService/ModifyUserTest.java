@@ -1,7 +1,5 @@
 package autotest.rpc.testCaseUserCenter.userService;
 
-import com.luoys.upgrade.uc.share.dto.UserDTO;
-import com.luoys.upgrade.uc.share.service.UserService;
 import org.testng.Assert;
 import org.testng.Reporter;
 import org.testng.annotations.BeforeClass;
