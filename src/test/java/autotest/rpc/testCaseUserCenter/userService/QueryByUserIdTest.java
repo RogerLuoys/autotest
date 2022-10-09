@@ -42,7 +42,7 @@ public class QueryByUserIdTest extends UserCenterTestBase {
 
     @Test
     public void test() {
-        auto.rpc.invokeOld();
+        auto.rpc.invoke();
 
     }
 
