@@ -95,12 +95,12 @@ public class RpcClient {
         //创建ApplicationConfig
         ApplicationConfig applicationConfig = new ApplicationConfig();
         applicationConfig.setName("generic-call-consumer");
-        //创建注册中心配置
+        //创建注册中心配置,zookeeper://118.24.117.181:2181
         RegistryConfig registryConfig = new RegistryConfig();
-        registryConfig.setAddress("zookeeper://118.24.117.181:2181");
+        registryConfig.setAddress("dubbo://118.24.117.181:20881");
         //创建服务引用配置
         ReferenceConfig<GenericService> referenceConfig = new ReferenceConfig<>();
-        //设置接口
+        //设置接口,com.luoys.upgrade.uc.share.service.UserService
         referenceConfig.setInterface("com.luoys.upgrade.uc.share.service.UserService");
         applicationConfig.setRegistry(registryConfig);
         referenceConfig.setApplication(applicationConfig);
@@ -109,7 +109,7 @@ public class RpcClient {
         //应该使用referenceConfig.setGeneric("true")代替
         referenceConfig.setGeneric("true");
         //设置异步，不必须，根据业务而定。
-//        referenceConfig.setAsync(true);
+        referenceConfig.setAsync(true);
         //设置超时时间
         referenceConfig.setTimeout(7000);
 
@@ -117,17 +117,17 @@ public class RpcClient {
         GenericService genericService = referenceConfig.get();
 
         //使用GenericService类对象的$invoke方法可以代替原方法使用
-        //第一个参数是需要调用的方法名
+        //第一个参数是需要调用的方法名,queryByUserId
         //第二个参数是需要调用的方法的参数类型数组，为String数组，里面存入参数的全类名。
         //第三个参数是需要调用的方法的参数数组，为Object数组，里面存入需要的参数。
-        Object result = genericService.$invoke("sayHello", new String[]{"java.lang.String"}, new Object[]{"416160586979148"});
+        Object result = genericService.$invoke("queryByUserId", new String[]{"java.lang.String"}, new Object[]{"416160586979148"});
         //使用CountDownLatch，如果使用同步调用则不需要这么做。
-//        CountDownLatch latch = new CountDownLatch(1);
+        CountDownLatch latch = new CountDownLatch(1);
         //获取结果
         CompletableFuture<String> future = RpcContext.getContext().getCompletableFuture();
         future.whenComplete((value, t) -> {
             System.err.println("invokeSayHello(whenComplete): " + value);
-//            latch.countDown();
+            latch.countDown();
         });
         //打印结果
         System.err.println("invokeSayHello(return): " + result);

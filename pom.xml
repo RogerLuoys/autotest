@@ -110,6 +110,16 @@
             <artifactId>dubbo</artifactId>
             <version>2.7.12</version>
         </dependency>
+        <dependency>
+            <groupId>org.apache.curator</groupId>
+            <artifactId>curator-framework</artifactId>
+            <version>4.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.curator</groupId>
+            <artifactId>curator-recipes</artifactId>
+            <version>4.0.0</version>
+        </dependency>
         <!--dubbo 相关包-->
 
         <!--excel 相关包-->
