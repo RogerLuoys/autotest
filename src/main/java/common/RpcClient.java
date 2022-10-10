@@ -95,15 +95,17 @@ public class RpcClient {
         //创建ApplicationConfig
         ApplicationConfig applicationConfig = new ApplicationConfig();
         applicationConfig.setName("generic-call-consumer");
-        //创建注册中心配置,zookeeper://118.24.117.181:2181
+        //创建注册中心配置,zookeeper://118.24.117.181:2181,dubbo://118.24.117.181:20881
         RegistryConfig registryConfig = new RegistryConfig();
-        registryConfig.setAddress("dubbo://118.24.117.181:20881");
+//        registryConfig.setAddress("zookeeper://10.199.142.107:2181");
         //创建服务引用配置
         ReferenceConfig<GenericService> referenceConfig = new ReferenceConfig<>();
         //设置接口,com.luoys.upgrade.uc.share.service.UserService
         referenceConfig.setInterface("com.luoys.upgrade.uc.share.service.UserService");
-        applicationConfig.setRegistry(registryConfig);
+//        applicationConfig.setRegistry(registryConfig);
         referenceConfig.setApplication(applicationConfig);
+//        referenceConfig.completeCompoundConfigs();
+        referenceConfig.setUrl("dubbo://118.24.117.181:20881/com.luoys.upgrade.uc.share.service.UserService");
         //重点：设置为泛化调用
         //注：不再推荐使用参数为布尔值的setGeneric函数
         //应该使用referenceConfig.setGeneric("true")代替
