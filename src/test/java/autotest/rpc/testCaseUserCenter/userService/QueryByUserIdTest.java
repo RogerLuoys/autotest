@@ -1,7 +1,5 @@
 package autotest.rpc.testCaseUserCenter.userService;
 
-import org.testng.Assert;
-import org.testng.Reporter;
 import org.testng.annotations.Test;
 import autotest.rpc.testCaseUserCenter.UserCenterTestBase;
 
@@ -42,8 +40,9 @@ public class QueryByUserIdTest extends UserCenterTestBase {
 
     @Test
     public void test() {
-        auto.rpc.invoke();
-
+        String result = auto.rpc.invoke("com.luoys.upgrade.uc.share.service.UserService#queryByUserId", "java.lang.String", "416160586979148");
+        String userId = auto.util.getFirstValue("userId", result);
+        auto.assertion.isEquals(userId, "416160586979148");
     }
 
 }

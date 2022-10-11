@@ -13,7 +13,7 @@ public class UserCenterTestBase extends RpcTestBase {
 
     @BeforeClass
     public void beforeClass() {
-
+        auto.rpc.setBaseURL(auto.config.RPC_UC_URL);
     }
 
 }

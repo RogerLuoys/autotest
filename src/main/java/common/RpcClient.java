@@ -47,6 +47,40 @@ public class RpcClient {
         }
     }
 
+    public String invokeOld2() {
+        //创建ApplicationConfig
+        ApplicationConfig applicationConfig = new ApplicationConfig();
+        applicationConfig.setName("generic-call-consumer");
+        //创建注册中心配置,zookeeper://118.24.117.181:2181,dubbo://118.24.117.181:20881
+        RegistryConfig registryConfig = new RegistryConfig();
+//        registryConfig.setAddress("zookeeper://10.199.142.107:2181");
+        //创建服务引用配置
+        ReferenceConfig<GenericService> referenceConfig = new ReferenceConfig<>();
+        //设置接口,com.luoys.upgrade.uc.share.service.UserService
+        referenceConfig.setInterface("com.luoys.upgrade.uc.share.service.UserService");
+//        applicationConfig.setRegistry(registryConfig);
+        referenceConfig.setApplication(applicationConfig);
+        referenceConfig.setUrl("dubbo://118.24.117.181:20881");
+        //重点：设置为泛化调用
+        //注：不再推荐使用参数为布尔值的setGeneric函数
+        //应该使用referenceConfig.setGeneric("true")代替
+        referenceConfig.setGeneric("true");
+        //设置超时时间
+        referenceConfig.setTimeout(7000);
+
+        //获取服务，由于是泛化调用，所以获取的一定是GenericService类型
+        GenericService genericService = referenceConfig.get();
+
+        //使用GenericService类对象的$invoke方法可以代替原方法使用
+        //第一个参数是需要调用的方法名,queryByUserId
+        //第二个参数是需要调用的方法的参数类型数组，为String数组，里面存入参数的全类名。
+        //第三个参数是需要调用的方法的参数数组，为Object数组，里面存入需要的参数。
+        Object result = genericService.$invoke("queryByUserId", new String[]{"java.lang.String"}, new Object[]{"416160586979148"});
+        //打印结果
+        System.out.println(JSON.toJSONString(result));
+        return JSON.toJSONString(result);
+    }
+
     public String invoke_template() throws InterruptedException {
         //创建ApplicationConfig
         ApplicationConfig applicationConfig = new ApplicationConfig();
@@ -91,29 +125,35 @@ public class RpcClient {
         return "";
     }
 
-    public String invoke() {
+    /**
+     * 泛化调用rpc接口
+     *
+     * @param fullLocation 完整调用地址，如 "dubbo://ip:port/interface#method"
+     * @param paramType 被测rpc接口的入参类型
+     * @param paramValue 被测rpc接口的入参
+     * @return jason格式调用结果
+     */
+    public String invoke(String fullLocation, String paramType, String paramValue) {
+        // 将完整调用地址，截成服务器地址、接口路径和方法名
+        String url = fullLocation.substring(0, fullLocation.lastIndexOf("/"));
+        String interfaceClass = fullLocation.substring(fullLocation.lastIndexOf("/") + 1, fullLocation.lastIndexOf("#"));
+        String methodName = fullLocation.substring(fullLocation.lastIndexOf("#") + 1);
+
         //创建ApplicationConfig
         ApplicationConfig applicationConfig = new ApplicationConfig();
         applicationConfig.setName("generic-call-consumer");
-        //创建注册中心配置,zookeeper://118.24.117.181:2181,dubbo://118.24.117.181:20881
-        RegistryConfig registryConfig = new RegistryConfig();
-//        registryConfig.setAddress("zookeeper://10.199.142.107:2181");
         //创建服务引用配置
         ReferenceConfig<GenericService> referenceConfig = new ReferenceConfig<>();
         //设置接口,com.luoys.upgrade.uc.share.service.UserService
-        referenceConfig.setInterface("com.luoys.upgrade.uc.share.service.UserService");
-//        applicationConfig.setRegistry(registryConfig);
+        referenceConfig.setInterface(interfaceClass);
         referenceConfig.setApplication(applicationConfig);
-//        referenceConfig.completeCompoundConfigs();
-        referenceConfig.setUrl("dubbo://118.24.117.181:20881/com.luoys.upgrade.uc.share.service.UserService");
+        referenceConfig.setUrl(url);
         //重点：设置为泛化调用
         //注：不再推荐使用参数为布尔值的setGeneric函数
         //应该使用referenceConfig.setGeneric("true")代替
         referenceConfig.setGeneric("true");
-        //设置异步，不必须，根据业务而定。
-        referenceConfig.setAsync(true);
         //设置超时时间
-        referenceConfig.setTimeout(7000);
+        referenceConfig.setTimeout(10000);
 
         //获取服务，由于是泛化调用，所以获取的一定是GenericService类型
         GenericService genericService = referenceConfig.get();
@@ -122,19 +162,11 @@ public class RpcClient {
         //第一个参数是需要调用的方法名,queryByUserId
         //第二个参数是需要调用的方法的参数类型数组，为String数组，里面存入参数的全类名。
         //第三个参数是需要调用的方法的参数数组，为Object数组，里面存入需要的参数。
-        Object result = genericService.$invoke("queryByUserId", new String[]{"java.lang.String"}, new Object[]{"416160586979148"});
-        //使用CountDownLatch，如果使用同步调用则不需要这么做。
-        CountDownLatch latch = new CountDownLatch(1);
-        //获取结果
-        CompletableFuture<String> future = RpcContext.getContext().getCompletableFuture();
-        future.whenComplete((value, t) -> {
-            System.err.println("invokeSayHello(whenComplete): " + value);
-            latch.countDown();
-        });
+        Object result = genericService.$invoke(methodName, new String[]{paramType}, new Object[]{paramValue});
         //打印结果
-        System.err.println("invokeSayHello(return): " + result);
-//        latch.await();
-        return "";
+        System.out.println(JSON.toJSONString(result));
+        referenceConfig.destroy();
+        return JSON.toJSONString(result);
     }
 
     /**
