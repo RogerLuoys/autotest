@@ -1,8 +1,5 @@
 package autotest.rpc.testCaseUserCenter.userService;
 
-import org.testng.Assert;
-import org.testng.Reporter;
-import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import autotest.rpc.testCaseUserCenter.UserCenterTestBase;
 
@@ -50,5 +47,19 @@ public class RegisterTest extends UserCenterTestBase {
 //        String message = auto.jsonUtil.getBaseData(result, "message");
 //        Assert.assertEquals(message, "登录名已被注册", "验证登录名重复注册结果");
 //    }
+
+    @Test(description = "正常注册")
+    public void test() {
+        // 数据还原，删除上次注册的用户
+        auto.sql.uc("delete from point where owner_id in (select user_id from user where login_name='DUBBOAuto')");
+        auto.sql.uc("delete from user where login_name='DUBBOAuto';");
+
+        // 调用接口注册
+        auto.rpc.invoke("com.luoys.upgrade.uc.share.service.UserService#register", "com.luoys.upgrade.uc.share.dto.UserDTO", "{\"userName\":\"接口自动化注册的用户名\",\"loginName\":\"DUBBOAuto\",\"password\":\"auto123456\"}");
+
+        // 校验结果
+        String password = auto.sql.uc("select pass_word from user where login_name='DUBBOAuto' and is_delete=0;");
+        auto.assertion.isEquals(password, "auto123456");
+    }
 
 }

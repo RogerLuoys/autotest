@@ -1,5 +1,7 @@
 package autotest.rpc.testCaseUserCenter.userService;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import org.testng.Assert;
 import org.testng.Reporter;
 import org.testng.annotations.BeforeClass;
@@ -46,5 +48,20 @@ public class ModifyUserTest extends UserCenterTestBase {
 //        String message = auto.jsonUtil.getBaseData(result, "message");
 //        Assert.assertEquals(message, "业务异常", "验证不传用户id修改");
 //    }
+
+    @Test(description = "正常修改名称")
+    public void test() {
+
+        // 数据还原
+        auto.sql.uc("update user set user_name='干旗人' where user_id='416170902167365';");
+
+        // 调rpc接口修改信息
+        auto.rpc.invoke("com.luoys.upgrade.uc.share.service.UserService#modifyUser", "com.luoys.upgrade.uc.share.dto.UserDTO", "{\"userName\":\"这是修改后的名字\",\"userId\":\"416170902167365\"}");
+
+        // 验证修改结果
+        String userName = auto.sql.uc("select user_name from user where user_id='416170902167365';");
+        auto.assertion.isEquals(userName, "这是修改后的名字");
+    }
+
 
 }
