@@ -1,16 +1,14 @@
 package autotest;
 
-import common.UiClient;
-import org.openqa.selenium.By;
 
 /**
  * 相当于总的PO，与util有区别
  */
 public class CommonFunction {
 
-    private UiClient ui;
+    private CommonUi ui;
 
-    public CommonFunction(UiClient ui) {
+    public CommonFunction(CommonUi ui) {
         this.ui = ui;
     }
 
