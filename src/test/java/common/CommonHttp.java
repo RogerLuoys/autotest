@@ -1,4 +1,4 @@
-package autotest;
+package common;
 
 import common.HttpClient;
 

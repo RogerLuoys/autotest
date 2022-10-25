@@ -5,7 +5,7 @@ import autotest.rpc.testCaseUserCenter.UserCenterTestBase;
 
 public class RegisterTest extends UserCenterTestBase {
 
-//    private final String serviceURL = auto.config.URL + "com.luoys.upgrade.uc.share.service.UserService";
+//    private final String serviceURL = config.Config.URL + "com.luoys.upgrade.uc.share.service.UserService";
 //    private final UserService userService = auto.rpc.getService(serviceURL, UserService.class);
 //
 //    @BeforeClass

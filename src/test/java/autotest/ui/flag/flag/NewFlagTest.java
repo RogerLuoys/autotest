@@ -26,7 +26,7 @@ public class NewFlagTest extends FlagTestBase {
         auto.ui.click("//span[text()='确 定']");
 
         Reporter.log("验证新增的flag是否存在");
-        auto.function.searchFlagByName("自动化新增FLAG测试");
+        auto.po.searchFlagByName("自动化新增FLAG测试");
         auto.util.sleep(3);
         auto.assertion.isElementExist("//div[text()='自动化新增FLAG测试']");
     }

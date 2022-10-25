@@ -13,6 +13,8 @@ public class AssertionClient {
 
     UiClient ui;
 
+    public AssertionClient() {}
+
     public AssertionClient (UiClient ui) {
         this.ui = ui;
     }

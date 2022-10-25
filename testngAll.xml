@@ -4,19 +4,23 @@
         <listener class-name="org.uncommons.reportng.HTMLReporter"/>
         <listener class-name="org.uncommons.reportng.JUnitXMLReporter"/>
     </listeners>
-    <test name="http">
-        <packages>
-            <package name="autotest.http.*" />
-        </packages>
-    </test>
+
     <test name="ui">
         <packages>
             <package name="autotest.ui.*" />
         </packages>
     </test>
+
+    <test name="http">
+        <packages>
+            <package name="autotest.http.*" />
+        </packages>
+    </test>
+
     <test name="rpc">
         <packages>
             <package name="autotest.rpc.*" />
         </packages>
     </test>
+
 </suite>

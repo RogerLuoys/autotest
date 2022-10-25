@@ -12,7 +12,7 @@ public class EditFlagWitnessTest extends FlagTestBase {
         auto.sql.flag("update flag_bind set witness_id=null, witness_name=null where flag_id='116166511224083';");
 
         Reporter.log("打开详情");
-        auto.function.openFlagDetail("自动化FLAG见证人编辑测试-勿删");
+        auto.po.openFlagDetail("自动化FLAG见证人编辑测试-勿删");
 
         Reporter.log("编辑见证人");
         auto.ui.click("//span[text()='+ 添加见证人']");
@@ -21,7 +21,7 @@ public class EditFlagWitnessTest extends FlagTestBase {
 
         Reporter.log("验证列表数据");
         auto.ui.click("//div[text()='返回列表']");
-        auto.function.searchFlagByName("自动化FLAG见证人编辑测试-勿删");
+        auto.po.searchFlagByName("自动化FLAG见证人编辑测试-勿删");
         auto.assertion.isElementExist("//div[text()='罗永胜']");
 
     }

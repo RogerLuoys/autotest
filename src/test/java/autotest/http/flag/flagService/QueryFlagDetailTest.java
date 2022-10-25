@@ -5,7 +5,7 @@ import autotest.http.flag.FlagTestBase;
 
 public class QueryFlagDetailTest extends FlagTestBase {
 
-//    private final String FullURL = auto.config.URL + "flag/queryFlagDetail";
+//    private final String FullURL = config.Config.URL + "flag/queryFlagDetail";
 //
 //    @Test(description = "查询包含周期任务的正常flag详情")
 //    void test1() {

@@ -22,7 +22,7 @@ public class NewHabitTest extends FlagTestBase {
         auto.ui.click("//span[text()='确 定']", 1);
 
         Reporter.log("验证习惯是否存在");
-//        auto.function.searchFlagByName("自动化新增习惯测试");
+//        auto.po.searchFlagByName("自动化新增习惯测试");
         //按名称搜索
         auto.ui.sendKey("//div[@id='pane-habit']//input[@placeholder='请输入名称']", "自动化新增习惯测试");
         auto.ui.click("//div[@id='pane-habit']//i[@class='el-icon-search']");

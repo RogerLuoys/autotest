@@ -6,7 +6,7 @@ import autotest.http.flag.FlagTestBase;
 
 public class NewTaskTest extends FlagTestBase {
 
-//    private final String FullURL = auto.config.URL + "task/newTask";
+//    private final String FullURL = config.Config.URL + "task/newTask";
 
 //    @BeforeClass
 //    void resetData() {

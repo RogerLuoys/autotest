@@ -7,7 +7,7 @@ import autotest.http.flag.FlagTestBase;
 
 public class ModifyTaskTest extends FlagTestBase {
 
-//    private final String FullURL = auto.config.URL + "task/modifyTask";
+//    private final String FullURL = config.Config.URL + "task/modifyTask";
 
 //    @BeforeClass
 //    void resetData() {

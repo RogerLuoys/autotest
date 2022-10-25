@@ -5,7 +5,7 @@ import autotest.http.flag.FlagTestBase;
 
 public class ModifyFlagBasicTest extends FlagTestBase {
 
-//    private final String FullURL = auto.config.URL + "flag/modifyFlagBasic";
+//    private final String FullURL = config.Config.URL + "flag/modifyFlagBasic";
 //
 //    @BeforeClass
 //    void resetData() {

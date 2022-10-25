@@ -5,7 +5,7 @@ import org.testng.annotations.Test;
 
 public class SearchTest extends BaiDuTestBase {
 
-    @Test
+    @Test(description = "校验搜索")
     public void test() {
         auto.ui.sendKey("//input[@id='kw']", "测试");
         auto.ui.sendKey("//input[@id='kw']", "{ENTER}");

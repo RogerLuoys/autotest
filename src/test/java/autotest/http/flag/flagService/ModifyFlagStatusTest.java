@@ -6,7 +6,7 @@ import autotest.http.flag.FlagTestBase;
 
 public class ModifyFlagStatusTest extends FlagTestBase {
 
-//    private final String FullURL = auto.config.URL + "flag/modifyFlagStatus";
+//    private final String FullURL = config.Config.URL + "flag/modifyFlagStatus";
 //
 //    @BeforeClass
 //    void resetData() {

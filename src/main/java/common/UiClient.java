@@ -2,10 +2,13 @@ package common;
 
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.*;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
@@ -17,23 +20,82 @@ public class UiClient {
     private int forceTimeOut = 1;
 
     /**
+     * 进程睡眠，强制等待
+     *
+     * @param second 等待的时间-单位秒
+     */
+    private void forceWait(int second) {
+        try {
+            Thread.sleep((long) second * 1000);
+        } catch (InterruptedException e) {
+            log.error("\n---->线程睡眠异常");
+            e.printStackTrace();
+        }
+    }
+
+    private static void killLinuxProcess(String processName) {
+    }
+
+    private static void killWindowsProcess(String processName) {
+
+    }
+
+    /**
      * 返回driver实例
-     * 如果获取时未初始化过，则先初始化再返回
      */
     public WebDriver getDriver() {
-        if (driver == null) {
-            this.driver = AutomationBase.getChromeDriver();
-        }
         return this.driver;
     }
 
     /**
-     * 初始化
+     * 初始化，参数默认
      *
      */
     public void init() {
         if (driver == null) {
-            this.driver = AutomationBase.getChromeDriver();
+            // 设置启动参数
+            ChromeOptions chromeOptions = new ChromeOptions();
+            if (System.getProperty("os.name").toLowerCase().contains("linux")) {
+                killLinuxProcess("chromedriver");
+                chromeOptions.addArguments("--kiosk");
+                chromeOptions.addArguments("--disable-dev-shm-usage");
+            } else if (System.getProperty("os.name").toLowerCase().contains("windows")) {
+                killWindowsProcess("chromedriver");
+            }
+//            chromeOptions.addArguments("window-size=1920*1080");
+            // 解决DevToolsActivePort文件不存在的报错
+            chromeOptions.addArguments("--no-sandbox");
+            // 设置启动浏览器空白页
+            chromeOptions.addArguments("url=data:,");
+            // 最大化
+            chromeOptions.addArguments("--start-maximized");
+            // 谷歌禁用GPU加速
+            chromeOptions.addArguments("--disable-gpu");
+            // 隐藏滚动条
+            chromeOptions.addArguments("--hide-scrollbars");
+            // 后台运行
+            chromeOptions.addArguments("--headless");
+            // 去掉Chrome提示受到自动软件控制
+            chromeOptions.addArguments("disable-infobars");
+            driver = new ChromeDriver(chromeOptions);
+        }
+    }
+
+    /**
+     * 初始化，参数默认
+     *
+     */
+    public void init(String... options) {
+        if (driver == null) {
+            // 设置启动参数
+            ChromeOptions chromeOptions = new ChromeOptions();
+            if (System.getProperty("os.name").toLowerCase().contains("linux")) {
+                killLinuxProcess("chromedriver");
+            } else if (System.getProperty("os.name").toLowerCase().contains("windows")) {
+                killWindowsProcess("chromedriver");
+            }
+            chromeOptions.addArguments(Arrays.asList(options));
+            driver = new ChromeDriver(chromeOptions);
         }
     }
 
@@ -57,20 +119,6 @@ public class UiClient {
         driver.close();
         driver.quit();
         driver = null;
-    }
-
-    /**
-     * 进程睡眠，强制等待
-     *
-     * @param second 等待的时间-单位秒
-     */
-    private void forceWait(int second) {
-        try {
-            Thread.sleep((long) second * 1000);
-        } catch (InterruptedException e) {
-            log.error("\n---->线程睡眠异常");
-//            e.printStackTrace();
-        }
     }
 
     /**

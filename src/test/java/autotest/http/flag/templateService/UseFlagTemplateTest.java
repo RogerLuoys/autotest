@@ -6,7 +6,7 @@ import autotest.http.flag.FlagTestBase;
 
 public class UseFlagTemplateTest extends FlagTestBase {
 
-//    private final String FullURL = auto.config.URL + "template/useFlagTemplate";
+//    private final String FullURL = config.Config.URL + "template/useFlagTemplate";
 
 //    @BeforeClass
 //    void resetData() {

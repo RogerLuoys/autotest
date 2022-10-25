@@ -1,6 +1,6 @@
-package autotest;
+package common;
 
-import common.UiClient;
+import config.Config;
 
 /**
  * 相当于base page
@@ -8,15 +8,13 @@ import common.UiClient;
  */
 public class CommonUi extends UiClient {
 
-    CommonConfig config = new CommonConfig();
-
     // 这里可以加自定义方法
     @Override
     public void openUrl(String url) {
         if (url.toLowerCase().startsWith("http")) {
             super.openUrl(url);
         } else {
-            super.openUrl(config.WEB_FLAG_URL + url);
+            super.openUrl(Config.UI_FLAG_URL + url);
         }
     }
 }

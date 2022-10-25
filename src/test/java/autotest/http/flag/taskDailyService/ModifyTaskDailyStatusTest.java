@@ -6,7 +6,7 @@ import autotest.http.flag.FlagTestBase;
 
 public class ModifyTaskDailyStatusTest extends FlagTestBase {
 
-//    private final String FullURL = auto.config.URL + "taskDaily/modifyTaskDailyStatus";
+//    private final String FullURL = config.Config.URL + "taskDaily/modifyTaskDailyStatus";
 //
 //    @BeforeClass
 //    void resetData() {

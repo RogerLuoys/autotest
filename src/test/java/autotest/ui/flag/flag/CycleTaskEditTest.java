@@ -1,10 +1,10 @@
 package autotest.ui.flag.flag;
 
+import autotest.ui.flag.FlagTestBase;
 import org.testng.Reporter;
 import org.testng.annotations.Test;
-import autotest.ui.UITestBase;
 
-public class CycleTaskEditTest extends UITestBase {
+public class CycleTaskEditTest extends FlagTestBase {
 
     // 除一个@Test注解外，不能有别的Testng注解
 //    @BeforeMethod
@@ -18,7 +18,7 @@ public class CycleTaskEditTest extends UITestBase {
         auto.sql.flag("update task set task_name='自动化编辑任务测试-勿删', description=null, point=1, cycle='1' where task_id='216166577939354';");
 
         Reporter.log("打开详情");
-        auto.function.openFlagDetail("自动化FLAG任务编辑测试-勿删");
+        auto.po.openFlagDetail("自动化FLAG任务编辑测试-勿删");
 
         Reporter.log("进入编辑弹窗");
         auto.ui.click("//span[text()='编辑']");

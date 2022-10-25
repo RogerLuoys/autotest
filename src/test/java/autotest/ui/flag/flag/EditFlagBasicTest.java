@@ -12,7 +12,7 @@ public class EditFlagBasicTest extends FlagTestBase {
         auto.sql.flag("update flag set description=null, expected=null, actual=null, priority=1 where flag_id='116165510085692';");
 
         Reporter.log("打开详情");
-        auto.function.openFlagDetail("自动化FLAG基本信息编辑测试-勿删");
+        auto.po.openFlagDetail("自动化FLAG基本信息编辑测试-勿删");
 
         Reporter.log("编辑优先级");
         auto.ui.click("//input[@placeholder='选择优先级']");
@@ -30,7 +30,7 @@ public class EditFlagBasicTest extends FlagTestBase {
 
         Reporter.log("验证列表数据");
         auto.ui.click("//div[text()='返回列表']");
-        auto.function.searchFlagByName("自动化FLAG基本信息编辑测试-勿删");
+        auto.po.searchFlagByName("自动化FLAG基本信息编辑测试-勿删");
         auto.assertion.isElementExist("//div[text()='自动化测试描述']");
         auto.assertion.isElementExist("//div[contains(text(),'非常重要')]");
         auto.assertion.isElementExist("//div[text()='自动化测试目标']");

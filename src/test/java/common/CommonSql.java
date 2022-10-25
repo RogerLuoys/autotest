@@ -1,6 +1,6 @@
-package autotest;
+package common;
 
-import common.DbClient;
+import config.Config;
 
 /**
  * 执行sql的数据库客户端
@@ -9,7 +9,6 @@ import common.DbClient;
 public class CommonSql {
 
     // 不占太多资源，可以直接实例化
-    private final static CommonConfig config = new CommonConfig();
     private final static DbClient flag = new DbClient();
     private final static DbClient dzb = new DbClient();
     private final static DbClient uc = new DbClient();
@@ -25,10 +24,10 @@ public class CommonSql {
      */
     public String flag(String sql) {
         // 使用时才初始化
-        flag.init(config.DB_FLAG_DRIVER,
-                config.DB_FLAG_URL,
-                config.DB_FLAG_USERNAME,
-                config.DB_FLAG_PASSWORD);
+        flag.init(Config.DB_FLAG_DRIVER,
+                Config.DB_FLAG_URL,
+                Config.DB_FLAG_USERNAME,
+                Config.DB_FLAG_PASSWORD);
         return flag.execute(sql);
     }
 
@@ -43,10 +42,10 @@ public class CommonSql {
      */
     public String uc(String sql) {
         // 使用时才初始化
-        flag.init(config.DB_FLAG_DRIVER,
-                config.DB_FLAG_URL,
-                config.DB_FLAG_USERNAME,
-                config.DB_FLAG_PASSWORD);
+        flag.init(Config.DB_FLAG_DRIVER,
+                Config.DB_FLAG_URL,
+                Config.DB_FLAG_USERNAME,
+                Config.DB_FLAG_PASSWORD);
         return flag.execute(sql);
     }
 
@@ -61,10 +60,11 @@ public class CommonSql {
      */
     public String dzb(String sql) {
         // 使用时才初始化
-        dzb.init(config.DB_DZB_DRIVER,
-                config.DB_DZB_URL,
-                config.DB_DZB_USERNAME,
-                config.DB_DZB_PASSWORD);
+        dzb.init(Config.DB_DZB_DRIVER,
+                Config.DB_DZB_URL,
+                Config.DB_DZB_USERNAME,
+                Config.DB_DZB_PASSWORD);
         return dzb.execute(sql);
     }
+
 }

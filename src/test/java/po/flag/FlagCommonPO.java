@@ -1,14 +1,12 @@
-package autotest;
+package po.flag;
 
+import common.CommonUi;
 
-/**
- * 相当于总的PO，与util有区别
- */
-public class CommonFunction {
+public class FlagCommonPO {
 
     private CommonUi ui;
 
-    public CommonFunction(CommonUi ui) {
+    public FlagCommonPO(CommonUi ui) {
         this.ui = ui;
     }
 

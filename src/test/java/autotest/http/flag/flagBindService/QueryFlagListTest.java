@@ -6,7 +6,7 @@ import autotest.http.flag.FlagTestBase;
 
 public class QueryFlagListTest extends FlagTestBase {
 
-//    private final String FullURL = auto.config.URL + "flagBind/queryFlagList";
+//    private final String FullURL = config.Config.URL + "flagBind/queryFlagList";
 //
 //    @Test(description = "正常查看列表")
 //    void test1() {

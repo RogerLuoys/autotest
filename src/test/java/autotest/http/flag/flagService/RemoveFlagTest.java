@@ -5,7 +5,7 @@ import autotest.http.flag.FlagTestBase;
 
 public class RemoveFlagTest extends FlagTestBase {
 
-//    private final String FullURL = auto.config.URL + "flag/removeFlag";
+//    private final String FullURL = config.Config.URL + "flag/removeFlag";
 //
 //    @BeforeClass
 //    void resetData() {
