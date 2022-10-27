@@ -6,7 +6,7 @@
     </listeners>
     <test name="user center all test case test">
         <packages>
-            <package name="autotest.rpc.testCaseUserCenter.*" />
+            <package name="testCase.rpc.testCaseUserCenter.*" />
         </packages>
     </test>
 </suite>

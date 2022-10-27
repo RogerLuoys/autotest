@@ -6,12 +6,12 @@
     </listeners>
     <test name="flag">
         <packages>
-            <package name="autotest.ui.flag.*" />
+            <package name="testCase.ui.flag.*" />
         </packages>
     </test>
     <test name="baidu">
         <packages>
-            <package name="autotest.ui.baidu.*" />
+            <package name="testCase.ui.baidu.*" />
         </packages>
     </test>
 </suite>

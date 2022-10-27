@@ -7,19 +7,19 @@
 
     <test name="ui">
         <packages>
-            <package name="autotest.ui.*" />
+            <package name="testCase.ui.*" />
         </packages>
     </test>
 
     <test name="http">
         <packages>
-            <package name="autotest.http.*" />
+            <package name="testCase.http.*" />
         </packages>
     </test>
 
     <test name="rpc">
         <packages>
-            <package name="autotest.rpc.*" />
+            <package name="testCase.rpc.*" />
         </packages>
     </test>
 

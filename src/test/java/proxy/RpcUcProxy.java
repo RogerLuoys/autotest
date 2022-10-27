@@ -1,9 +1,9 @@
 package proxy;
 
-import common.CommonAssertion;
-import common.CommonRpc;
-import common.CommonSql;
-import common.CommonUtil;
+import client.CommonAssertion;
+import client.CommonRpc;
+import client.CommonSql;
+import client.CommonUtil;
 
 /**
  * 各种资源使用到时才初始化

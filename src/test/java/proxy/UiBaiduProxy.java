@@ -1,6 +1,6 @@
 package proxy;
 
-import common.*;
+import client.*;
 import po.baidu.BaiduCommonPO;
 
 /**

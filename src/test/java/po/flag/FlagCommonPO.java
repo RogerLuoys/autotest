@@ -1,6 +1,6 @@
 package po.flag;
 
-import common.CommonUi;
+import client.CommonUi;
 
 public class FlagCommonPO {
 

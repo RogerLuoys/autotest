@@ -6,7 +6,7 @@
     </listeners>
     <test name="flag all test case test">
         <packages>
-            <package name="autotest.http.testCaseFlag.*" />
+            <package name="testCase.http.testCaseFlag.*" />
         </packages>
     </test>
 </suite>

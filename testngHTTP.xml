@@ -6,12 +6,12 @@
     </listeners>
     <test name="flag">
         <packages>
-            <package name="autotest.http.flag.*" />
+            <package name="testCase.http.flag.*" />
         </packages>
     </test>
     <test name="express">
         <packages>
-            <package name="autotest.http.express.*" />
+            <package name="testCase.http.express.*" />
         </packages>
     </test>
 </suite>

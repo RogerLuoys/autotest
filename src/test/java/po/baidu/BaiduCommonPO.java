@@ -1,6 +1,6 @@
 package po.baidu;
 
-import common.CommonUi;
+import client.CommonUi;
 
 public class BaiduCommonPO {
 

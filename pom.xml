@@ -16,6 +16,7 @@
     </properties>
 
     <dependencies>
+
         <!--http接口调用-->
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>
