@@ -5,12 +5,12 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 @Slf4j
 public class UiClient {
@@ -98,6 +98,42 @@ public class UiClient {
             driver = new ChromeDriver(chromeOptions);
         }
     }
+
+
+    private WebDriver initH5() {
+        log.info("start chrome  H5 browser..");
+        Map<String, Object> chromeOptions = new HashMap();
+        Map<String, String> mobileEmulation = new HashMap();
+        mobileEmulation.put("deviceName", "H5_DEVICE_NAME");
+        chromeOptions.put("mobileEmulation", mobileEmulation);
+        List<String> args = new ArrayList();
+        args.add("--no-sandbox");
+            args.add("--headless");
+            args.add("--disable-gpu");
+
+        if (System.getProperty("os.name").toLowerCase().indexOf("linux") >= 0) {
+            args.add("--kiosk");
+            args.add("--disable-dev-shm-usage");
+        } else if (System.getProperty("os.name").toLowerCase().indexOf("mac") >= 0) {
+            args.add("--kiosk");
+        }
+
+        chromeOptions.put("args", args);
+        DesiredCapabilities capabilities = DesiredCapabilities.chrome();
+        capabilities.setCapability("goog:chromeOptions", chromeOptions);
+
+        try {
+            this.driver = new ChromeDriver(capabilities);
+            this.driver.manage().timeouts().implicitlyWait(1L, TimeUnit.MILLISECONDS);
+            log.info(" chrome  H5 browser started");
+        } catch (Exception var6) {
+            log.error("启动 chrome H5 driver failed !");
+            log.error(var6.getMessage());
+        }
+
+        return this.driver;
+    }
+
 
     /**
      * 刷新页面
