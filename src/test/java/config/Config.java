@@ -22,6 +22,8 @@ public class Config {
     // 主网站
     public static final String UI_BAIDU_URL = "https://www.baidu.com/";
 
+    // jue jin ui 自动化专用
+    public static final String UI_JUE_JIN_URL = "https://juejin.cn/";
 
     // flag http 自动化专用
     // 接口域名(调用环境)

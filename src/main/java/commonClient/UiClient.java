@@ -49,7 +49,6 @@ public class UiClient {
 
     /**
      * 初始化，参数默认
-     *
      */
     public void init() {
         if (driver == null) {
@@ -83,7 +82,6 @@ public class UiClient {
 
     /**
      * 初始化，参数默认
-     *
      */
     public void init(String... options) {
         if (driver == null) {
@@ -100,16 +98,16 @@ public class UiClient {
     }
 
 
-    private WebDriver initH5() {
+    public void initH5() {
         log.info("start chrome  H5 browser..");
         Map<String, Object> chromeOptions = new HashMap();
         Map<String, String> mobileEmulation = new HashMap();
-        mobileEmulation.put("deviceName", "H5_DEVICE_NAME");
+        mobileEmulation.put("deviceName", "Galaxy S5");
         chromeOptions.put("mobileEmulation", mobileEmulation);
         List<String> args = new ArrayList();
         args.add("--no-sandbox");
-            args.add("--headless");
-            args.add("--disable-gpu");
+//        args.add("--headless");
+        args.add("--disable-gpu");
 
         if (System.getProperty("os.name").toLowerCase().indexOf("linux") >= 0) {
             args.add("--kiosk");
@@ -131,7 +129,6 @@ public class UiClient {
             log.error(var6.getMessage());
         }
 
-        return this.driver;
     }
 
 
@@ -142,7 +139,6 @@ public class UiClient {
      */
     public void openUrl(String url) {
         this.driver.get(url);
-        forceWait(3);
     }
 
     /**
@@ -254,15 +250,15 @@ public class UiClient {
      * @param locator 自选元素定位方式
      * @param key     输入的字符串
      */
-    private void sendKey(By locator, CharSequence key) {
+    private void sendKey(By locator, String key) {
         forceWait(forceTimeOut);
         WebElement webElement = getElement(locator);
         WebDriverWait webDriverWait = new WebDriverWait(driver, DEFAULT_WAIT_TIME);
         webDriverWait.until(ExpectedConditions.visibilityOf(webElement));
-        if (key.equals("{ENTER}")) {
+        if (key.equalsIgnoreCase("{ENTER}")) {
             webElement.sendKeys("\ue007");
             return;
-        } else if (key.equals("{TAB}")) {
+        } else if (key.equalsIgnoreCase("{TAB}")) {
             webElement.sendKeys("\ue004");
             return;
         }
@@ -293,7 +289,7 @@ public class UiClient {
      * @param xpath 元素的xpath
      * @param key   输入的字符串
      */
-    public void sendKey(String xpath, CharSequence key) {
+    public void sendKey(String xpath, String key) {
         sendKey(By.xpath(xpath), key);
     }
 
@@ -367,6 +363,7 @@ public class UiClient {
 
     /**
      * 先移动到控件位置，再点击
+     *
      * @param locator 元素位置
      */
     private void moveAndClick(By locator) {
@@ -401,21 +398,21 @@ public class UiClient {
 
     /**
      * 执行java script脚本
+     *
      * @param jsExecString 脚本
      */
     public void execJs(String jsExecString) {
-        ((JavascriptExecutor)driver).executeScript(jsExecString, new Object[0]);
+        ((JavascriptExecutor) driver).executeScript(jsExecString, new Object[0]);
     }
 
     public void execJs(WebElement webElement, String jsExecString) {
-        ((JavascriptExecutor)driver).executeScript(jsExecString, new Object[]{webElement});
+        ((JavascriptExecutor) driver).executeScript(jsExecString, new Object[]{webElement});
     }
 
 
     /**
      * 切换到最后一个标签页，并关闭其它；
      * 如果只有一个标签页，则不处理
-     *
      */
     public void switchTab() {
         Set<String> windows = driver.getWindowHandles();
