@@ -14,4 +14,9 @@
             <package name="testCase.ui.baidu.*" />
         </packages>
     </test>
+    <test name="juejin">
+        <packages>
+            <package name="testCase.ui.juejin.*" />
+        </packages>
+    </test>
 </suite>

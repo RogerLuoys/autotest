@@ -1,37 +1,42 @@
 package commonClient;
 
+import io.netty.util.ResourceLeakDetector;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeDriverLogLevel;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.time.Duration;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 @Slf4j
 public class UiClient {
 
-    private final Long DEFAULT_WAIT_TIME = 30L;
+    private final Duration actionDuration = Duration.ofSeconds(30L);
+    private final Duration elementDuration = Duration.ofSeconds(10L);
+    WebDriverWait webDriverWait = null;
     private WebDriver driver = null;
-    private int forceTimeOut = 1;
+//    private int forceTimeOut = 1;
 
-    /**
-     * 进程睡眠，强制等待
-     *
-     * @param second 等待的时间-单位秒
-     */
-    private void forceWait(int second) {
-        try {
-            Thread.sleep((long) second * 1000);
-        } catch (InterruptedException e) {
-            log.error("\n---->线程睡眠异常");
-            e.printStackTrace();
-        }
-    }
+//    /**
+//     * 进程睡眠，强制等待
+//     *
+//     * @param second 等待的时间-单位秒
+//     */
+//    private void forceWait(int second) {
+//        try {
+//            Thread.sleep((long) second * 1000);
+//        } catch (InterruptedException e) {
+//            log.error("\n---->线程睡眠异常");
+//            e.printStackTrace();
+//        }
+//    }
 
     private static void killLinuxProcess(String processName) {
     }
@@ -51,33 +56,41 @@ public class UiClient {
      * 初始化，参数默认
      */
     public void init() {
-        if (driver == null) {
-            // 设置启动参数
-            ChromeOptions chromeOptions = new ChromeOptions();
-            if (System.getProperty("os.name").toLowerCase().contains("linux")) {
-                killLinuxProcess("chromedriver");
-                chromeOptions.addArguments("--kiosk");
-                chromeOptions.addArguments("--disable-dev-shm-usage");
-            } else if (System.getProperty("os.name").toLowerCase().contains("windows")) {
-                killWindowsProcess("chromedriver");
-            }
-//            chromeOptions.addArguments("window-size=1920*1080");
-            // 解决DevToolsActivePort文件不存在的报错
-            chromeOptions.addArguments("--no-sandbox");
-            // 设置启动浏览器空白页
-            chromeOptions.addArguments("url=data:,");
-            // 最大化
-            chromeOptions.addArguments("--start-maximized");
-            // 谷歌禁用GPU加速
-            chromeOptions.addArguments("--disable-gpu");
-            // 隐藏滚动条
-            chromeOptions.addArguments("--hide-scrollbars");
-            // 后台运行
-            chromeOptions.addArguments("--headless");
-            // 去掉Chrome提示受到自动软件控制
-            chromeOptions.addArguments("disable-infobars");
-            driver = new ChromeDriver(chromeOptions);
+        if (driver != null) {
+            return;
         }
+        // 设置启动参数
+        ChromeOptions chromeOptions = new ChromeOptions();
+        if (System.getProperty("os.name").toLowerCase().contains("linux")) {
+            killLinuxProcess("chromedriver");
+            // 无地址栏
+            chromeOptions.addArguments("--kiosk");
+        } else if (System.getProperty("os.name").toLowerCase().contains("windows")) {
+            killWindowsProcess("chromedriver");
+        }
+//            chromeOptions.addArguments("window-size=1920*1080");
+        // 解决DevToolsActivePort文件不存在的报错
+        chromeOptions.addArguments("--no-sandbox");
+        // 设置启动浏览器空白页
+        chromeOptions.addArguments("url=data:,");
+        // 最大化
+        chromeOptions.addArguments("--start-maximized");
+        // 谷歌禁用GPU加速
+        chromeOptions.addArguments("--disable-gpu");
+        // 隐藏滚动条
+        chromeOptions.addArguments("--hide-scrollbars");
+        // 后台运行
+            chromeOptions.addArguments("--headless");
+        // 去掉Chrome提示受到自动软件控制
+//        chromeOptions.addArguments("--disable-infobars");
+//        chromeOptions.addArguments("log-level=3");
+        chromeOptions.addArguments("--disable-dev-shm-usage");
+        chromeOptions.setLogLevel(ChromeDriverLogLevel.WARNING);
+        driver = new ChromeDriver(chromeOptions);
+        // 针对查找页面元素的隐式等待
+        driver.manage().timeouts().implicitlyWait(elementDuration);
+        webDriverWait = new WebDriverWait(driver, actionDuration);
+//        ResourceLeakDetector.setLevel(ResourceLeakDetector.Level.DISABLED);
     }
 
     /**
@@ -94,41 +107,24 @@ public class UiClient {
             }
             chromeOptions.addArguments(Arrays.asList(options));
             driver = new ChromeDriver(chromeOptions);
-        }
+            // 针对查找页面元素的隐式等待
+            driver.manage().timeouts().implicitlyWait(elementDuration);}
     }
 
 
     public void initH5() {
-        log.info("start chrome  H5 browser..");
-        Map<String, Object> chromeOptions = new HashMap();
-        Map<String, String> mobileEmulation = new HashMap();
-        mobileEmulation.put("deviceName", "Galaxy S5");
-        chromeOptions.put("mobileEmulation", mobileEmulation);
-        List<String> args = new ArrayList();
-        args.add("--no-sandbox");
-//        args.add("--headless");
-        args.add("--disable-gpu");
-
-        if (System.getProperty("os.name").toLowerCase().indexOf("linux") >= 0) {
-            args.add("--kiosk");
-            args.add("--disable-dev-shm-usage");
-        } else if (System.getProperty("os.name").toLowerCase().indexOf("mac") >= 0) {
-            args.add("--kiosk");
-        }
-
-        chromeOptions.put("args", args);
-        DesiredCapabilities capabilities = DesiredCapabilities.chrome();
-        capabilities.setCapability("goog:chromeOptions", chromeOptions);
-
-        try {
-            this.driver = new ChromeDriver(capabilities);
-            this.driver.manage().timeouts().implicitlyWait(1L, TimeUnit.MILLISECONDS);
-            log.info(" chrome  H5 browser started");
-        } catch (Exception var6) {
-            log.error("启动 chrome H5 driver failed !");
-            log.error(var6.getMessage());
-        }
-
+        ChromeOptions chromeOptions = new ChromeOptions();
+        chromeOptions.addArguments("--disable-dev-shm-usage");
+        chromeOptions.addArguments("--no-sandbox");
+        chromeOptions.addArguments("--disable-gpu");
+        chromeOptions.addArguments("--disable-gpu");
+        Map<String, String> mobileEmulationMap = new HashMap<>();
+        mobileEmulationMap.put("deviceName", "Samsung Galaxy S8+");
+        chromeOptions.setExperimentalOption("mobileEmulation", mobileEmulationMap);
+//        options.addArguments("--headless");
+        driver = new ChromeDriver(chromeOptions);
+        // 针对查找页面元素的隐式等待
+        driver.manage().timeouts().implicitlyWait(elementDuration);
     }
 
 
@@ -148,7 +144,6 @@ public class UiClient {
         if (driver == null) {
             return;
         }
-        driver.close();
         driver.quit();
         driver = null;
     }
@@ -163,6 +158,29 @@ public class UiClient {
         return getElements(locator).get(0);
     }
 
+//    /**
+//     * 获取同类别的自动化元素列表
+//     *
+//     * @param locator 自选元素定位方式
+//     * @return 所有符合条件的元素
+//     */
+//    private List<WebElement> getElements(By locator) {
+////        forceWait(forceTimeOut);
+//        List<WebElement> elements = null;
+//        // 多找几次元素
+//        for (int i = 0; i < 3; i++) {
+//            // 首次寻找不用等待
+//            if (i != 0) {
+//                forceWait(3);
+//            }
+//            elements = driver.findElements(locator);
+//            if (elements != null && elements.size() > 0) {
+//                return elements;
+//            }
+//        }
+//        return elements;
+//    }
+
     /**
      * 获取同类别的自动化元素列表
      *
@@ -170,20 +188,7 @@ public class UiClient {
      * @return 所有符合条件的元素
      */
     private List<WebElement> getElements(By locator) {
-        forceWait(forceTimeOut);
-        List<WebElement> elements = null;
-        // 多找几次元素
-        for (int i = 0; i < 3; i++) {
-            // 首次寻找不用等待
-            if (i != 0) {
-                forceWait(3);
-            }
-            elements = driver.findElements(locator);
-            if (elements != null && elements.size() > 0) {
-                return elements;
-            }
-        }
-        return elements;
+        return driver.findElements(locator);
     }
 
     /**
@@ -202,28 +207,14 @@ public class UiClient {
      * @param locator 自选元素定位方式
      */
     private void click(By locator, int index) {
-        forceWait(forceTimeOut);
+//        forceWait(forceTimeOut);
+//        WebDriverWait webDriverWait = new WebDriverWait(driver, actionDuration);
+        webDriverWait.until(ExpectedConditions.elementToBeClickable(locator));
         WebElement webElement = getElements(locator).get(index);
-        WebDriverWait webDriverWait = new WebDriverWait(driver, DEFAULT_WAIT_TIME);
-        webDriverWait.until(ExpectedConditions.elementToBeClickable(webElement));
         Actions actions = new Actions(driver);
         actions.click(webElement);
         actions.perform();
     }
-
-//    /**
-//     * 鼠标点击指定元素
-//     *
-//     * @param element 元素对象
-//     */
-//    public void click(WebElement element) {
-//        forceWait(forceTimeOut);
-//        WebDriverWait webDriverWait = new WebDriverWait(driver, DEFAULT_WAIT_TIME);
-//        webDriverWait.until(ExpectedConditions.elementToBeClickable(element));
-//        Actions actions = new Actions(driver);
-//        actions.click(element);
-//        actions.perform();
-//    }
 
     /**
      * 鼠标点击指定元素
@@ -251,10 +242,10 @@ public class UiClient {
      * @param key     输入的字符串
      */
     private void sendKey(By locator, String key) {
-        forceWait(forceTimeOut);
+//        forceWait(forceTimeOut);
+//        WebDriverWait webDriverWait = new WebDriverWait(driver, actionDuration);
+        webDriverWait.until(ExpectedConditions.elementToBeClickable(locator));
         WebElement webElement = getElement(locator);
-        WebDriverWait webDriverWait = new WebDriverWait(driver, DEFAULT_WAIT_TIME);
-        webDriverWait.until(ExpectedConditions.visibilityOf(webElement));
         if (key.equalsIgnoreCase("{ENTER}")) {
             webElement.sendKeys("\ue007");
             return;
@@ -293,60 +284,16 @@ public class UiClient {
         sendKey(By.xpath(xpath), key);
     }
 
-//    /**
-//     * 先清除输入框的内容，再往指定元素中输入字符
-//     *
-//     * @param locator 自选元素定位方式
-//     * @param key     输入的字符串
-//     */
-//    public void sendKeyWithClear(By locator, CharSequence key) {
-//        forceWait(forceTimeOut);
-//        WebElement webElement = driver.findElement(locator);
-//        WebDriverWait webDriverWait = new WebDriverWait(driver, DEFAULT_WAIT_TIME);
-//        webDriverWait.until(ExpectedConditions.visibilityOf(webElement));
-//        webElement.clear();
-//        Actions actions = new Actions(driver);
-//        actions.sendKeys(webElement, key);
-//        actions.perform();
-//    }
-
-//    /**
-//     * 先清除输入框的内容，再往指定元素中输入字符
-//     *
-//     * @param element 元素对象
-//     * @param key     输入的字符串
-//     */
-//    public void sendKeyWithClear(WebElement element, CharSequence key) {
-//        forceWait(forceTimeOut);
-//        WebDriverWait webDriverWait = new WebDriverWait(driver, DEFAULT_WAIT_TIME);
-//        webDriverWait.until(ExpectedConditions.visibilityOf(element));
-//        element.clear();
-//        Actions actions = new Actions(driver);
-//        actions.sendKeys(element, key);
-//        actions.perform();
-//    }
-
-//    /**
-//     * 先清除输入框的内容，再往指定元素中输入字符
-//     *
-//     * @param xpath 元素的xpath
-//     * @param key   输入的字符串
-//     */
-//    public void sendKeyWithClear(String xpath, CharSequence key) {
-//        sendKeyWithClear(By.xpath(xpath), key);
-//
-//    }
-
     /**
      * 鼠标移动到指定元素上
      *
      * @param locator 自选元素定位方式
      */
     private void moveToElement(By locator) {
-        forceWait(forceTimeOut);
+//        forceWait(forceTimeOut);
+//        WebDriverWait webDriverWait = new WebDriverWait(driver, actionDuration);
+        webDriverWait.until(ExpectedConditions.invisibilityOfElementLocated(locator));
         WebElement webElement = driver.findElement(locator);
-        WebDriverWait webDriverWait = new WebDriverWait(driver, DEFAULT_WAIT_TIME);
-        webDriverWait.until(ExpectedConditions.visibilityOf(webElement));
         Actions actions = new Actions(driver);
         actions.moveToElement(webElement);
         actions.perform();
@@ -367,10 +314,10 @@ public class UiClient {
      * @param locator 元素位置
      */
     private void moveAndClick(By locator) {
-        forceWait(forceTimeOut);
+//        forceWait(forceTimeOut);
+//        WebDriverWait webDriverWait = new WebDriverWait(driver, actionDuration);
+        webDriverWait.until(ExpectedConditions.elementToBeClickable(locator));
         WebElement webElement = driver.findElement(locator);
-        WebDriverWait webDriverWait = new WebDriverWait(driver, DEFAULT_WAIT_TIME);
-        webDriverWait.until(ExpectedConditions.elementToBeClickable(webElement));
         Actions actions = new Actions(driver);
         actions.moveToElement(webElement).click();
         actions.perform();
@@ -384,17 +331,6 @@ public class UiClient {
     public void moveAndClick(String xpath) {
         moveAndClick(By.xpath(xpath));
     }
-
-//    /**
-//     * 判断指定元素是否存在，如果找到多个元素，也返回true
-//     *
-//     * @param locator 自选元素定位方式
-//     * @return 存在-true，不存在-false
-//     */
-//    private Boolean isElementExist(By locator) {
-//        List<WebElement> webElementList = getElements(locator);
-//        return webElementList.size() > 0;
-//    }
 
     /**
      * 执行java script脚本
@@ -439,7 +375,7 @@ public class UiClient {
         this.driver.manage().addCookie(cookie);
     }
 
-    public Cookie getCookieNamed(String cookieName) {
+    public Cookie getCookieByName(String cookieName) {
         return this.driver.manage().getCookieNamed(cookieName);
     }
 

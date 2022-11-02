@@ -29,9 +29,17 @@
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-java</artifactId>
-            <version>3.141.59</version>
+            <version>4.5.0</version>
         </dependency>
         <!--selenium自动化-->
+
+        <!--appium自动化-->
+        <dependency>
+            <groupId>io.appium</groupId>
+            <artifactId>java-client</artifactId>
+            <version>8.1.1</version>
+        </dependency>
+        <!--appium自动化-->
 
         <!--jdbc template相关的包-->
         <dependency>
