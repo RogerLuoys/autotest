@@ -35,7 +35,7 @@ public class FlagCommonPO {
         //按名称搜索
         ui.sendKey("//div[@id='pane-flag']//input[@placeholder='请输入名称']", flagName);
         ui.click("//div[@id='pane-flag']//i[@class='el-icon-search']");
-//        forceWait(2);
+        forceWait(2);
         //点编辑
         ui.click("//div[@id='pane-flag']//span[text()='编辑']", 1);
 //        forceWait(2);

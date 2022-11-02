@@ -18,32 +18,17 @@ import java.util.concurrent.TimeUnit;
 @Slf4j
 public class UiClient {
 
+    // 显式等待最大时间
     private final Duration actionDuration = Duration.ofSeconds(30L);
+    // 隐式等待最大时间
     private final Duration elementDuration = Duration.ofSeconds(10L);
-    WebDriverWait webDriverWait = null;
+    private WebDriverWait webDriverWait = null;
     private WebDriver driver = null;
-//    private int forceTimeOut = 1;
 
-//    /**
-//     * 进程睡眠，强制等待
-//     *
-//     * @param second 等待的时间-单位秒
-//     */
-//    private void forceWait(int second) {
-//        try {
-//            Thread.sleep((long) second * 1000);
-//        } catch (InterruptedException e) {
-//            log.error("\n---->线程睡眠异常");
-//            e.printStackTrace();
-//        }
+//    private static void killLinuxProcess(String processName) {
 //    }
-
-    private static void killLinuxProcess(String processName) {
-    }
-
-    private static void killWindowsProcess(String processName) {
-
-    }
+//    private static void killWindowsProcess(String processName) {
+//    }
 
     /**
      * 返回driver实例
@@ -61,13 +46,13 @@ public class UiClient {
         }
         // 设置启动参数
         ChromeOptions chromeOptions = new ChromeOptions();
-        if (System.getProperty("os.name").toLowerCase().contains("linux")) {
-            killLinuxProcess("chromedriver");
-            // 无地址栏
-            chromeOptions.addArguments("--kiosk");
-        } else if (System.getProperty("os.name").toLowerCase().contains("windows")) {
-            killWindowsProcess("chromedriver");
-        }
+//        if (System.getProperty("os.name").toLowerCase().contains("linux")) {
+//            killLinuxProcess("chromedriver");
+//            // 无地址栏
+//            chromeOptions.addArguments("--kiosk");
+//        } else if (System.getProperty("os.name").toLowerCase().contains("windows")) {
+//            killWindowsProcess("chromedriver");
+//        }
 //            chromeOptions.addArguments("window-size=1920*1080");
         // 解决DevToolsActivePort文件不存在的报错
         chromeOptions.addArguments("--no-sandbox");
@@ -80,7 +65,7 @@ public class UiClient {
         // 隐藏滚动条
         chromeOptions.addArguments("--hide-scrollbars");
         // 后台运行
-            chromeOptions.addArguments("--headless");
+        chromeOptions.addArguments("--headless");
         // 去掉Chrome提示受到自动软件控制
 //        chromeOptions.addArguments("--disable-infobars");
 //        chromeOptions.addArguments("log-level=3");
@@ -100,11 +85,11 @@ public class UiClient {
         if (driver == null) {
             // 设置启动参数
             ChromeOptions chromeOptions = new ChromeOptions();
-            if (System.getProperty("os.name").toLowerCase().contains("linux")) {
-                killLinuxProcess("chromedriver");
-            } else if (System.getProperty("os.name").toLowerCase().contains("windows")) {
-                killWindowsProcess("chromedriver");
-            }
+//            if (System.getProperty("os.name").toLowerCase().contains("linux")) {
+//                killLinuxProcess("chromedriver");
+//            } else if (System.getProperty("os.name").toLowerCase().contains("windows")) {
+//                killWindowsProcess("chromedriver");
+//            }
             chromeOptions.addArguments(Arrays.asList(options));
             driver = new ChromeDriver(chromeOptions);
             // 针对查找页面元素的隐式等待
@@ -121,7 +106,7 @@ public class UiClient {
         Map<String, String> mobileEmulationMap = new HashMap<>();
         mobileEmulationMap.put("deviceName", "Samsung Galaxy S8+");
         chromeOptions.setExperimentalOption("mobileEmulation", mobileEmulationMap);
-//        options.addArguments("--headless");
+        chromeOptions.addArguments("--headless");
         driver = new ChromeDriver(chromeOptions);
         // 针对查找页面元素的隐式等待
         driver.manage().timeouts().implicitlyWait(elementDuration);
@@ -209,7 +194,7 @@ public class UiClient {
     private void click(By locator, int index) {
 //        forceWait(forceTimeOut);
 //        WebDriverWait webDriverWait = new WebDriverWait(driver, actionDuration);
-        webDriverWait.until(ExpectedConditions.elementToBeClickable(locator));
+//        webDriverWait.until(ExpectedConditions.invisibilityOfElementLocated(locator));
         WebElement webElement = getElements(locator).get(index);
         Actions actions = new Actions(driver);
         actions.click(webElement);
