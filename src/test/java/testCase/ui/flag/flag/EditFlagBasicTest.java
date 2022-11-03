@@ -32,7 +32,7 @@ public class EditFlagBasicTest extends FlagTestBase {
         auto.ui.click("//div[text()='返回列表']");
         auto.po.searchFlagByName("自动化FLAG基本信息编辑测试-勿删");
         auto.assertion.isElementExist("//div[text()='自动化测试描述']");
-        auto.assertion.isElementExist("//div[contains(text(),'非常重要')]");
+        auto.assertion.isElementExist("//div[contains(text(),'非常重要')]"); // 这里是bug导致失败
         auto.assertion.isElementExist("//div[text()='自动化测试目标']");
 
     }

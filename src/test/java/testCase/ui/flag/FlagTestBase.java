@@ -31,13 +31,14 @@ public class FlagTestBase {
     public void supperBeforeClass() {
         System.out.println("\n--------> 开始执行 Flag UI 前置步骤\n");
 
-        auto.ui.init();
+        auto.ui.initChrome(Config.UI_FLAG_OPTIONS);
 
         //1 清理cookies
         auto.ui.clearCookies();
         auto.ui.openUrl(Config.UI_FLAG_URL);
-        auto.util.sleep(5);
         auto.po.loginFlag(Config.UI_FLAG_USERNAME, Config.UI_FLAG_PASSWORD);
+        // 设置本地存储，以屏蔽部分提示
+        auto.ui.executeJS("localStorage.setItem('guide','close')");
 
         System.out.println("\n--------> 开始执行 Flag UI 自动化用例\n");
     }

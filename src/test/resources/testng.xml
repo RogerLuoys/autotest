@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<suite name="All Suite" verbose="1" parallel="classes" thread-count="3" configfailurepolicy="continue">
+    <listeners>
+        <listener class-name="org.uncommons.reportng.HTMLReporter"/>
+        <listener class-name="org.uncommons.reportng.JUnitXMLReporter"/>
+    </listeners>
+    <test name="All test">
+<!--        <packages>-->
+<!--            <package name="testCase.rpc.testCaseUserCenter.*" />-->
+<!--            <package name="testCase.http.testCaseFlag.*" />-->
+<!--            <package name="autotest.oldCode.ui.testCaseUI.*" />-->
+<!--        </packages>-->
+        <classes>
+            <class name="testCase.http.flag.pointService.QueryPointSummaryTest" />
+        </classes>
+    </test>
+</suite>

@@ -27,11 +27,10 @@ public class BaiDuTestBase {
     public void supperBeforeClass() {
         System.out.println("\n--------> 开始执行百度 UI 前置步骤\n");
 
-        auto.ui.init();
+        auto.ui.initChrome(Config.UI_BAIDU_OPTIONS);
 
         auto.ui.clearCookies();
         auto.ui.openUrl(Config.UI_BAIDU_URL);
-        auto.util.sleep(3);
 
         System.out.println("\n--------> 开始执行百度 UI 自动化用例\n");
     }

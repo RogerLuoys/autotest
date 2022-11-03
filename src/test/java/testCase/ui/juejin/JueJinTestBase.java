@@ -26,7 +26,7 @@ public class JueJinTestBase {
     public void supperBeforeClass() {
 
         // webDriver 初始化
-        auto.ui.initH5();
+        auto.ui.initChrome(Config.UI_JUE_JIN_OPTIONS);
         auto.ui.setBaseURL(Config.UI_JUE_JIN_URL);
 
         //1 清理cookies

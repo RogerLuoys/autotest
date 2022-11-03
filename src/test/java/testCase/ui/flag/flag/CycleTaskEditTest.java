@@ -7,11 +7,6 @@ import org.testng.annotations.Test;
 public class CycleTaskEditTest extends FlagTestBase {
 
     // 除一个@Test注解外，不能有别的Testng注解
-//    @BeforeMethod
-//    void prepareEnv() {
-//        auto.flagDB.update("update task set task_name='自动化编辑任务测试-勿删', description=null, point=1, cycle='1' where task_id='216166577939354';");
-//    }
-
     @Test(description = "编辑flag周期任务")
     void editTask() {
         // 数据还原

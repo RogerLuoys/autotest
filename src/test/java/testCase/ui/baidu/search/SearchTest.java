@@ -10,6 +10,7 @@ public class SearchTest extends BaiDuTestBase {
         auto.ui.sendKey("//input[@id='kw']", "测试");
         auto.ui.sendKey("//input[@id='kw']", "{ENTER}");
         auto.util.sleep(3);
-        auto.assertion.isElementExist("//*[@aria-label='测试，汉语词语，百度百科']");
+        auto.assertion.isElementExist("//em[text()='测试']");
+        auto.assertion.isElementExist("//*[text()='广告']");
     }
 }

@@ -6,24 +6,35 @@ package config;
 public class Config {
 
     // flag ui 自动化专用
-    // 主网站
+    // 环境域名
     public static final String UI_FLAG_URL = "http://118.24.117.181/";
     // 登录名
     public static final String UI_FLAG_USERNAME = "UITester";
     // 登录密码
     public static final String UI_FLAG_PASSWORD = "123456";
-    // webdriver启动参数
-    public static final String[] DRIVER_OPTIONS = {"--kiosk", "--disable-dev-shm-usage", "window-size=1920*1080",
+    // webdriver启动参数,"--headless"
+    public static final String[] UI_FLAG_OPTIONS = {"--disable-dev-shm-usage",
             "--no-sandbox", "url=data:,", "--start-maximized", "--disable-gpu", "--hide-scrollbars",
-            "--headless", "disable-infobars"};
+            "disable-infobars","--headless"};
 
 
     // baidu ui 自动化专用
-    // 主网站
+    // 环境域名
     public static final String UI_BAIDU_URL = "https://www.baidu.com/";
+    // webdriver启动参数,"--headless"
+    public static final String[] UI_BAIDU_OPTIONS = {"--disable-dev-shm-usage",
+            "--no-sandbox", "url=data:,", "--start-maximized", "--disable-gpu", "--hide-scrollbars",
+            "disable-infobars","--headless"};
+
 
     // jue jin ui 自动化专用
+    // 环境域名
     public static final String UI_JUE_JIN_URL = "https://juejin.cn/";
+    // 启动参数
+    public static final String[] UI_JUE_JIN_OPTIONS = {"--disable-dev-shm-usage",
+            "--no-sandbox", "url=data:,", "--start-maximized", "--disable-gpu", "--hide-scrollbars",
+            "disable-infobars", "deviceName,Samsung Galaxy S8+","--headless"};
+
 
     // flag http 自动化专用
     // 接口域名(调用环境)
