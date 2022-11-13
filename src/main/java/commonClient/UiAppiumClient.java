@@ -23,15 +23,25 @@ public class UiAppiumClient {
     private AppiumDriver driver = null;
     private Actions actions = null;
 
+    /**
+     * 进程睡眠，强制等待
+     *
+     * @param millis 等待的时间-单位豪秒
+     */
+    private void sleep(long millis) {
+        try {
+            Thread.sleep(millis);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void init() {
         DesiredCapabilities desiredCapabilities = new DesiredCapabilities();
-//        desiredCapabilities.setCapability(CapabilityType.BROWSER_NAME, "");
         desiredCapabilities.setCapability("platformName", "Android"); //指定测试平台
         desiredCapabilities.setCapability("deviceName", "127.0.0.1:7555"); //指定测试机的ID,通过adb命令`adb devices`获取
-//        cap.setCapability("platformVersion", "6.0.1");
 
 //        cap.setCapability("app", "C:\\other\\q391m11market01xtg101s.apk");
-        //将上面获取到的包名和Activity名设置为值?????
         desiredCapabilities.setCapability("appPackage", "com.qmxsppa.novelreader");
         desiredCapabilities.setCapability("appActivity", "com.marketplaceapp.novelmatthew.mvp.ui.activity.main.AndroidAppActivity");
 
@@ -50,28 +60,16 @@ public class UiAppiumClient {
         driver.manage().timeouts().implicitlyWait(implicitlyDuration);
     }
 
-
-    /**
-     * 进程睡眠，强制等待
-     *
-     * @param millis 等待的时间-单位豪秒
-     */
-    private void sleep(long millis) {
-        try {
-            Thread.sleep(millis);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+    public void quit() {
+        if (driver == null) {
+            return;
         }
+        driver.quit();
+        driver = null;
     }
 
-    @Test
-    public void test() {
-        init();
-        // 全民阅读官网apk
-        driver.findElement(By.xpath("//*[@text='同意并进入']")).click();
-        driver.findElement(By.xpath("//*[@text='立即进入']")).click();
-        driver.findElement(By.xpath("//*[@text='好的']")).click();
+    public void click(String xpath) {
+        driver.findElement(By.xpath(xpath)).click();
     }
-
 
 }
