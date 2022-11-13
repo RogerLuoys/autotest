@@ -1,4 +1,4 @@
-package testCase.rpc.testCaseUserCenter;
+package testCase.rpc.userCenter;
 
 import config.Config;
 import org.testng.annotations.BeforeClass;

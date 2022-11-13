@@ -1,7 +1,7 @@
-package testCase.rpc.testCaseUserCenter.userService;
+package testCase.rpc.userCenter.userService;
 
 import org.testng.annotations.Test;
-import testCase.rpc.testCaseUserCenter.UserCenterTestBase;
+import testCase.rpc.userCenter.UserCenterTestBase;
 
 public class RegisterTest extends UserCenterTestBase {
 

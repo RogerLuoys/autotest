@@ -1,6 +1,6 @@
-package testCase.rpc.testCaseUserCenter.userService;
+package testCase.rpc.userCenter.userService;
 
-import testCase.rpc.testCaseUserCenter.UserCenterTestBase;
+import testCase.rpc.userCenter.UserCenterTestBase;
 import org.testng.annotations.Test;
 
 public class QueryByUserIdAbsentTest extends UserCenterTestBase {

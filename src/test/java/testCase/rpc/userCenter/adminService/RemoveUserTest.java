@@ -1,7 +1,7 @@
-package testCase.rpc.testCaseUserCenter.adminService;
+package testCase.rpc.userCenter.adminService;
 
 import org.testng.annotations.Test;
-import testCase.rpc.testCaseUserCenter.UserCenterTestBase;
+import testCase.rpc.userCenter.UserCenterTestBase;
 
 
 public class RemoveUserTest extends UserCenterTestBase {
