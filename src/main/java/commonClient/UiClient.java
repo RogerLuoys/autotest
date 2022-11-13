@@ -43,7 +43,7 @@ public class UiClient {
      *
      * @param millis 等待的时间-单位豪秒
      */
-    public void sleep(long millis) {
+    private void sleep(long millis) {
         try {
             Thread.sleep(millis);
         } catch (InterruptedException e) {
