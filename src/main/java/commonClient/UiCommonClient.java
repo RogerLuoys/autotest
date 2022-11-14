@@ -54,6 +54,19 @@ public class UiCommonClient {
         }
     }
 
+    private void settings() {
+        // 初始化actions
+        actions = new Actions(driver);
+        // 隐式等待设置
+        driver.manage().timeouts().implicitlyWait(implicitlyDuration);
+        // 显示等待初始化
+        webDriverWait = new WebDriverWait(driver, explicitDuration);
+        // 流畅等待初始化
+        wait = new FluentWait<WebDriver>(driver)
+                .withTimeout(fluentDuration)
+                .pollingEvery(Duration.ofSeconds(1))
+                .ignoring(NoSuchElementException.class);
+    }
 
     /**
      * 返回driver实例
@@ -91,17 +104,7 @@ public class UiCommonClient {
         chromeOptions.addArguments("--disable-dev-shm-usage");
         chromeOptions.setLogLevel(ChromeDriverLogLevel.OFF);
         driver = new ChromeDriver(chromeOptions);
-        // 初始化actions
-        actions = new Actions(driver);
-        // 隐式等待设置
-        driver.manage().timeouts().implicitlyWait(implicitlyDuration);
-        // 显示等待初始化
-        webDriverWait = new WebDriverWait(driver, explicitDuration);
-        // 流畅等待初始化
-        wait = new FluentWait<WebDriver>(driver)
-                .withTimeout(fluentDuration)
-                .pollingEvery(Duration.ofSeconds(1))
-                .ignoring(NoSuchElementException.class);
+        this.settings();
 //        ResourceLeakDetector.setLevel(ResourceLeakDetector.Level.DISABLED);
     }
 
@@ -129,17 +132,8 @@ public class UiCommonClient {
         chromeOptions.setExperimentalOption("mobileEmulation", mobileEmulationMap);
 
         driver = new ChromeDriver(chromeOptions);
-        // 初始化actions
-        actions = new Actions(driver);
-        // 隐式等待设置
-        driver.manage().timeouts().implicitlyWait(implicitlyDuration);
-        // 显式等待初始化
-        webDriverWait = new WebDriverWait(driver, explicitDuration);
-        // 流畅等待初始化
-        wait = new FluentWait<WebDriver>(driver)
-                .withTimeout(fluentDuration)
-                .pollingEvery(Duration.ofSeconds(1))
-                .ignoring(NoSuchElementException.class);
+        this.settings();
+
     }
 
     /**
@@ -160,17 +154,8 @@ public class UiCommonClient {
         chromeOptions.setExperimentalOption("mobileEmulation", mobileEmulationMap);
         chromeOptions.addArguments("--headless");
         driver = new ChromeDriver(chromeOptions);
-        // 初始化actions
-        actions = new Actions(driver);
-        // 隐式等待设置
-        driver.manage().timeouts().implicitlyWait(implicitlyDuration);
-        // 显示等待初始化
-        webDriverWait = new WebDriverWait(driver, explicitDuration);
-        // 流畅等待初始化
-        wait = new FluentWait<WebDriver>(driver)
-                .withTimeout(fluentDuration)
-                .pollingEvery(Duration.ofSeconds(1))
-                .ignoring(NoSuchElementException.class);
+        this.settings();
+
     }
 
     /**
@@ -178,6 +163,7 @@ public class UiCommonClient {
      * 如果已初始化过，则跳过
      */
     public void initAndroid() {
+        // 连模拟器命令 adb connect 127.0.0.1:7555
         DesiredCapabilities desiredCapabilities = new DesiredCapabilities();
         desiredCapabilities.setCapability("platformName", "Android"); //指定测试平台
         desiredCapabilities.setCapability("deviceName", "127.0.0.1:7555"); //指定测试机的ID,通过adb命令`adb devices`获取
@@ -195,10 +181,8 @@ public class UiCommonClient {
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
-        // 初始化actions
-        actions = new Actions(driver);
-        // 隐式等待设置
-        driver.manage().timeouts().implicitlyWait(implicitlyDuration);
+        this.settings();
+
     }
 
     /**
