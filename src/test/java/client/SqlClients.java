@@ -1,18 +1,18 @@
 package client;
 
-import commonClient.DbClient;
+import commonClient.SqlCommonClient;
 import config.Config;
 
 /**
  * 执行sql的数据库客户端
  * 每个数据库只对应一个client实例，所以用static
  */
-public class CommonSql {
+public class SqlClients {
 
     // 不占太多资源，可以直接实例化
-    private final static DbClient flag = new DbClient();
-    private final static DbClient dzb = new DbClient();
-    private final static DbClient uc = new DbClient();
+    private final static SqlCommonClient flag = new SqlCommonClient();
+    private final static SqlCommonClient dzb = new SqlCommonClient();
+    private final static SqlCommonClient uc = new SqlCommonClient();
 
     /**
      * 在flag数据库中执sql/n

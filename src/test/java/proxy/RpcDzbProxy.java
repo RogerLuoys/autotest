@@ -1,9 +1,9 @@
 package proxy;
 
-import client.CommonAssertion;
-import client.CommonRpc;
-import client.CommonSql;
-import client.CommonUtil;
+import client.AssertionClient;
+import client.RpcClient;
+import client.SqlClients;
+import client.UtilClient;
 
 /**
  * 各种资源使用到时才初始化
@@ -13,9 +13,9 @@ public class RpcDzbProxy {
 
     // 传参小于等于3个，传参类型只用String或Integer，返回只用String
 
-    public CommonRpc rpc = new CommonRpc();
-    public CommonSql sql = new CommonSql();
-    public CommonAssertion assertion = new CommonAssertion();
-    public CommonUtil util = new CommonUtil();
+    public RpcClient rpc = new RpcClient();
+    public SqlClients sql = new SqlClients();
+    public AssertionClient assertion = new AssertionClient();
+    public UtilClient util = new UtilClient();
 
 }

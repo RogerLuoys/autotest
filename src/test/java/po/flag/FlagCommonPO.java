@@ -1,12 +1,12 @@
 package po.flag;
 
-import client.CommonUi;
+import client.UiClient;
 
 public class FlagCommonPO {
 
-    private CommonUi ui;
+    private UiClient ui;
 
-    public FlagCommonPO(CommonUi ui) {
+    public FlagCommonPO(UiClient ui) {
         this.ui = ui;
     }
 

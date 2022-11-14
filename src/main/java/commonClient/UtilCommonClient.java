@@ -10,7 +10,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 @Slf4j
-public class UtilClient {
+public class UtilCommonClient {
 
 
     /**

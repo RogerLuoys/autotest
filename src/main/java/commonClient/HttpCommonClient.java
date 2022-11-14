@@ -22,7 +22,7 @@ import java.util.Map;
 //3 设置
 //4 发送请求
 @Slf4j
-public class HttpClient {
+public class HttpCommonClient {
 
     /**
      * 执行http get请求

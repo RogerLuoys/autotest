@@ -1,11 +1,11 @@
 package client;
 
-import commonClient.HttpClient;
+import commonClient.HttpCommonClient;
 
 /**
  * 发起请求时初始化资源，请求结束后关闭
  */
-public class CommonHttp extends HttpClient {
+public class HttpClient extends HttpCommonClient {
     // 这里可以加自定义方法
 
     String baseURL;

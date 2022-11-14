@@ -1,13 +1,12 @@
 package po.reader;
 
-import client.CommonUi;
-import client.CommonUiAppium;
+import client.UiClient;
 
 public class ReaderCommonPO {
 
-    private CommonUiAppium ui;
+    private UiClient ui;
 
-    public ReaderCommonPO(CommonUiAppium ui) {
+    public ReaderCommonPO(UiClient ui) {
         this.ui = ui;
     }
 

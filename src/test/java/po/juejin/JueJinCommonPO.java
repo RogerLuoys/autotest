@@ -1,12 +1,12 @@
 package po.juejin;
 
-import client.CommonUi;
+import client.UiClient;
 
 public class JueJinCommonPO {
 
-    private CommonUi ui;
+    private UiClient ui;
 
-    public JueJinCommonPO(CommonUi ui) {
+    public JueJinCommonPO(UiClient ui) {
         this.ui = ui;
     }
 

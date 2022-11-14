@@ -12,7 +12,7 @@ import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CountDownLatch;
 
-public class RpcClient {
+public class RpcCommonClient {
 
     private static final String DEFAULT_NAME = "AutomationTester";
 

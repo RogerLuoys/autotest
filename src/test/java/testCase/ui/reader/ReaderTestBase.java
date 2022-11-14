@@ -20,7 +20,8 @@ public class ReaderTestBase {
 
         //1 套件开始执行时，再实例化代理类
         auto = new UiReaderProxy();
-
+        // 全民阅读官网apk
+        auto.ui.initAndroid();
     }
 
     @BeforeClass(description = "--", alwaysRun = true)

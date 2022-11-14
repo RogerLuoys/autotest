@@ -1,9 +1,9 @@
 package proxy;
 
-import client.CommonAssertion;
-import client.CommonHttp;
-import client.CommonSql;
-import client.CommonUtil;
+import client.AssertionClient;
+import client.HttpClient;
+import client.SqlClients;
+import client.UtilClient;
 
 /**
  * 各种资源使用到时才初始化
@@ -13,9 +13,9 @@ public class HttpFlagProxy {
 
     // 传参小于等于3个，传参类型只用String或Integer，返回只用String
 
-    public CommonHttp http = new CommonHttp();
-    public CommonSql sql = new CommonSql();
-    public CommonAssertion assertion = new CommonAssertion();
-    public CommonUtil util = new CommonUtil();
+    public HttpClient http = new HttpClient();
+    public SqlClients sql = new SqlClients();
+    public AssertionClient assertion = new AssertionClient();
+    public UtilClient util = new UtilClient();
 
 }

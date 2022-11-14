@@ -1,13 +1,12 @@
 package client;
 
-import commonClient.UiClient;
-import config.Config;
+import commonClient.UiCommonClient;
 
 /**
  * 相当于base page
  * 需要在UI相关套件执行前实例化内部的webdriver，且套件结束后关闭资源
  */
-public class CommonUi extends UiClient {
+public class UiClient extends UiCommonClient {
     // 这里可以加自定义方法或参数
 
     private String baseURL = null;

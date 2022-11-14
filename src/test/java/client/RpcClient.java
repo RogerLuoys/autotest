@@ -1,11 +1,11 @@
 package client;
 
-import commonClient.RpcClient;
+import commonClient.RpcCommonClient;
 
 /**
  * 请求时才初始化资源，结束后关闭
  */
-public class CommonRpc extends RpcClient {
+public class RpcClient extends RpcCommonClient {
     // 这里可以加自定义方法
 
     String baseURL;

@@ -1,5 +1,7 @@
 package commonClient;
 
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 
@@ -9,13 +11,13 @@ import java.util.List;
  * 自定义断言
  * 也可以继承Assert类
  */
-public class AssertionClient {
+public class AssertionCommonClient {
 
-    UiClient ui;
+    UiCommonClient ui;
 
-    public AssertionClient() {}
+    public AssertionCommonClient() {}
 
-    public AssertionClient (UiClient ui) {
+    public AssertionCommonClient (UiCommonClient ui) {
         this.ui = ui;
     }
 

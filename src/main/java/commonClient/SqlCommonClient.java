@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 @Slf4j
-public class DbClient {
+public class SqlCommonClient {
 
     private JdbcTemplate jdbcTemplate = null;
     private DriverManagerDataSource dataSource = null;
@@ -52,17 +52,16 @@ public class DbClient {
      *
      */
     public void init(String driver, String url, String userName, String password) {
-        if (jdbcTemplate == null) {
-            jdbcTemplate = new JdbcTemplate();
+        if (jdbcTemplate != null) {
+            return;
         }
-        if (dataSource == null) {
-            dataSource = new DriverManagerDataSource();
-            dataSource.setDriverClassName(driver);
-            dataSource.setUrl(url);
-            dataSource.setUsername(userName);
-            dataSource.setPassword(password);
-            jdbcTemplate.setDataSource(dataSource);
-        }
+        jdbcTemplate = new JdbcTemplate();
+        dataSource = new DriverManagerDataSource();
+        dataSource.setDriverClassName(driver);
+        dataSource.setUrl(url);
+        dataSource.setUsername(userName);
+        dataSource.setPassword(password);
+        jdbcTemplate.setDataSource(dataSource);
     }
 
 

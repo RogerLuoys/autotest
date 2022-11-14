@@ -1,5 +1,6 @@
 package commonClient;
 
+import io.appium.java_client.android.AndroidDriver;
 import io.netty.util.ResourceLeakDetector;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.*;
@@ -14,13 +15,15 @@ import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.time.Duration;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 
 @Slf4j
-public class UiClient {
+public class UiCommonClient {
 
     // 显式等待最大时间(有问题，偶尔会失效)
     private final Duration explicitDuration = Duration.ofSeconds(30L);
@@ -60,7 +63,7 @@ public class UiClient {
     }
 
     /**
-     * 初始化webdriver，参数默认；
+     * 用ChromeDriver初始化webdriver，参数默认，web模式；
      * 如果已初始化过，则跳过
      */
     public void initChromeWeb() {
@@ -103,7 +106,7 @@ public class UiClient {
     }
 
     /**
-     * 自带参数初始化
+     * 用ChromeDriver初始化webdriver，自定义参数
      * 如果已初始化过，则跳过
      */
     public void initChrome(String... options) {
@@ -140,7 +143,7 @@ public class UiClient {
     }
 
     /**
-     * 初始化webdriver，参数默认；
+     * 用ChromeDriver初始化webdriver，参数默认，H5模式；
      * 如果已初始化过，则跳过
      */
     public void initChromeH5() {
@@ -170,6 +173,33 @@ public class UiClient {
                 .ignoring(NoSuchElementException.class);
     }
 
+    /**
+     * 用AndroidDriver初始化webdriver，参数默认；
+     * 如果已初始化过，则跳过
+     */
+    public void initAndroid() {
+        DesiredCapabilities desiredCapabilities = new DesiredCapabilities();
+        desiredCapabilities.setCapability("platformName", "Android"); //指定测试平台
+        desiredCapabilities.setCapability("deviceName", "127.0.0.1:7555"); //指定测试机的ID,通过adb命令`adb devices`获取
+
+//        cap.setCapability("app", "C:\\other\\q391m11market01xtg101s.apk");
+        desiredCapabilities.setCapability("appPackage", "com.qmxsppa.novelreader");
+        desiredCapabilities.setCapability("appActivity", "com.marketplaceapp.novelmatthew.mvp.ui.activity.main.AndroidAppActivity");
+
+        //A new session could not be created的解决方法
+//        cap.setCapability("appWaitActivity", "com.qmxsppa.novelreader");
+//        //每次启动时覆盖session，否则第二次后运行会报错不能新建session
+//        cap.setCapability("sessionOverride", true);
+        try {
+            driver = new AndroidDriver(new URL("http://localhost:4723/wd/hub"), desiredCapabilities);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        // 初始化actions
+        actions = new Actions(driver);
+        // 隐式等待设置
+        driver.manage().timeouts().implicitlyWait(implicitlyDuration);
+    }
 
     /**
      * 刷新页面

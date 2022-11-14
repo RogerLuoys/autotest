@@ -1,12 +1,12 @@
 package po.baidu;
 
-import client.CommonUi;
+import client.UiClient;
 
 public class BaiduCommonPO {
 
-    private CommonUi ui;
+    private UiClient ui;
 
-    public BaiduCommonPO(CommonUi ui) {
+    public BaiduCommonPO(UiClient ui) {
         this.ui = ui;
     }
 
