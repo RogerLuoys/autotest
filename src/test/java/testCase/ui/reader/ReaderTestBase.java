@@ -1,11 +1,9 @@
 package testCase.ui.reader;
 
-import config.Config;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeSuite;
-import proxy.UiJueJinProxy;
 import proxy.UiReaderProxy;
 
 public class ReaderTestBase {

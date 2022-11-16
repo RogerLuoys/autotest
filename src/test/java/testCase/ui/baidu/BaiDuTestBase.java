@@ -1,6 +1,5 @@
 package testCase.ui.baidu;
 
-import config.Config;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeClass;
@@ -27,10 +26,10 @@ public class BaiDuTestBase {
     public void supperBeforeClass() {
         System.out.println("\n--------> 开始执行百度 UI 前置步骤\n");
 
-        auto.ui.initChrome(Config.UI_BAIDU_OPTIONS);
+        auto.ui.initChrome(Config.OPTIONS);
 
         auto.ui.clearCookies();
-        auto.ui.openUrl(Config.UI_BAIDU_URL);
+        auto.ui.openUrl(Config.URL);
 
         System.out.println("\n--------> 开始执行百度 UI 自动化用例\n");
     }

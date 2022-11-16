@@ -1,6 +1,5 @@
 package testCase.rpc.userCenter;
 
-import config.Config;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeSuite;
 import proxy.RpcUcProxy;
@@ -24,7 +23,7 @@ public class UserCenterTestBase {
 
     @BeforeClass
     public void beforeClass() {
-        auto.rpc.setBaseURL(Config.RPC_UC_URL);
+        auto.rpc.setBaseURL(Config.URL);
     }
 
 }

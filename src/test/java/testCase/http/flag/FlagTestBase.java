@@ -1,6 +1,5 @@
 package testCase.http.flag;
 
-import config.Config;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeSuite;
 import proxy.HttpFlagProxy;
@@ -25,6 +24,6 @@ public class FlagTestBase {
     @BeforeClass
     public void beforeClass() {
         // 指定环境
-        auto.http.setBaseURL(Config.HTTP_FLAG_URL);
+        auto.http.setBaseURL(Config.URL);
     }
 }

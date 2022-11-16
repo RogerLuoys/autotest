@@ -1,6 +1,5 @@
 package testCase.ui.flag;
 
-import config.Config;
 import org.testng.annotations.*;
 import proxy.UiFlagProxy;
 
@@ -31,12 +30,12 @@ public class FlagTestBase {
     public void supperBeforeClass() {
         System.out.println("\n--------> 开始执行 Flag UI 前置步骤\n");
 
-        auto.ui.initChrome(Config.UI_FLAG_OPTIONS);
+        auto.ui.initChrome(Config.OPTIONS);
 
         //1 清理cookies
         auto.ui.clearCookies();
-        auto.ui.openUrl(Config.UI_FLAG_URL);
-        auto.po.loginFlag(Config.UI_FLAG_USERNAME, Config.UI_FLAG_PASSWORD);
+        auto.ui.openUrl(Config.URL);
+        auto.po.loginFlag(Config.USERNAME, Config.PASSWORD);
         // 设置本地存储，以屏蔽部分提示
         auto.ui.executeJS("localStorage.setItem('guide','close')");
 

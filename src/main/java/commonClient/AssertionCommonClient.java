@@ -101,11 +101,11 @@ public class AssertionCommonClient {
      * @param xpath 元素的xpath
      */
     public void isElementExist(String xpath) {
-        if (ui.getDriver() == null) {
+        if (this.ui.getDriver() == null) {
             Assert.fail("未启动webDriver");
             return;
         }
-        List<WebElement> webElements = ui.getElements(xpath);
+        List<WebElement> webElements = this.ui.getElements(xpath);
         Assert.assertTrue(webElements.size() > 0);
     }
 
@@ -116,11 +116,11 @@ public class AssertionCommonClient {
      * @param xpath 元素的xpath
      */
     public void isElementNotExist(String xpath) {
-        if (ui.getDriver() == null) {
+        if (this.ui.getDriver() == null) {
             Assert.fail("未启动webDriver");
             return;
         }
-        List<WebElement> webElements = ui.getElements(xpath);
+        List<WebElement> webElements = this.ui.getElements(xpath);
         Assert.assertTrue(webElements.size() == 0);
     }
 

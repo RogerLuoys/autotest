@@ -1,7 +1,6 @@
 package client;
 
 import commonClient.SqlCommonClient;
-import config.Config;
 
 /**
  * 执行sql的数据库客户端
@@ -25,10 +24,10 @@ public class SqlClients {
      */
     public String flag(String sql) {
         // 使用时才初始化
-        flag.init(Config.DB_FLAG_DRIVER,
-                Config.DB_FLAG_URL,
-                Config.DB_FLAG_USERNAME,
-                Config.DB_FLAG_PASSWORD);
+        flag.init("com.mysql.cj.jdbc.Driver",
+                "jdbc:mysql://118.24.117.181:3306/onepiece?useUnicode=true&characterEncoding=UTF-8&userSSL=false&serverTimezone=Asia/Shanghai",
+                "testerone",
+                "testerone");
         return flag.execute(sql);
     }
 
@@ -43,10 +42,10 @@ public class SqlClients {
      */
     public String uc(String sql) {
         // 使用时才初始化
-        flag.init(Config.DB_FLAG_DRIVER,
-                Config.DB_FLAG_URL,
-                Config.DB_FLAG_USERNAME,
-                Config.DB_FLAG_PASSWORD);
+        flag.init("com.mysql.cj.jdbc.Driver",
+                "jdbc:mysql://118.24.117.181:3306/onepiece?useUnicode=true&characterEncoding=UTF-8&userSSL=false&serverTimezone=Asia/Shanghai",
+                "testerone",
+                "testerone");
         return flag.execute(sql);
     }
 
@@ -61,10 +60,10 @@ public class SqlClients {
      */
     public String dzb(String sql) {
         // 使用时才初始化
-        dzb.init(Config.DB_DZB_DRIVER,
-                Config.DB_DZB_URL,
-                Config.DB_DZB_USERNAME,
-                Config.DB_DZB_PASSWORD);
+        dzb.init("com.mysql.cj.jdbc.Driver",
+                "jdbc:mysql:******",
+                "*****",
+                "*****");
         return dzb.execute(sql);
     }
 

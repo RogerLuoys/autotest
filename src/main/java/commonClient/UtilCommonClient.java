@@ -25,7 +25,7 @@ public class UtilCommonClient {
         if (!var.contains(key)) {
             return count;
         } else {
-            return countByString(var.substring(var.indexOf(key) + key.length()), key, count + 1);
+            return this.countByString(var.substring(var.indexOf(key) + key.length()), key, count + 1);
         }
     }
 
@@ -46,11 +46,11 @@ public class UtilCommonClient {
         if (nextEndIndex >= json.length()) {
             log.warn("节点值不规范");
             return -1;
-        }  else if (countByString(json.substring(startIndex, nextEndIndex), typeLeft, 0)
-                == countByString(json.substring(startIndex, nextEndIndex), typeRight, 0)) {
+        }  else if (this.countByString(json.substring(startIndex, nextEndIndex), typeLeft, 0)
+                == this.countByString(json.substring(startIndex, nextEndIndex), typeRight, 0)) {
             return nextEndIndex;
         } else {
-            return getNodeEnd(json, typeLeft, typeRight, startIndex, nextEndIndex);
+            return this.getNodeEnd(json, typeLeft, typeRight, startIndex, nextEndIndex);
         }
     }
 
@@ -79,7 +79,7 @@ public class UtilCommonClient {
             return startIndex + jsonData.indexOf(",");
         }
         //节点的值是数组或对象，
-        return getNodeEnd(json, typeLeft, typeRight, startIndex, 0);
+        return this.getNodeEnd(json, typeLeft, typeRight, startIndex, 0);
     }
 
     /**
@@ -147,7 +147,7 @@ public class UtilCommonClient {
      * @return -
      */
     public Date setDate(int year, int month, int day) {
-        return setDate(year, month, day, 1, 1, 1);
+        return this.setDate(year, month, day, 1, 1, 1);
     }
 
     /**
@@ -159,7 +159,7 @@ public class UtilCommonClient {
      * @return -
      */
     public Date setDateStart(int year, int month, int day) {
-        return setDate(year, month, day, 0, 0, 30);
+        return this.setDate(year, month, day, 0, 0, 30);
     }
 
     /**
@@ -171,7 +171,7 @@ public class UtilCommonClient {
      * @return -
      */
     public Date setDateEnd(int year, int month, int day) {
-        return setDate(year, month, day, 23, 59, 30);
+        return this.setDate(year, month, day, 23, 59, 30);
     }
 
     /**
@@ -205,7 +205,7 @@ public class UtilCommonClient {
         String directory = filePath.substring(0, nameIndex);
         String fileName = filePath.substring(nameIndex);
         File dir = new File(directory);
-        if (dir.exists() == false) {
+        if (!dir.exists()) {
             dir.mkdirs(); // the directory is created
         }
         File file = new File(directory + "//" + fileName);

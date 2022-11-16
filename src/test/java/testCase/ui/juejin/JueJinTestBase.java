@@ -1,6 +1,5 @@
 package testCase.ui.juejin;
 
-import config.Config;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeClass;
@@ -26,8 +25,8 @@ public class JueJinTestBase {
     public void supperBeforeClass() {
 
         // webDriver 初始化
-        auto.ui.initChrome(Config.UI_JUE_JIN_OPTIONS);
-        auto.ui.setBaseURL(Config.UI_JUE_JIN_URL);
+        auto.ui.initChrome(Config.OPTIONS);
+        auto.ui.setBaseURL(Config.URL);
 
         //1 清理cookies
         auto.ui.clearCookies();

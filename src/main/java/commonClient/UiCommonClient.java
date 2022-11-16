@@ -56,14 +56,14 @@ public class UiCommonClient {
 
     private void settings() {
         // 初始化actions
-        actions = new Actions(driver);
+        this.actions = new Actions(this.driver);
         // 隐式等待设置
-        driver.manage().timeouts().implicitlyWait(implicitlyDuration);
+        this.driver.manage().timeouts().implicitlyWait(this.implicitlyDuration);
         // 显示等待初始化
-        webDriverWait = new WebDriverWait(driver, explicitDuration);
+        this.webDriverWait = new WebDriverWait(this.driver, this.explicitDuration);
         // 流畅等待初始化
-        wait = new FluentWait<WebDriver>(driver)
-                .withTimeout(fluentDuration)
+        this.wait = new FluentWait<WebDriver>(this.driver)
+                .withTimeout(this.fluentDuration)
                 .pollingEvery(Duration.ofSeconds(1))
                 .ignoring(NoSuchElementException.class);
     }
@@ -81,7 +81,7 @@ public class UiCommonClient {
      */
     public void initChromeWeb() {
         // 不为null则表示已初始化
-        if (driver != null) {
+        if (this.driver != null) {
             return;
         }
         // 设置启动参数
@@ -97,13 +97,13 @@ public class UiCommonClient {
         // 隐藏滚动条
         chromeOptions.addArguments("--hide-scrollbars");
         // 后台运行
-//        chromeOptions.addArguments("--headless");
+        chromeOptions.addArguments("--headless");
         // 去掉Chrome提示受到自动软件控制
         chromeOptions.addArguments("disable-infobars");
 //        chromeOptions.addArguments("log-level=3");
         chromeOptions.addArguments("--disable-dev-shm-usage");
         chromeOptions.setLogLevel(ChromeDriverLogLevel.OFF);
-        driver = new ChromeDriver(chromeOptions);
+        this.driver = new ChromeDriver(chromeOptions);
         this.settings();
 //        ResourceLeakDetector.setLevel(ResourceLeakDetector.Level.DISABLED);
     }
@@ -113,13 +113,13 @@ public class UiCommonClient {
      * 如果已初始化过，则跳过
      */
     public void initChrome(String... options) {
-        if (driver != null) {
+        if (this.driver != null) {
             return;
         }
         Map<String, String> mobileEmulationMap = new HashMap<>();
         List<String> cOptions = new ArrayList<>();
         for (String option :  options) {
-            // H5配置项
+            // 带“,”的是H5配置项，键值对
             if (option.matches(".+,.+")) {
                 String[] var = option.split(",");
                 mobileEmulationMap.put(var[0], var[1]);
@@ -129,9 +129,10 @@ public class UiCommonClient {
         }
         ChromeOptions chromeOptions = new ChromeOptions();
         chromeOptions.addArguments(cOptions);
-        chromeOptions.setExperimentalOption("mobileEmulation", mobileEmulationMap);
-
-        driver = new ChromeDriver(chromeOptions);
+        if (mobileEmulationMap.size() > 0) {
+            chromeOptions.setExperimentalOption("mobileEmulation", mobileEmulationMap);
+        }
+        this.driver = new ChromeDriver(chromeOptions);
         this.settings();
 
     }
@@ -141,7 +142,7 @@ public class UiCommonClient {
      * 如果已初始化过，则跳过
      */
     public void initChromeH5() {
-        if (driver != null) {
+        if (this.driver != null) {
             return;
         }
         ChromeOptions chromeOptions = new ChromeOptions();
@@ -153,7 +154,7 @@ public class UiCommonClient {
         mobileEmulationMap.put("deviceName", "Samsung Galaxy S8+");
         chromeOptions.setExperimentalOption("mobileEmulation", mobileEmulationMap);
         chromeOptions.addArguments("--headless");
-        driver = new ChromeDriver(chromeOptions);
+        this.driver = new ChromeDriver(chromeOptions);
         this.settings();
 
     }
@@ -177,7 +178,7 @@ public class UiCommonClient {
 //        //每次启动时覆盖session，否则第二次后运行会报错不能新建session
 //        cap.setCapability("sessionOverride", true);
         try {
-            driver = new AndroidDriver(new URL("http://localhost:4723/wd/hub"), desiredCapabilities);
+            this.driver = new AndroidDriver(new URL("http://localhost:4723/wd/hub"), desiredCapabilities);
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
@@ -198,21 +199,11 @@ public class UiCommonClient {
      * 关闭浏览器且关闭资源
      */
     public void quit() {
-        if (driver == null) {
+        if (this.driver == null) {
             return;
         }
-        driver.quit();
-        driver = null;
-    }
-
-    /**
-     * 获取自动化元素
-     *
-     * @param locator 自选元素定位方式
-     * @return 返回一个元素
-     */
-    private WebElement getElement(By locator) {
-        return getElements(locator).get(0);
+        this.driver.quit();
+        this.driver = null;
     }
 
     /**
@@ -222,7 +213,7 @@ public class UiCommonClient {
      * @return 所有符合条件的元素
      */
     private List<WebElement> getElements(By locator) {
-        return driver.findElements(locator);
+        return this.driver.findElements(locator);
     }
 
     /**
@@ -232,23 +223,8 @@ public class UiCommonClient {
      * @return 所有符合条件的元素
      */
     public List<WebElement> getElements(String xpath) {
-        return getElements(By.xpath(xpath));
+        return this.getElements(By.xpath(xpath));
     }
-
-//    /**
-//     * 鼠标点击指定元素
-//     *
-//     * @param locator 自选元素定位方式
-//     */
-//    private void click(By locator, int index) {
-////        forceWait(forceTimeOut);
-////        WebDriverWait webDriverWait = new WebDriverWait(driver, actionDuration);
-////        webDriverWait.until(ExpectedConditions.invisibilityOfElementLocated(locator));
-//        WebElement webElement = wait.until(driver -> driver.findElements(locator).get(index));
-////        WebElement webElement = getElements(locator).get(index);
-//        actions.click(webElement);
-//        actions.perform();
-//    }
 
     /**
      * 鼠标点击指定元素
@@ -256,7 +232,7 @@ public class UiCommonClient {
      * @param xpath 元素的xpath
      */
     public void click(String xpath) {
-        click(xpath, 0);
+        this.click(xpath, 0);
     }
 
     /**
@@ -267,9 +243,9 @@ public class UiCommonClient {
      */
     public void click(String xpath, Integer index) {
         // 这里不能用显式等待，有的控件等不到，却可以点击
-        WebElement webElement = wait.until(driver -> driver.findElements(By.xpath(xpath)).get(index));
-        actions.click(webElement);
-        actions.perform();
+        WebElement webElement = this.wait.until(driver -> driver.findElements(By.xpath(xpath)).get(index));
+        this.actions.click(webElement);
+        this.actions.perform();
 
     }
 
@@ -278,30 +254,8 @@ public class UiCommonClient {
      * @param xpath 页面元素的xpath
      */
     public void clickByJS(String xpath) {
-        executeJS(xpath, "arguments[0].click();");
+        this.executeJS(xpath, "arguments[0].click();");
     }
-
-//    /**
-//     * 往元素中输入字符
-//     *
-//     * @param locator 自选元素定位方式
-//     * @param key     输入的字符串
-//     */
-//    private void sendKey(By locator, String key) {
-//        // 这里不能直接隐式等待
-//        webDriverWait.until(ExpectedConditions.elementToBeClickable(locator));
-//        WebElement webElement = getElement(locator);
-//        if (key.equalsIgnoreCase("{ENTER}")) {
-//            webElement.sendKeys("\ue007");
-//            return;
-//        } else if (key.equalsIgnoreCase("{TAB}")) {
-//            webElement.sendKeys("\ue004");
-//            return;
-//        }
-//        webElement.clear();
-//        actions.sendKeys(webElement, key);
-//        actions.perform();
-//    }
 
     /**
      * 先清除输入框的内容，再往指定元素中输入字符
@@ -310,9 +264,9 @@ public class UiCommonClient {
      * @param key   输入的字符串
      */
     public void sendKey(String xpath, String key) {
-        WebElement webElement = wait.until(driver -> driver.findElement(By.xpath(xpath)));
-        // 再强制等会，比较稳定(显示、隐式、流畅等待都有小概率操作失败)
-        sleep(500L);
+        WebElement webElement = this.wait.until(driver -> driver.findElement(By.xpath(xpath)));
+        // 再强制等0.5s会更稳定(显示、隐式、流畅等待都有小概率操作失败)
+        this.sleep(500L);
         if (key.equalsIgnoreCase("{ENTER}")) {
             webElement.sendKeys("\ue007");
             return;
@@ -321,24 +275,8 @@ public class UiCommonClient {
             return;
         }
         webElement.clear();
-        actions.sendKeys(webElement, key);
-        actions.perform();
+        this.actions.sendKeys(webElement, key).perform();
     }
-
-//    /**
-//     * 鼠标移动到指定元素上
-//     *
-//     * @param locator 自选元素定位方式
-//     */
-//    private void moveToElement(By locator) {
-////        forceWait(forceTimeOut);
-////        WebDriverWait webDriverWait = new WebDriverWait(driver, actionDuration);
-////        webDriverWait.until(ExpectedConditions.invisibilityOfElementLocated(locator));
-////        WebElement webElement = driver.findElement(locator);
-//        WebElement webElement = wait.until(driver -> driver.findElement(locator));
-//        actions.moveToElement(webElement);
-//        actions.perform();
-//    }
 
     /**
      * 鼠标移动到指定元素上
@@ -346,25 +284,9 @@ public class UiCommonClient {
      * @param xpath 元素的xpath
      */
     public void moveToElement(String xpath) {
-        WebElement webElement = wait.until(driver -> driver.findElement(By.xpath(xpath)));
-        actions.moveToElement(webElement);
-        actions.perform();
+        WebElement webElement = this.wait.until(driver -> driver.findElement(By.xpath(xpath)));
+        this.actions.moveToElement(webElement).perform();
     }
-
-//    /**
-//     * 先移动到控件位置，再点击
-//     *
-//     * @param locator 元素位置
-//     */
-//    private void moveAndClick(By locator) {
-////        forceWait(forceTimeOut);
-////        WebDriverWait webDriverWait = new WebDriverWait(driver, actionDuration);
-////        webDriverWait.until(ExpectedConditions.elementToBeClickable(locator));
-////        WebElement webElement = driver.findElement(locator);
-//        WebElement webElement = wait.until(driver -> driver.findElement(locator));
-//        actions.moveToElement(webElement).click();
-//        actions.perform();
-//    }
 
     /**
      * 先鼠标移动到指定元素上，然后鼠标点击
@@ -372,9 +294,8 @@ public class UiCommonClient {
      * @param xpath 元素的xpath
      */
     public void moveAndClick(String xpath) {
-        WebElement webElement = wait.until(driver -> driver.findElement(By.xpath(xpath)));
-        actions.moveToElement(webElement).click();
-        actions.perform();
+        WebElement webElement = this.wait.until(driver -> driver.findElement(By.xpath(xpath)));
+        this.actions.moveToElement(webElement).click().perform();
     }
 
     /**
@@ -383,7 +304,7 @@ public class UiCommonClient {
      * @param jsExecString 脚本
      */
     public void executeJS(String jsExecString) {
-        ((JavascriptExecutor) driver).executeScript(jsExecString);
+        ((JavascriptExecutor) this.driver).executeScript(jsExecString);
     }
 
     /**
@@ -393,8 +314,8 @@ public class UiCommonClient {
      * @param jsExecString 脚本
      */
     public void executeJS(String xpath, String jsExecString) {
-        WebElement webElement = driver.findElement(By.xpath(xpath));
-        ((JavascriptExecutor) driver).executeScript(jsExecString, webElement);
+        WebElement webElement = this.driver.findElement(By.xpath(xpath));
+        ((JavascriptExecutor) this.driver).executeScript(jsExecString, webElement);
     }
 
 
@@ -403,17 +324,17 @@ public class UiCommonClient {
      * 如果只有一个标签页，则不处理
      */
     public void switchTab() {
-        Set<String> windows = driver.getWindowHandles();
+        Set<String> windows = this.driver.getWindowHandles();
         if (windows.size() <= 1) {
             return;
         }
         // 先关闭前面所有标签页
         for (int i = windows.size() - 2; i >= 0; i--) {
-            driver.switchTo().window(windows.toArray()[i].toString());
-            driver.close();
+            this.driver.switchTo().window(windows.toArray()[i].toString());
+            this.driver.close();
         }
         // 再切换至最后标签页
-        driver.switchTo().window(windows.toArray()[windows.size() - 1].toString());
+        this.driver.switchTo().window(windows.toArray()[windows.size() - 1].toString());
     }
 
     /**

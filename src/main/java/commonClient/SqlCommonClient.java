@@ -27,17 +27,17 @@ public class SqlCommonClient {
         String result;
         // 根据sql语句类型，选择不同的方法执行
         if (sql.toUpperCase().matches("^INSERT INTO .+")) {
-            result = insert(sql);
+            result = this.insert(sql);
         } else if (sql.toUpperCase().matches("^DELETE FROM [A-Z0-9_]+ WHERE .+")) {
-            result = delete(sql);
+            result = this.delete(sql);
         } else if (sql.toUpperCase().matches("^UPDATE [A-Z0-9_]+ SET .+ WHERE .+")) {
-            result = update(sql);
+            result = this.update(sql);
         } else if (sql.toUpperCase().matches("^SELECT .+ FROM [A-Z0-9_]+ WHERE .+")) {
             // 查询单列
             if (sql.toUpperCase().matches("^SELECT [^,*]+ FROM [A-Z0-9_]+ WHERE .+")) {
-                result = selectOneCell(sql);
+                result = this.selectOneCell(sql);
             } else {
-                result = select(sql);
+                result = this.select(sql);
             }
         } else {
             result = "不支持sql类型 ";
@@ -52,16 +52,16 @@ public class SqlCommonClient {
      *
      */
     public void init(String driver, String url, String userName, String password) {
-        if (jdbcTemplate != null) {
+        if (this.jdbcTemplate != null) {
             return;
         }
-        jdbcTemplate = new JdbcTemplate();
-        dataSource = new DriverManagerDataSource();
-        dataSource.setDriverClassName(driver);
-        dataSource.setUrl(url);
-        dataSource.setUsername(userName);
-        dataSource.setPassword(password);
-        jdbcTemplate.setDataSource(dataSource);
+        this.jdbcTemplate = new JdbcTemplate();
+        this.dataSource = new DriverManagerDataSource();
+        this.dataSource.setDriverClassName(driver);
+        this.dataSource.setUrl(url);
+        this.dataSource.setUsername(userName);
+        this.dataSource.setPassword(password);
+        this.jdbcTemplate.setDataSource(this.dataSource);
     }
 
 
@@ -98,13 +98,13 @@ public class SqlCommonClient {
      * @return 执行结果
      */
     private String update(String sql) {
-        int effectRow = count(transformUpdate2Select(sql));
+        int effectRow = this.count(transformUpdate2Select(sql));
         if (effectRow > 200) {
             return "一次更新超过200行，请确认sql条件是否正确";
         } else if (effectRow == 0) {
             return "查无此类数据，不需要更新";
         }
-        return String.valueOf(jdbcTemplate.update(sql));
+        return String.valueOf(this.jdbcTemplate.update(sql));
     }
 
     /**
@@ -114,7 +114,7 @@ public class SqlCommonClient {
      * @return 执行结果
      */
     private String insert(String sql) {
-        return String.valueOf(jdbcTemplate.update(sql));
+        return String.valueOf(this.jdbcTemplate.update(sql));
     }
 
     /**
@@ -124,7 +124,7 @@ public class SqlCommonClient {
      * @return 执行结果
      */
     private String select(String sql) {
-        return jdbcTemplate.queryForList(sql).toString();
+        return this.jdbcTemplate.queryForList(sql).toString();
     }
 
     /**
@@ -134,13 +134,13 @@ public class SqlCommonClient {
      * @return 执行结果
      */
     private String delete(String sql) {
-        int effectRow = count(transformDelete2Select(sql));
+        int effectRow = this.count(transformDelete2Select(sql));
         if (effectRow > 50) {
             return "一次删除超过50行，请确认sql条件是否正确";
         } else if (effectRow == 0) {
             return "查无此类数据，不需要删除";
         }
-        return String.valueOf(jdbcTemplate.update(sql));
+        return String.valueOf(this.jdbcTemplate.update(sql));
     }
 
     /**
@@ -150,7 +150,7 @@ public class SqlCommonClient {
      * @return 总条数
      */
     private Integer count(String sql) {
-        Map<String, Object> result = jdbcTemplate.queryForMap(sql);
+        Map<String, Object> result = this.jdbcTemplate.queryForMap(sql);
         String COUNT = "count(1)";
         return Integer.valueOf(result.get(COUNT).toString());
     }
@@ -164,7 +164,7 @@ public class SqlCommonClient {
      */
     private String selectOneCell(String sql) {
         String[] sqlList = sql.split("[ ]+");
-        Map<String, Object> result = jdbcTemplate.queryForList(sql).get(0);
+        Map<String, Object> result = this.jdbcTemplate.queryForList(sql).get(0);
         // 根据列名取值
         Object value = result.get(sqlList[1]);
         //时间格式要转换

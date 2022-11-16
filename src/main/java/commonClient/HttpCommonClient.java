@@ -218,7 +218,7 @@ public class HttpCommonClient {
      * @param cs 目标字符串
      * @return 字符串为null || 长度为0 || 只包含空格，则返回true
      */
-    public static boolean isBlank(CharSequence cs) {
+    private boolean isBlank(CharSequence cs) {
         int strLen;
         if (cs != null && (strLen = cs.length()) != 0) {
             for(int i = 0; i < strLen; ++i) {
@@ -268,7 +268,7 @@ public class HttpCommonClient {
     public String get(String url) {
         Map<String, String> header = new HashMap<>();
         header.put("Connection", "keep-alive");
-        return httpGet(url, header);
+        return this.httpGet(url, header);
     }
 
     /**
@@ -281,7 +281,7 @@ public class HttpCommonClient {
     public String get(String url, String header) {
         Map<String, String> headerMap = transformJson2Map(header);
         headerMap.put("Connection", "keep-alive");
-        return httpGet(url, headerMap);
+        return this.httpGet(url, headerMap);
     }
 
     /**
@@ -293,7 +293,7 @@ public class HttpCommonClient {
     public String delete(String url) {
         Map<String, String> header = new HashMap<>();
         header.put("Connection", "keep-alive");
-        return httpDelete(url, header);
+        return this.httpDelete(url, header);
     }
 
     /**
@@ -306,7 +306,7 @@ public class HttpCommonClient {
     public String delete(String url, String header) {
         Map<String, String> headerMap = transformJson2Map(header);
         headerMap.put("Connection", "keep-alive");
-        return httpDelete(url, headerMap);
+        return this.httpDelete(url, headerMap);
     }
 
     /**
@@ -318,7 +318,7 @@ public class HttpCommonClient {
     public String post(String url) {
         Map<String, String> header = new HashMap<>();
         header.put("Connection", "keep-alive");
-        return httpPost(url, null, header);
+        return this.httpPost(url, null, header);
     }
 
 
@@ -332,13 +332,13 @@ public class HttpCommonClient {
     public String post(String url, String body) {
         Map<String, String> header = new HashMap<>();
         header.put("Connection", "keep-alive");
-        return httpPost(url, body, header);
+        return this.httpPost(url, body, header);
     }
 
     public String post(String url, String body, String header) {
         Map<String, String> headerMap = transformJson2Map(header);
         headerMap.put("Connection", "keep-alive");
-        return httpPost(url, body, headerMap);
+        return this.httpPost(url, body, headerMap);
     }
 
     /**
@@ -350,7 +350,7 @@ public class HttpCommonClient {
     public String put(String url) {
         Map<String, String> header = new HashMap<>();
         header.put("Connection", "keep-alive");
-        return httpPut(url, null, header);
+        return this.httpPut(url, null, header);
     }
 
     /**
@@ -363,7 +363,7 @@ public class HttpCommonClient {
     public String put(String url, String body) {
         Map<String, String> header = new HashMap<>();
         header.put("Connection", "keep-alive");
-        return httpPut(url, body, header);
+        return this.httpPut(url, body, header);
     }
 
     /**
@@ -377,7 +377,7 @@ public class HttpCommonClient {
     public String put(String url, String body, String header) {
         Map<String, String> headerMap = transformJson2Map(header);
         headerMap.put("Connection", "keep-alive");
-        return httpPut(url, body, headerMap);
+        return this.httpPut(url, body, headerMap);
     }
 
     public String execute(String httpDTOJson) {
@@ -389,13 +389,13 @@ public class HttpCommonClient {
         Map<String, String> headerMap = transformJson2Map(header);
         headerMap.put("Connection", "keep-alive");
         if (type.equalsIgnoreCase("get")) {
-            return httpGet(url, headerMap);
+            return this.httpGet(url, headerMap);
         } else if (type.equalsIgnoreCase("delete")) {
-            return httpDelete(url, headerMap);
+            return this.httpDelete(url, headerMap);
         } else if (type.equalsIgnoreCase("post")) {
-            return httpPost(url, body, headerMap);
+            return this.httpPost(url, body, headerMap);
         } else if (type.equalsIgnoreCase("put")) {
-            return httpPost(url, body, headerMap);
+            return this.httpPost(url, body, headerMap);
         }
         return null;
     }

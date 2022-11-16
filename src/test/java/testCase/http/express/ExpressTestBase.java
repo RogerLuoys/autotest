@@ -1,6 +1,5 @@
 package testCase.http.express;
 
-import config.Config;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeSuite;
 import proxy.HttpExpressProxy;
@@ -21,7 +20,7 @@ public class ExpressTestBase {
     @BeforeClass
     public void beforeClass() {
         // 指定环境
-        auto.http.setBaseURL(Config.HTTP_EXPRESS_URL);
+        auto.http.setBaseURL(Config.URL);
     }
 
 }
