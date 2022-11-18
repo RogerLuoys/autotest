@@ -61,9 +61,9 @@ public class SqlClients {
     public String dzb(String sql) {
         // 使用时才初始化
         dzb.init("com.mysql.cj.jdbc.Driver",
-                "jdbc:mysql:******",
-                "*****",
-                "*****");
+                "jdbc:mysql://****?useUnicode=true&characterEncoding=utf8&allowMultiQueries=true",
+                "***",
+                "******");
         return dzb.execute(sql);
     }
 

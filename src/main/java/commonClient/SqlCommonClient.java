@@ -32,7 +32,7 @@ public class SqlCommonClient {
             result = this.delete(sql);
         } else if (sql.toUpperCase().matches("^UPDATE [A-Z0-9_]+ SET .+ WHERE .+")) {
             result = this.update(sql);
-        } else if (sql.toUpperCase().matches("^SELECT .+ FROM [A-Z0-9_]+ WHERE .+")) {
+        } else if (sql.toUpperCase().matches("^SELECT .+ FROM [A-Z0-9_]+")) {//todo 还要改
             // 查询单列
             if (sql.toUpperCase().matches("^SELECT [^,*]+ FROM [A-Z0-9_]+ WHERE .+")) {
                 result = this.selectOneCell(sql);
