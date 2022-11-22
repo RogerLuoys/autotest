@@ -95,6 +95,22 @@ public class AssertionCommonClient {
     }
 
     /**
+     * 校验实际结果是否小于预期结果
+     *
+     * @param actual 实际结果，需要是数字字符
+     * @param expect 预期结果，需要是数字字符
+     */
+    public void isSmaller(String actual, String expect) {
+        double actual1 = Double.parseDouble(actual);
+        double expect1 = Double.parseDouble(expect);
+        if (actual1 < expect1) {
+            Assert.assertTrue(true);
+        } else {
+            Assert.fail();
+        }
+    }
+
+    /**
      * 判断指定元素是否存在 (UI专用)
      * 如果找到多个元素，也算成功
      *

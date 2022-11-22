@@ -37,7 +37,7 @@ public class FlagTestBase {
         auto.ui.openUrl(Config.URL);
         auto.po.loginFlag(Config.USERNAME, Config.PASSWORD);
         // 设置本地存储，以屏蔽部分提示
-        auto.ui.executeJS("localStorage.setItem('guide','close')");
+        auto.ui.executeJs("localStorage.setItem('guide','close')");
 
         System.out.println("\n--------> 开始执行 Flag UI 自动化用例\n");
     }

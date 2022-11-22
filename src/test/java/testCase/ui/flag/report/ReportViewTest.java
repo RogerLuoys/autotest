@@ -9,7 +9,7 @@ public class ReportViewTest extends FlagTestBase {
     @Test(description = "查看指定成长轨迹")
     void lookReport() {
         Reporter.log("进入成长轨迹");
-        auto.ui.clickByJS("//span[text()='成长轨迹']");
+        auto.ui.clickByJs("//span[text()='成长轨迹']");
         auto.ui.click("//span[text()='自动化成长轨迹测试']");
 
         Reporter.log("验证列表和详情");

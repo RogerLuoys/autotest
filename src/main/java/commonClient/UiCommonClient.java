@@ -36,11 +36,6 @@ public class UiCommonClient {
     private WebDriver driver = null;
     private Actions actions = null;
 
-    private static void killLinuxProcess(String processName) {
-    }
-    private static void killWindowsProcess(String processName) {
-    }
-
     /**
      * 进程睡眠，强制等待
      *
@@ -54,7 +49,23 @@ public class UiCommonClient {
         }
     }
 
-    private void settings() {
+    /**
+     * 获取快捷键枚举值，不是快捷键则直接返回key本身
+     * @param key 字符
+     * @return 枚举值
+     */
+    protected CharSequence getKey(String key) {
+        // 快捷键
+        if (key.equalsIgnoreCase("<ENTER>")) {
+            return Keys.ENTER;
+        } else if (key.equalsIgnoreCase("<TAB>")) {
+            return Keys.TAB;
+        }
+        // 普通输入
+        return key;
+    }
+
+    protected void settings() {
         // 初始化actions
         this.actions = new Actions(this.driver);
         // 隐式等待设置
@@ -212,7 +223,7 @@ public class UiCommonClient {
      * @param locator 自选元素定位方式
      * @return 所有符合条件的元素
      */
-    private List<WebElement> getElements(By locator) {
+    protected List<WebElement> getElements(By locator) {
         return this.driver.findElements(locator);
     }
 
@@ -222,7 +233,7 @@ public class UiCommonClient {
      * @param xpath 元素的xpath
      * @return 所有符合条件的元素
      */
-    public List<WebElement> getElements(String xpath) {
+    protected List<WebElement> getElements(String xpath) {
         return this.getElements(By.xpath(xpath));
     }
 
@@ -241,11 +252,23 @@ public class UiCommonClient {
      * @param xpath 元素的xpath
      * @param index list下标，从0开始
      */
+    @Deprecated
     public void click(String xpath, Integer index) {
         // 这里不能用显式等待，有的控件等不到，却可以点击
         WebElement webElement = this.wait.until(driver -> driver.findElements(By.xpath(xpath)).get(index));
-        this.actions.click(webElement);
-        this.actions.perform();
+        this.actions.click(webElement).perform();
+    }
+
+    /**
+     * 鼠标点击指定元素
+     *
+     * @param xpath 元素的xpath
+     * @param index list下标，从0开始
+     */
+    public void click(String xpath, String index) {
+        // 这里不能用显式等待，有的控件等不到，却可以点击
+        WebElement webElement = this.wait.until(driver -> driver.findElements(By.xpath(xpath)).get(Integer.parseInt(index)));
+        this.actions.click(webElement).perform();
 
     }
 
@@ -253,39 +276,8 @@ public class UiCommonClient {
      * 通过js的形式点击页面元素
      * @param xpath 页面元素的xpath
      */
-    public void clickByJS(String xpath) {
-        this.executeJS(xpath, "arguments[0].click();");
-    }
-
-    /**
-     * 先清除输入框的内容，再往指定元素中输入字符
-     *
-     * @param xpath 元素的xpath
-     * @param key   输入的字符串
-     */
-    public void sendKey(String xpath, String key) {
-        WebElement webElement = this.wait.until(driver -> driver.findElement(By.xpath(xpath)));
-        // 再强制等0.5s会更稳定(显示、隐式、流畅等待都有小概率操作失败)
-        this.sleep(500L);
-        if (key.equalsIgnoreCase("{ENTER}")) {
-            webElement.sendKeys("\ue007");
-            return;
-        } else if (key.equalsIgnoreCase("{TAB}")) {
-            webElement.sendKeys("\ue004");
-            return;
-        }
-        webElement.clear();
-        this.actions.sendKeys(webElement, key).perform();
-    }
-
-    /**
-     * 鼠标移动到指定元素上
-     *
-     * @param xpath 元素的xpath
-     */
-    public void moveToElement(String xpath) {
-        WebElement webElement = this.wait.until(driver -> driver.findElement(By.xpath(xpath)));
-        this.actions.moveToElement(webElement).perform();
+    public void clickByJs(String xpath) {
+        this.executeJs(xpath, "arguments[0].click();");
     }
 
     /**
@@ -293,29 +285,103 @@ public class UiCommonClient {
      *
      * @param xpath 元素的xpath
      */
-    public void moveAndClick(String xpath) {
+    public void clickByMove(String xpath) {
         WebElement webElement = this.wait.until(driver -> driver.findElement(By.xpath(xpath)));
         this.actions.moveToElement(webElement).click().perform();
     }
 
     /**
+     * 先清除输入框的内容，再往指定元素中输入字符
+     *
+     * @param key   输入的字符串或快捷键
+     */
+    public void sendKey(String key) {
+        this.actions.sendKeys(this.getKey(key)).perform();
+    }
+
+    /**
+     * 先清除输入框的内容，再往指定元素中输入字符
+     *
+     * @param xpath 元素的xpath
+     * @param key   输入的字符串或按键
+     */
+    public void sendKey(String xpath, String key) {
+        WebElement webElement = this.wait.until(driver -> driver.findElement(By.xpath(xpath)));
+        // 再强制等0.5s会更稳定(显示、隐式、流畅等待都有小概率操作失败)
+        this.sleep(500L);
+        webElement.clear();
+        this.actions.sendKeys(webElement, this.getKey(key)).perform();
+    }
+
+    /**
+     * 先清除输入框的内容，再往指定元素中输入字符
+     *
+     * @param xpath 元素的xpath
+     * @param key   输入的字符串
+     * @param shortcutKey 快捷键
+     */
+    public void sendKey(String xpath, String key, String shortcutKey) {
+        WebElement webElement = this.wait.until(driver -> driver.findElement(By.xpath(xpath)));
+        // 再强制等0.5s会更稳定(显示、隐式、流畅等待都有小概率操作失败)
+        this.sleep(500L);
+        webElement.clear();
+        this.actions.sendKeys(webElement, this.getKey(key), this.getKey(shortcutKey)).perform();
+    }
+
+    /**
+     * 先清除输入框的内容，再往指定元素中输入字符，再按Enter键
+     *
+     * @param xpath 元素的xpath
+     * @param key   输入的字符串
+     */
+    public void sendKeyByEnter(String xpath, String key) {
+        WebElement webElement = this.wait.until(driver -> driver.findElement(By.xpath(xpath)));
+        // 再强制等0.5s会更稳定(显示、隐式、流畅等待都有小概率操作失败)
+        this.sleep(500L);
+        webElement.clear();
+        this.actions.sendKeys(webElement, key, Keys.ENTER).perform();
+    }
+
+    /**
+     * 鼠标移动到指定元素上
+     *
+     * @param xpath 元素的xpath
+     */
+    public void move(String xpath) {
+        WebElement webElement = this.wait.until(driver -> driver.findElement(By.xpath(xpath)));
+        this.actions.moveToElement(webElement).perform();
+    }
+
+    /**
+     * 从一个元素位置拖拽到另一个元素位置
+     * @param fromXpath
+     * @param toXpath
+     */
+    public void drag(String fromXpath, String toXpath) {
+        WebElement from = this.wait.until(driver -> driver.findElement(By.xpath(fromXpath)));
+        WebElement to = this.wait.until(driver -> driver.findElement(By.xpath(toXpath)));
+        this.actions.dragAndDrop(from, to).perform();
+
+    }
+
+    /**
      * 执行java script脚本
      *
-     * @param jsExecString 脚本
+     * @param javaScript 脚本
      */
-    public void executeJS(String jsExecString) {
-        ((JavascriptExecutor) this.driver).executeScript(jsExecString);
+    public void executeJs(String javaScript) {
+        ((JavascriptExecutor) this.driver).executeScript(javaScript);
     }
 
     /**
      * 执行java script脚本
      *
      * @param xpath 元素xpath
-     * @param jsExecString 脚本
+     * @param javaScript 脚本
      */
-    public void executeJS(String xpath, String jsExecString) {
+    public void executeJs(String xpath, String javaScript) {
         WebElement webElement = this.driver.findElement(By.xpath(xpath));
-        ((JavascriptExecutor) this.driver).executeScript(jsExecString, webElement);
+        ((JavascriptExecutor) this.driver).executeScript(javaScript, webElement);
     }
 
 
@@ -342,22 +408,6 @@ public class UiCommonClient {
      */
     public void clearCookies() {
         this.driver.manage().deleteAllCookies();
-    }
-
-    public void addCookie(Cookie cookie) {
-        this.driver.manage().addCookie(cookie);
-    }
-
-    public Cookie getCookieByName(String cookieName) {
-        return this.driver.manage().getCookieNamed(cookieName);
-    }
-
-    public void refresh() {
-        this.driver.navigate().refresh();
-    }
-
-    public void back() {
-        this.driver.navigate().back();
     }
 
 }

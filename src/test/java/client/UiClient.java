@@ -1,6 +1,7 @@
 package client;
 
 import commonClient.UiCommonClient;
+import org.openqa.selenium.Cookie;
 
 /**
  * 相当于base page
@@ -40,8 +41,27 @@ public class UiClient extends UiCommonClient {
         sleep(3);
     }
 
-    public void sendAndEnter(String xpath, String key) {
+    protected void sendAndEnter(String xpath, String key) {
         super.sendKey(xpath, key);
         super.sendKey(xpath, "{ENTER}");
     }
+
+
+    public void addCookie(Cookie cookie) {
+        super.getDriver().manage().addCookie(cookie);
+        super.settings();
+    }
+
+    public Cookie getCookieByName(String cookieName) {
+        return super.getDriver().manage().getCookieNamed(cookieName);
+    }
+
+    public void refresh() {
+        super.getDriver().navigate().refresh();
+    }
+
+    public void back() {
+        super.getDriver().navigate().back();
+    }
+
 }
