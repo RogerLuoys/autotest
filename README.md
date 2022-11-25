@@ -8,8 +8,8 @@ autotest是一个可以同时实现http、rpc和ui自动化的项目。\
 3、android app的ui自动化
 
 # 二、调用层级介绍
-1、client层  包含所有公用方法，包含 ui操作、sql执行、http接口调用、dubbo接口调用、工具、断言 功能\
-2、po层   主要用于ui自动化，也可以按页面细分，非必须\
+1、client层  全项目共用，包含所有公用方法，包括 ui操作、sql执行、http接口调用、dubbo接口调用、工具、断言 功能\
+2、po层   非必须，主要用于ui自动化，可以按页面细分不同PO类，但最好别分\
 3、root层  调用根节点，实例化了必要的client类和po类，这层是为了实现三级树状调用结构\
 4、testCase层  自动化脚本，支持多应用、全类型同时存在，也支持多线程
 ![introduce.png](introduce.png)
