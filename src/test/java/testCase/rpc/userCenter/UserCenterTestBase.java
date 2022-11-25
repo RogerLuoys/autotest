@@ -2,7 +2,7 @@ package testCase.rpc.userCenter;
 
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeSuite;
-import proxy.RpcUcProxy;
+import root.RpcUcRoot;
 
 public class UserCenterTestBase {
     //云服务器
@@ -14,11 +14,11 @@ public class UserCenterTestBase {
     /**
      * 代理类实例，所有公共模块方法通过此实例调用（这里一定要static）
      */
-    public static RpcUcProxy auto;
+    public static RpcUcRoot auto;
 
     @BeforeSuite(alwaysRun = true)
     public void supperBeforeSuite() {
-        auto = new RpcUcProxy();
+        auto = new RpcUcRoot();
     }
 
     @BeforeClass

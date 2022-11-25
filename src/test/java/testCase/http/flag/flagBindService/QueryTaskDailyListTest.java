@@ -30,7 +30,7 @@ public class QueryTaskDailyListTest extends FlagTestBase {
         String result = auto.http.post("flagBind/queryTaskDailyList", "{\"startTime\":\"2021-04-01\",\"endTime\":\"2021-04-30\",\"ownerId\":\"416176799148282\"}");
 
         Reporter.log("验证数据");
-        String taskDailyName = auto.util.getFirstValue("taskDailyName", result);
+        String taskDailyName = auto.util.getJsonAny("taskDailyName", result);
         auto.assertion.isEquals(taskDailyName, "queryReportDetail任务");
     }
 

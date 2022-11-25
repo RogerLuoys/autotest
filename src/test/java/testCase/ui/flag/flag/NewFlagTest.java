@@ -28,7 +28,7 @@ public class NewFlagTest extends FlagTestBase {
         Reporter.log("验证新增的flag是否存在");
         auto.po.searchFlagByName("自动化新增FLAG测试");
         auto.util.sleep(3);
-        auto.assertion.isElementExist("//div[text()='自动化新增FLAG测试']");
+        auto.assertion.isXpathExist("//div[text()='自动化新增FLAG测试']");
     }
 
 }

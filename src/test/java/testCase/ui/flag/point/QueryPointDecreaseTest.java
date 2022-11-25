@@ -13,9 +13,9 @@ public class QueryPointDecreaseTest extends FlagTestBase {
         auto.ui.click("//div[text()='积分使用']");
 
         Reporter.log("验证列表和详情");
-        auto.assertion.isElementExist("//div[text()='自动化积分使用测试说明']");
-        auto.assertion.isElementExist("//div[text()='10']");
-        auto.assertion.isElementExist("//div[text()='自动化积分使用测试备注']");
+        auto.assertion.isXpathExist("//div[text()='自动化积分使用测试说明']");
+        auto.assertion.isXpathExist("//div[text()='10']");
+        auto.assertion.isXpathExist("//div[text()='自动化积分使用测试备注']");
 
     }
 

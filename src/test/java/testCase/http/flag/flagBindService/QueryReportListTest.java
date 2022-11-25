@@ -12,7 +12,7 @@ public class QueryReportListTest extends FlagTestBase {
         String result = auto.http.get("flagBind/queryReportList?ownerId=416176799148282&status=3");
 
         Reporter.log("验证结果");
-        String data = auto.util.getJsonValue(result, "data");
+        String data = auto.util.getJson("data", result);
         auto.assertion.isContains(data, "自动化queryReportList测试");
 //        Assert.assertTrue(data.contains("自动化queryReportList测试"), "校验对应的flag是否存在");
     }

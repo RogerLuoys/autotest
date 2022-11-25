@@ -12,7 +12,7 @@ public class QueryReportDetailAbsentTest extends FlagTestBase {
         String result = auto.http.get("report/queryReportDetail?flagId=123123");
 
         Reporter.log("验证结果");
-        String message = auto.util.getFirstValue("message", result);
+        String message = auto.util.getJsonAny("message", result);
         auto.assertion.isEquals(message, "flag不存在");
 //        Assert.assertEquals(message, "flag不存在", "验证异常信息");
     }

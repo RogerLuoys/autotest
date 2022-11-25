@@ -10,7 +10,7 @@ public class NetDisk extends BaiDuTestBase {
         auto.ui.click("//*[text()='网盘']");
         auto.util.sleep(2);
         auto.ui.switchTab();
-        auto.assertion.isElementExist("//*[text()=' 数据管理 ']");
+        auto.assertion.isXpathExist("//*[text()=' 数据管理 ']");
     }
 
 }

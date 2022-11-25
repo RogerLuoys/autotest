@@ -27,10 +27,10 @@ public class CycleTaskEditTest extends FlagTestBase {
         auto.util.sleep(3);
 
         Reporter.log("验证编辑结果");
-        auto.assertion.isElementExist("//div[text()='自动化编辑任务名']");//验证名称编辑结果
-        auto.assertion.isElementExist("//span[contains(text(), '周二')]");//验证周期编辑结果
-        auto.assertion.isElementExist("//div[text()='自动化编辑任务描述']");//验证描述编辑结果
-        auto.assertion.isElementExist("//div[text()='2']");//验证积分编辑结果
+        auto.assertion.isXpathExist("//div[text()='自动化编辑任务名']");//验证名称编辑结果
+        auto.assertion.isXpathExist("//span[contains(text(), '周二')]");//验证周期编辑结果
+        auto.assertion.isXpathExist("//div[text()='自动化编辑任务描述']");//验证描述编辑结果
+        auto.assertion.isXpathExist("//div[text()='2']");//验证积分编辑结果
 
     }
 }

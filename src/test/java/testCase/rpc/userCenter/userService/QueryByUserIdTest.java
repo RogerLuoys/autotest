@@ -41,7 +41,7 @@ public class QueryByUserIdTest extends UserCenterTestBase {
     @Test(description = "查询正常用户信息")
     public void test() {
         String result = auto.rpc.invoke("com.luoys.upgrade.uc.share.service.UserService#queryByUserId", "java.lang.String", "416160586979148");
-        String userId = auto.util.getFirstValue("userId", result);
+        String userId = auto.util.getJsonAny("userId", result);
         auto.assertion.isEquals(userId, "416160586979148");
     }
 

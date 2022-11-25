@@ -12,7 +12,7 @@ public class QueryFlagListLastIndexTest extends FlagTestBase {
         String result = auto.http.post("flagBind/queryFlagList", "{\"pageIndex\":99,\"ownerId\":\"416176799148282\"}");
 
         Reporter.log("验证结果");
-        String list = auto.util.getFirstValue("list", result);
+        String list = auto.util.getJsonAny("list", result);
         auto.assertion.isEquals(list, "[]");
     }
 

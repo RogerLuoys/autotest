@@ -15,7 +15,7 @@ public class ModifyUser2Test extends UserCenterTestBase {
         String result = auto.rpc.invoke("com.luoys.upgrade.uc.share.service.UserService#modifyUser", "com.luoys.upgrade.uc.share.dto.UserDTO", "{\"userName\":\"这是修改后的名字\"}");
 
         // 验证修改结果
-        String message = auto.util.getJsonValue("message", result);
+        String message = auto.util.getJson("message", result);
         auto.assertion.isEquals(message, "业务异常");
     }
 

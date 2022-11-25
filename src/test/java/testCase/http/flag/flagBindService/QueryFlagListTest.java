@@ -29,7 +29,7 @@ public class QueryFlagListTest extends FlagTestBase {
         String result = auto.http.post("flagBind/queryFlagList", "{\"pageIndex\":1,\"ownerId\":\"416176799148282\"}");
 
         Reporter.log("验证结果");
-        String total = auto.util.getFirstValue("total", result);
+        String total = auto.util.getJsonAny("total", result);
         auto.assertion.isGreater(total, "0");
     }
 

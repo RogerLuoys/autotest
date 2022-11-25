@@ -230,23 +230,6 @@ public class HttpCommonClient {
         return true;
     }
 
-    /**
-     * 把Map变量转换成http的请求头参数
-     *
-     * @param url    完整的地址
-     * @param params 需要往请求头传的参数
-     * @return 带参数的完整url地址
-     */
-    private String transformMap2URL(String url, Map<String, ?> params) {
-        URIBuilder uriBuilder = getURIBuilder(url);
-        for (String key : params.keySet()) {
-            assert uriBuilder != null;
-            uriBuilder.setParameter(key, params.get(key).toString());
-        }
-        assert uriBuilder != null;
-        return uriBuilder.toString();
-    }
-
     private Map<String, String> transformJson2Map(String json) {
         Map<String, String> map = new HashMap<>();
         if (isBlank(json)) {
@@ -378,26 +361,6 @@ public class HttpCommonClient {
         Map<String, String> headerMap = transformJson2Map(header);
         headerMap.put("Connection", "keep-alive");
         return this.httpPut(url, body, headerMap);
-    }
-
-    public String execute(String httpDTOJson) {
-        JSONObject httpDTO = JSON.parseObject(httpDTOJson);
-        String type = httpDTO.getString("type");
-        String url = httpDTO.getString("url");
-        String header = httpDTO.getString("header");
-        String body = httpDTO.getString("body");
-        Map<String, String> headerMap = transformJson2Map(header);
-        headerMap.put("Connection", "keep-alive");
-        if (type.equalsIgnoreCase("get")) {
-            return this.httpGet(url, headerMap);
-        } else if (type.equalsIgnoreCase("delete")) {
-            return this.httpDelete(url, headerMap);
-        } else if (type.equalsIgnoreCase("post")) {
-            return this.httpPost(url, body, headerMap);
-        } else if (type.equalsIgnoreCase("put")) {
-            return this.httpPost(url, body, headerMap);
-        }
-        return null;
     }
 
 }

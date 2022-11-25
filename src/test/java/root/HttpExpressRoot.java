@@ -1,4 +1,4 @@
-package proxy;
+package root;
 
 import client.AssertionClient;
 import client.HttpClient;
@@ -9,7 +9,7 @@ import client.UtilClient;
  * 各种资源使用到时才初始化
  * 此类可以实例化多个
  */
-public class HttpExpressProxy {
+public class HttpExpressRoot {
 
     // 传参小于等于3个，传参类型只用String或Integer，返回只用String
 

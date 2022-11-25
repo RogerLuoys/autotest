@@ -1,10 +1,10 @@
-package proxy;
+package root;
 
 import client.*;
-import po.baidu.BaiduCommonPO;
 import po.juejin.JueJinCommonPO;
+import po.reader.ReaderCommonPO;
 
-public class UiJueJinProxy {
+public class UiReaderRoot {
 
     // 传参小于等于3个，传参类型只用String或Integer，返回只用String
 
@@ -14,6 +14,6 @@ public class UiJueJinProxy {
     public SqlClients sql = new SqlClients();
     public AssertionClient assertion = new AssertionClient(ui);
     public UtilClient util = new UtilClient();
-    public JueJinCommonPO po = new JueJinCommonPO(ui);
+    public ReaderCommonPO po = new ReaderCommonPO(ui);
 
 }

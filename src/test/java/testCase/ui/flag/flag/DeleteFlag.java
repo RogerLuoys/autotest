@@ -27,7 +27,7 @@ public class DeleteFlag extends FlagTestBase {
         auto.ui.click("//div[@class='el-popconfirm']//span[contains(text(),'确定')]", 1);
 
         Reporter.log("校验更改结果");
-        auto.assertion.isElementNotExist("//div[text()='自动化FLAG状态测试-勿删']");
+        auto.assertion.isXpathNotExist("//div[text()='自动化FLAG状态测试-勿删']");
 
     }
 

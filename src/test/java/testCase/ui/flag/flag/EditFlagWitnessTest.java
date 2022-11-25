@@ -22,7 +22,7 @@ public class EditFlagWitnessTest extends FlagTestBase {
         Reporter.log("验证列表数据");
         auto.ui.click("//div[text()='返回列表']");
         auto.po.searchFlagByName("自动化FLAG见证人编辑测试-勿删");
-        auto.assertion.isElementExist("//div[text()='罗永胜']");
+        auto.assertion.isXpathExist("//div[text()='罗永胜']");
 
     }
 

@@ -27,7 +27,7 @@ public class StartFlagTest extends FlagTestBase {
         auto.ui.click("//div[@class='el-popconfirm']//span[contains(text(),'确定')]", 1);
 
         Reporter.log("校验更改结果");
-        auto.assertion.isElementExist("//span[text()='进行中']");
+        auto.assertion.isXpathExist("//span[text()='进行中']");
     }
 
 }

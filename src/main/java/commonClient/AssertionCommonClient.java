@@ -1,7 +1,5 @@
 package commonClient;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 
@@ -13,7 +11,7 @@ import java.util.List;
  */
 public class AssertionCommonClient {
 
-    UiCommonClient ui;
+    private UiCommonClient ui;
 
     public AssertionCommonClient() {}
 
@@ -22,31 +20,7 @@ public class AssertionCommonClient {
     }
 
     /**
-     * 判断是否为真
-     * @param result true断言成功，非true断言失败
-     */
-    public void isTrue(String result) {
-        if (result.equalsIgnoreCase("true")) {
-            Assert.assertTrue(true);
-        } else {
-            Assert.fail();
-        }
-    }
-
-    /**
-     * 判断是否为假
-     * @param result false断言成功，非false断言失败
-     */
-    public void isFalse(String result) {
-        if (result.equalsIgnoreCase("false")) {
-            Assert.assertTrue(true);
-        } else {
-            Assert.fail();
-        }
-    }
-
-    /**
-     * 校验expect是否存在于actual中
+     * 校验actual是否存包含了expect
      *
      * @param actual 实际结果
      * @param expect 预期结果
@@ -56,13 +30,23 @@ public class AssertionCommonClient {
     }
 
     /**
+     * 校验expect是否存包含了actual
+     *
+     * @param actual 实际结果
+     * @param expect 预期结果
+     */
+    public void isBeContains(String actual, String expect) {
+        Assert.assertTrue(expect.contains(actual));
+    }
+
+    /**
      * 校验字符串是否相等
      *
      * @param actual 实际结果
      * @param expect 预期结果
      */
     public void isEquals(String actual, String expect) {
-        Assert.assertTrue(actual.equals(expect));
+        Assert.assertEquals(expect, actual);
     }
 
     /**
@@ -75,6 +59,19 @@ public class AssertionCommonClient {
             Assert.fail();
         } else {
             Assert.assertTrue(true);
+        }
+    }
+
+    /**
+     * 校验数据是否未被逻辑删除，删除则校验失败，未删除则校验通过
+     *
+     * @param actual 实际结果，0或false表示未删除
+     */
+    public void isNotDeleted(String actual) {
+        if (actual.equalsIgnoreCase("0") || actual.equalsIgnoreCase("false")) {
+            Assert.assertTrue(true);
+        } else {
+            Assert.fail();
         }
     }
 
@@ -116,7 +113,7 @@ public class AssertionCommonClient {
      *
      * @param xpath 元素的xpath
      */
-    public void isElementExist(String xpath) {
+    public void isXpathExist(String xpath) {
         if (this.ui.getDriver() == null) {
             Assert.fail("未启动webDriver");
             return;
@@ -131,13 +128,13 @@ public class AssertionCommonClient {
      *
      * @param xpath 元素的xpath
      */
-    public void isElementNotExist(String xpath) {
+    public void isXpathNotExist(String xpath) {
         if (this.ui.getDriver() == null) {
             Assert.fail("未启动webDriver");
             return;
         }
         List<WebElement> webElements = this.ui.getElements(xpath);
-        Assert.assertTrue(webElements.size() == 0);
+        Assert.assertEquals(webElements.size(), 0);
     }
 
 }

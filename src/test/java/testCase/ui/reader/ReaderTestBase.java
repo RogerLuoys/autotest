@@ -4,20 +4,21 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeSuite;
-import proxy.UiReaderProxy;
+import root.UiReaderRoot;
+import root.UiReaderRoot;
 
 public class ReaderTestBase {
 
     /**
      * 代理类实例，所有公共模块方法通过此实例调用（加static则多线程只能到tests，不加可以tests或class）
      */
-    public static UiReaderProxy auto;
+    public static UiReaderRoot auto;
 
     @BeforeSuite(alwaysRun = true, description = "启动webDriver")
     public void supperBeforeSuite() {
 
         //1 套件开始执行时，再实例化代理类
-        auto = new UiReaderProxy();
+        auto = new UiReaderRoot();
         // 全民阅读官网apk
         auto.ui.initAndroid();
     }

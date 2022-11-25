@@ -14,7 +14,7 @@ public class QueryPointSummaryTest extends FlagTestBase {
         String result = auto.http.get("point/queryPointSummary?ownerId=416176799148282");
 
         Reporter.log("验证数据");
-        String pointId = auto.util.getJsonValue("pointId", result);
+        String pointId = auto.util.getJson("pointId", result);
         auto.assertion.isEquals(pointId, "516176799148478");
 //        Assert.assertEquals(pointId, "516176799148478", "验证积分总览返回结果");
     }

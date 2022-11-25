@@ -28,11 +28,11 @@ public class NewTaskDailyWithoutFlagTest extends FlagTestBase {
         Reporter.log("验证添加的临时任务详情");
         auto.ui.click("//td[contains(string(), '01')]//span[text()='今日有任务']");
         Reporter.log("验证任务名");
-        auto.assertion.isElementExist("//span[text()='自动化测试临时任务001']");
+        auto.assertion.isXpathExist("//span[text()='自动化测试临时任务001']");
         Reporter.log("验证临时任务描述");
-        auto.assertion.isElementExist("//div[text()='自动化临时任务描述001']");
+        auto.assertion.isXpathExist("//div[text()='自动化临时任务描述001']");
         Reporter.log("验证临时任务默认积分");
-        auto.assertion.isElementExist("//div[text()='1']");
+        auto.assertion.isXpathExist("//div[text()='1']");
     }
 
 }

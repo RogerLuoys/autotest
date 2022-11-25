@@ -12,9 +12,9 @@ public class QueryPointIncreaseTest extends FlagTestBase {
         auto.ui.click("//span[text()='积分']");
 
         Reporter.log("验证列表和详情");
-        auto.assertion.isElementExist("//div[text()='完成每日任务获得']");
-        auto.assertion.isElementExist("//div[text()='1000']");
-        auto.assertion.isElementExist("//div[text()='自动化测试临时任务']");
+        auto.assertion.isXpathExist("//div[text()='完成每日任务获得']");
+        auto.assertion.isXpathExist("//div[text()='1000']");
+        auto.assertion.isXpathExist("//div[text()='自动化测试临时任务']");
 
     }
 

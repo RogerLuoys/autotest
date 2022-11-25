@@ -10,7 +10,7 @@ public class NewsTest extends BaiDuTestBase {
         auto.ui.click("//*[text()='新闻']");
         auto.util.sleep(2);
         auto.ui.switchTab();
-        auto.assertion.isElementExist("//a[text()='热点要闻']");
+        auto.assertion.isXpathExist("//a[text()='热点要闻']");
     }
 
 }

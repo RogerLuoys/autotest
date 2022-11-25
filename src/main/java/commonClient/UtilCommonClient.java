@@ -1,6 +1,7 @@
 package commonClient;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import lombok.extern.slf4j.Slf4j;
 
@@ -89,7 +90,7 @@ public class UtilCommonClient {
      * @param json json字符串本身
      * @return key对应的value
      */
-    public String getJsonValue(String key, String json) {
+    public String getJson(String key, String json) {
         JSONObject jsonObject = JSON.parseObject(json);
         return jsonObject.getString(key);
     }
@@ -102,7 +103,7 @@ public class UtilCommonClient {
      * @param json  完整的json字符串
      * @return 名称对应的值
      */
-    public String getFirstValue(String key, String json) {
+    public String getJsonAny(String key, String json) {
         String jsonName = "\"" + key + "\":";
         int startIndex = json.indexOf(jsonName) + jsonName.length();
         int endIndex = getNodeEnd(json, startIndex);
@@ -114,6 +115,7 @@ public class UtilCommonClient {
         log.info("\n====>获取到的json节点值为：{}", jsonResult);
         return jsonResult;
     }
+
 
     /**
      * 进程睡眠，强制等待

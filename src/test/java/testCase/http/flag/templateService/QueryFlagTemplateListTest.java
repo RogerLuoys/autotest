@@ -14,7 +14,7 @@ public class QueryFlagTemplateListTest extends FlagTestBase {
         String result = auto.http.get("template/queryFlagTemplateList?ownerId=1");
 
         Reporter.log("验证数据");
-        String data = auto.util.getJsonValue("data", result);
+        String data = auto.util.getJson("data", result);
         auto.assertion.isContains(data, "只要走出去就算收获");
     }
 }

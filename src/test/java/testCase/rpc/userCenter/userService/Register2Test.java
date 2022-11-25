@@ -11,7 +11,7 @@ public class Register2Test extends UserCenterTestBase {
         String result = auto.rpc.invoke("com.luoys.upgrade.uc.share.service.UserService#register", "com.luoys.upgrade.uc.share.dto.UserDTO", "{\"userName\":\"接口自动化注册的用户名\",\"loginName\":\"autoTest01\",\"password\":\"123456\"}");
 
         // 校验结果
-        String message = auto.util.getJsonValue("message", result);
+        String message = auto.util.getJson("message", result);
         auto.assertion.isEquals(message, "登录名已被注册");
     }
 

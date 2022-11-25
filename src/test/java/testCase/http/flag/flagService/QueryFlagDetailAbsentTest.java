@@ -11,7 +11,7 @@ public class QueryFlagDetailAbsentTest extends FlagTestBase {
         String result = auto.http.get("flag/queryFlagDetail?flagId=123123");
 
         // 验证返回值
-        String message = auto.util.getFirstValue(result, "message");
+        String message = auto.util.getJsonAny("message", result);
         auto.assertion.isEquals(message, "未查询到此flag");
     }
 

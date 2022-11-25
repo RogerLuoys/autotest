@@ -11,7 +11,7 @@ public class QueryByUserIdAbsentTest extends UserCenterTestBase {
         String result = auto.rpc.invoke("com.luoys.upgrade.uc.share.service.UserService#queryByUserId", "java.lang.String", "10000");
 
         // 校验结果
-        String message = auto.util.getFirstValue("message", result);
+        String message = auto.util.getJsonAny("message", result);
         auto.assertion.isEquals(message, "业务异常");
     }
 

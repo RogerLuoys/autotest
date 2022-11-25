@@ -12,8 +12,8 @@ public class QueryReportDetailFinishTest extends FlagTestBase {
         String result = auto.http.get("report/queryReportDetail?flagId=116177766224670");
 
         Reporter.log("验证结果");
-        String flagName = auto.util.getFirstValue("flagName", result);
-        String taskDailyId = auto.util.getFirstValue("taskDailyId", result);
+        String flagName = auto.util.getJsonAny("flagName", result);
+        String taskDailyId = auto.util.getJsonAny("taskDailyId", result);
         auto.assertion.isEquals(flagName, "自动化queryReportDetail测试");
         auto.assertion.isEquals(taskDailyId, "316177767278125");
 //        Assert.assertEquals(flagName, "自动化queryReportDetail测试", "验证基本信息");

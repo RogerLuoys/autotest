@@ -25,6 +25,6 @@ public class NewHabitTest extends FlagTestBase {
         auto.ui.sendKey("//div[@id='pane-habit']//input[@placeholder='请输入名称']", "自动化新增习惯测试");
         auto.ui.click("//div[@id='pane-habit']//i[@class='el-icon-search']");
         auto.util.sleep(3);
-        auto.assertion.isElementExist("//div[text()='自动化新增习惯测试']");
+        auto.assertion.isXpathExist("//div[text()='自动化新增习惯测试']");
     }
 }

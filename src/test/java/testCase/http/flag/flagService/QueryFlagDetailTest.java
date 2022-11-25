@@ -25,8 +25,8 @@ public class QueryFlagDetailTest extends FlagTestBase {
         String result = auto.http.get("flag/queryFlagDetail?flagId=116176887323460");
 
         // 验证返回值
-        String flagName = auto.util.getFirstValue("flagName", result);
-        String taskName = auto.util.getFirstValue("taskName", result);
+        String flagName = auto.util.getJsonAny("flagName", result);
+        String taskName = auto.util.getJsonAny("taskName", result);
         auto.assertion.isEquals(flagName, "自动化queryFlagDetail测试");
         auto.assertion.isEquals(taskName, "queryFlagDetail测试任务");
 

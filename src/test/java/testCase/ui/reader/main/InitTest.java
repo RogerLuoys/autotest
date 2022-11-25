@@ -10,7 +10,7 @@ public class InitTest extends ReaderTestBase {
         auto.ui.click("//*[@text='同意并进入']");
         auto.ui.click("//*[@text='立即进入']");
         auto.ui.click("//*[@text='好的']");
-        auto.assertion.isElementExist("//*[@text='确定']");
+        auto.assertion.isXpathExist("//*[@text='确定']");
     }
 
 }
