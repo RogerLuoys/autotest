@@ -220,21 +220,11 @@ public class UiCommonClient {
     /**
      * 获取同类别的自动化元素列表
      *
-     * @param locator 自选元素定位方式
-     * @return 所有符合条件的元素
-     */
-    protected List<WebElement> getElements(By locator) {
-        return this.driver.findElements(locator);
-    }
-
-    /**
-     * 获取同类别的自动化元素列表
-     *
      * @param xpath 元素的xpath
      * @return 所有符合条件的元素
      */
     protected List<WebElement> getElements(String xpath) {
-        return this.getElements(By.xpath(xpath));
+        return this.driver.findElements(By.xpath(xpath));
     }
 
     /**
