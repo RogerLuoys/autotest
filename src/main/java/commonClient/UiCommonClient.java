@@ -267,7 +267,7 @@ public class UiCommonClient {
      * @param xpath 页面元素的xpath
      */
     public void clickByJs(String xpath) {
-        this.executeJs(xpath, "arguments[0].click();");
+        this.executeJs("arguments[0].click();", xpath);
     }
 
     /**
@@ -366,10 +366,10 @@ public class UiCommonClient {
     /**
      * 执行java script脚本
      *
-     * @param xpath 元素xpath
      * @param javaScript 脚本
+     * @param xpath 元素xpath
      */
-    public void executeJs(String xpath, String javaScript) {
+    public void executeJs(String javaScript, String xpath) {
         WebElement webElement = this.driver.findElement(By.xpath(xpath));
         ((JavascriptExecutor) this.driver).executeScript(javaScript, webElement);
     }
