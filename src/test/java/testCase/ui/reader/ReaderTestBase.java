@@ -7,7 +7,7 @@ import org.testng.annotations.BeforeSuite;
 import root.UiReaderRoot;
 import root.UiReaderRoot;
 
-public class ReaderTestBase {
+public class ReaderTestBase extends Config {
 
     /**
      * 代理类实例，所有公共模块方法通过此实例调用（加static则多线程只能到tests，不加可以tests或class）

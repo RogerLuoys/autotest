@@ -6,7 +6,7 @@ import testCase.http.flag.FlagTestBase;
 
 public class QueryFlagTemplateDetailTest extends FlagTestBase {
 
-//    private final String FullURL = config.Config.URL + "template/queryFlagTemplateDetail";
+//    private final String FullURL = URL + "template/queryFlagTemplateDetail";
 
     @Test
     void test1() {

@@ -6,7 +6,7 @@ import testCase.http.flag.FlagTestBase;
 
 public class NewTaskTest extends FlagTestBase {
 
-//    private final String FullURL = config.Config.URL + "task/newTask";
+//    private final String FullURL = URL + "task/newTask";
 
 //    @BeforeClass
 //    void resetData() {

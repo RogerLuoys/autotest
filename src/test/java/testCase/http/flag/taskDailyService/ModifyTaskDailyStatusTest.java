@@ -6,7 +6,7 @@ import testCase.http.flag.FlagTestBase;
 
 public class ModifyTaskDailyStatusTest extends FlagTestBase {
 
-//    private final String FullURL = config.Config.URL + "taskDaily/modifyTaskDailyStatus";
+//    private final String FullURL = URL + "taskDaily/modifyTaskDailyStatus";
 //
 //    @BeforeClass
 //    void resetData() {

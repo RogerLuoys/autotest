@@ -7,7 +7,7 @@ import root.UiFlagRoot;
  * 专用账号/密码：UITester/123456
  * 账号userId： 416160586979148
  */
-public class FlagTestBase {
+public class FlagTestBase extends Config {
 
     /**
      * 代理类实例，所有公共模块方法通过此实例调用（加static则多线程只能到tests，不加可以tests或class）
@@ -30,12 +30,12 @@ public class FlagTestBase {
     public void supperBeforeClass() {
         System.out.println("\n--------> 开始执行 Flag UI 前置步骤\n");
 
-        auto.ui.initChrome(Config.OPTIONS);
+        auto.ui.initChrome(OPTIONS);
 
         //1 清理cookies
         auto.ui.clearCookies();
-        auto.ui.openUrl(Config.URL);
-        auto.po.loginFlag(Config.USERNAME, Config.PASSWORD);
+        auto.ui.openUrl(URL);
+        auto.po.loginFlag(USERNAME, PASSWORD);
         // 设置本地存储，以屏蔽部分提示
         auto.ui.executeJs("localStorage.setItem('guide','close')");
 

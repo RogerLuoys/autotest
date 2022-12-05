@@ -6,7 +6,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeSuite;
 import root.UiBaiduRoot;
 
-public class BaiDuTestBase {
+public class BaiDuTestBase extends Config {
 
     /**
      * 代理类实例，所有公共模块方法通过此实例调用（这里一定要static，因为只实例化一次）
@@ -26,10 +26,10 @@ public class BaiDuTestBase {
     public void supperBeforeClass() {
         System.out.println("\n--------> 开始执行百度 UI 前置步骤\n");
 
-        auto.ui.initChrome(Config.OPTIONS);
+        auto.ui.initChrome(OPTIONS);
 
         auto.ui.clearCookies();
-        auto.ui.openUrl(Config.URL);
+        auto.ui.openUrl(URL);
 
         System.out.println("\n--------> 开始执行百度 UI 自动化用例\n");
     }

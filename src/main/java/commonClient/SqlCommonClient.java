@@ -32,7 +32,7 @@ public class SqlCommonClient {
             result = this.delete(sql);
         } else if (sql.toUpperCase().matches("^UPDATE [A-Z0-9_]+ SET .+ WHERE .+")) {
             result = this.update(sql);
-        } else if (sql.toUpperCase().matches("^SELECT .+ FROM [A-Z0-9_]+")) {//todo 还要改
+        } else if (sql.toUpperCase().matches("^SELECT .+ FROM [A-Z0-9_]+ (WHERE .+)?")) {
             // 查询单列
             if (sql.toUpperCase().matches("^SELECT [^,*]+ FROM [A-Z0-9_]+ WHERE .+")) {
                 result = this.selectOneCell(sql);
@@ -167,6 +167,9 @@ public class SqlCommonClient {
         Map<String, Object> result = this.jdbcTemplate.queryForList(sql).get(0);
         // 根据列名取值
         Object value = result.get(sqlList[1]);
+        if (value == null) {
+            return "null";
+        }
         //时间格式要转换
         if (value.getClass().getName().equals("java.time.LocalDateTime")) {
             LocalDateTime time = (LocalDateTime) value;

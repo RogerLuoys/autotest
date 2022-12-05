@@ -6,7 +6,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeSuite;
 import root.UiJueJinRoot;
 
-public class JueJinTestBase {
+public class JueJinTestBase extends Config {
 
     /**
      * 代理类实例，所有公共模块方法通过此实例调用（加static则多线程只能到tests，不加可以tests或class）
@@ -25,8 +25,8 @@ public class JueJinTestBase {
     public void supperBeforeClass() {
 
         // webDriver 初始化
-        auto.ui.initChrome(Config.OPTIONS);
-        auto.ui.setBaseURL(Config.URL);
+        auto.ui.initChrome(OPTIONS);
+        auto.ui.setBaseURL(URL);
 
         //1 清理cookies
         auto.ui.clearCookies();

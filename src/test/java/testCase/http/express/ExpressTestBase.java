@@ -4,7 +4,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeSuite;
 import root.HttpExpressRoot;
 
-public class ExpressTestBase {
+public class ExpressTestBase extends Config {
 
     /**
      * 代理类实例，所有公共模块方法通过此实例调用（这里一定要static）
@@ -20,7 +20,7 @@ public class ExpressTestBase {
     @BeforeClass
     public void beforeClass() {
         // 指定环境
-        auto.http.setBaseURL(Config.URL);
+        auto.http.setBaseURL(URL);
     }
 
 }

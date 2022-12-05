@@ -4,7 +4,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeSuite;
 import root.RpcUcRoot;
 
-public class UserCenterTestBase {
+public class UserCenterTestBase extends Config {
     //云服务器
 //    public static final String URL = "dubbo://118.24.117.181:20881/";
     //本地
@@ -23,7 +23,7 @@ public class UserCenterTestBase {
 
     @BeforeClass
     public void beforeClass() {
-        auto.rpc.setBaseURL(Config.URL);
+        auto.rpc.setBaseURL(URL);
     }
 
 }

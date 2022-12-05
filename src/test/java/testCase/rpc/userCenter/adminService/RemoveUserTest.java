@@ -6,7 +6,7 @@ import testCase.rpc.userCenter.UserCenterTestBase;
 
 public class RemoveUserTest extends UserCenterTestBase {
 
-//    private final String serviceURL = config.Config.UC_URL + "com.luoys.upgrade.uc.share.service.AdminService";
+//    private final String serviceURL = UC_URL + "com.luoys.upgrade.uc.share.service.AdminService";
 //    private final AdminService adminService = auto.rpc.getService(serviceURL, AdminService.class);
 //
 //    @BeforeClass

@@ -6,7 +6,7 @@ import testCase.http.flag.FlagTestBase;
 
 public class ModifyWitnessTest extends FlagTestBase {
 
-//    private final String FullURL = config.Config.URL + "flagBind/modifyWitness";
+//    private final String FullURL = URL + "flagBind/modifyWitness";
 //
 //    @BeforeClass
 //    void resetData() {

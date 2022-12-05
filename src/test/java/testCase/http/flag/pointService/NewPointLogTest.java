@@ -6,7 +6,7 @@ import testCase.http.flag.FlagTestBase;
 
 public class NewPointLogTest extends FlagTestBase {
 
-//    private final String FullURL = config.Config.URL + "point/newPointLog";
+//    private final String FullURL = URL + "point/newPointLog";
 //
 //    @BeforeClass
 //    void resetData() {

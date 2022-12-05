@@ -6,7 +6,7 @@ import testCase.http.flag.FlagTestBase;
 
 public class QueryPointLogListTest extends FlagTestBase {
 
-//    private final String FullURL = config.Config.URL + "point/queryPointLogList";
+//    private final String FullURL = URL + "point/queryPointLogList";
 
     @Test(description = "查询积分使用记录")
     void test1() {
