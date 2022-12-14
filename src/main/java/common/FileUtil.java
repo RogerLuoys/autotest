@@ -7,6 +7,7 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
 import java.io.FileInputStream;
 import java.io.InputStream;
+import java.util.Arrays;
 
 public class FileUtil {
 
@@ -25,53 +26,31 @@ public class FileUtil {
         HSSFSheet sheet;
         HSSFRow row;
         HSSFCell cell;
-        // 初始化
         try {
+            // 初始化
             inputStream = new FileInputStream(filePath);
             workbook = new HSSFWorkbook(inputStream);
             sheet = sheetName == null ? workbook.getSheetAt(0) : workbook.getSheet(sheetName);
+            // 获取行数和第一行的列数
+            int endLine = sheet.getLastRowNum() + 1;
+            int endColumn = sheet.getRow(0).getPhysicalNumberOfCells();
+            String[][] allData = new String[endLine - startLine][endColumn - startColumn];
+            // 获取工作表的数据，不一定是第0行
+            for (int i = startLine; i < endLine; i++) {
+                row = sheet.getRow(i);
+                for (int j = startColumn; j < endColumn; j++) {
+                    cell = row == null ? null : row.getCell(j);
+                    // 数组要从第0行第0列开始
+                    allData[i - startLine][j - startColumn] = cell == null ? "" : cell.toString();
+                }
+            }
+            // 关闭资源
+            inputStream.close();
+            return allData;
         } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
-        // 获取行数和第一行的列数
-        int endLine = sheet.getLastRowNum() + 1;
-        int endColumn = sheet.getRow(0).getPhysicalNumberOfCells();
-        String[][] allData = new String[endLine - startLine][endColumn];
-        // 获取工作表的数据
-        for (int i = startLine; i < endLine; i++) {
-            row = sheet.getRow(i);
-            for (int j = startColumn; j < endColumn; j++) {
-                cell = row == null ? null : row.getCell(j);
-                allData[i][j] = cell == null ? "" : cell.toString();
-            }
-        }
-        // 关闭资源
-        try {
-            inputStream.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return allData;
-    }
-
-    /**
-     * 获取excel中，第一个工作表的数据
-     * @param filePath excel文件全路径
-     * @return 可用于数据驱动
-     */
-    public static Object[][] getData(String filePath) {
-        return getExcelContent(filePath, null, 1, 0);
-    }
-
-    /**
-     * 获取excel中，指定工作表的数据
-     * @param filePath excel文件全路径
-     * @param env 工作表名
-     * @return 可用于数据驱动
-     */
-    public static Object[][] getData(String filePath, String env) {
-        return getExcelContent(filePath, env, 1, 0);
     }
 
 }

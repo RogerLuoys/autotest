@@ -1,6 +1,7 @@
 package testCase.rpc.xdzb;
 
 import common.FileUtil;
+import commonTestng.Provider;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.DataProvider;
@@ -26,7 +27,8 @@ public class DzbTestBase extends Config {
 
     @DataProvider(name = "data")
     public Object[][] provider() {
-        String path = System.getProperty("user.dir") + "/" + this.getClass().getName().replace(".", "/") + ".xls";
-        return FileUtil.getData(path);
+        String path = System.getProperty("user.dir") + "\\src\\test\\java\\" + this.getClass().getName().replace(".", "\\") + ".xls";
+        Object[][] data = Provider.getData(path);
+        return data;
     }
 }
