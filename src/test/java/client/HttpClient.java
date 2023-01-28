@@ -8,7 +8,7 @@ import commonClient.HttpCommonClient;
 public class HttpClient extends HttpCommonClient {
     // 这里可以加自定义方法
 
-    String baseURL;
+    private String baseURL;
 
     /**
      * 设置域名，即测试环境 (在超类中使用)
