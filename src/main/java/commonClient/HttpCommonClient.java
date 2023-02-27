@@ -3,19 +3,18 @@ package commonClient;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.http.HttpEntity;
+import org.apache.http.Header;
 import org.apache.http.client.methods.*;
-import org.apache.http.client.utils.URIBuilder;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
+import org.apache.http.message.BasicHeader;
 import org.apache.http.util.EntityUtils;
 
 import java.io.IOException;
-import java.net.URISyntaxException;
 import java.nio.charset.StandardCharsets;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
 //1 创建HttpClient客户端
 //2 创建Http请求
@@ -24,222 +23,184 @@ import java.util.Map;
 @Slf4j
 public class HttpCommonClient {
 
+    private final List<Header> DEFAULT_HEADER = new ArrayList<>();
+    private CloseableHttpClient httpClient = null;
+    private String defaultUrl = null;
+
     /**
-     * 执行http get请求
-     *
-     * @param url    带入参（如果有）的完整url
-     * @param header 请求头
-     * @return get请求结果
+     * 处理get请求参数，并转换成HttpGet对象
+     * @param url 完整url(可带参数)
+     * @param headers 请求头
+     * @return HttpGet
      */
-    private String httpGet(String url, Map<String, String> header) {
-        log.info("\n====>执行get请求开始：{}", url);
-        // 创建 HttpClient 客户端
-        CloseableHttpClient httpClient = HttpClients.createDefault();
-        String result = null;
+    private HttpGet transformGet(String url, String headers) {
+        if (!url.startsWith("http")) {
+            url = this.defaultUrl + url;
+        }
+        // 创建 HttpGet 请求
         HttpGet httpGet = new HttpGet(url);
         // 设置请求头
-        for (String key : header.keySet()) {
-            httpGet.setHeader(key, header.get(key));
-        }
-        CloseableHttpResponse httpResponse = null;
-        try {
-            httpResponse = httpClient.execute(httpGet);
-            HttpEntity httpEntity = httpResponse.getEntity();
-            result = EntityUtils.toString(httpEntity);
-        } catch (IOException e) {
-            log.error("\n====>执行get请求失败！");
-        } finally {
-            try {
-                if (httpResponse != null) {
-                    httpResponse.close();
-                }
-                if (httpClient != null) {
-                    httpClient.close();
-                }
-            } catch (IOException e) {
-                log.error("\n====>关闭请求失败！");
-            }
-        }
-        log.info("\n====>执行get请求成功：{}", result);
-        return result;
+        httpGet.setHeaders(this.transformHeaders(headers));
+        return httpGet;
     }
 
     /**
-     * 执行http post请求，通用方法
-     *
-     * @param url      带入参（如果有）的完整url
-     * @param jsonData json格式的body入参
-     * @param header   请求头
-     * @return post请求结果
+     * 处理post请求参数，并转换成HttpGet对象
+     * @param url 完整url(可带参数)
+     * @param body 请求体
+     * @param headers 请求头
+     * @return HttpPost
      */
-    private String httpPost(String url, String jsonData, Map<String, String> header) {
-        log.info("\n====>执行post请求开始：{}\n====>post请求body：{}", url, jsonData);
-        // 创建 HttpClient 客户端
-        CloseableHttpClient httpClient = HttpClients.createDefault();
-        String result = null;
+    private HttpPost transformPost(String url, String body, String headers) {
+        if (!url.startsWith("http")) {
+            url = this.defaultUrl + url;
+        }
         // 创建 HttpPost 请求
         HttpPost httpPost = new HttpPost(url);
-        for (String key : header.keySet()) {
-            httpPost.setHeader(key, header.get(key));
-        }
-        CloseableHttpResponse httpResponse = null;
-        StringEntity stringEntity;
-        //设置编码格式避免中文乱码
-        stringEntity = new StringEntity(jsonData, StandardCharsets.UTF_8);
-        stringEntity.setContentType("application/json");
-        try {
+        httpPost.setHeaders(this.transformHeaders(headers));
+        if (body != null) {
+            //设置编码格式避免中文乱码
+            StringEntity stringEntity = new StringEntity(body, StandardCharsets.UTF_8);
+            stringEntity.setContentType("application/json");
             // 设置 HttpPost 参数
             httpPost.setEntity(stringEntity);
-            httpResponse = httpClient.execute(httpPost);
-            HttpEntity httpEntity = httpResponse.getEntity();
-            result = EntityUtils.toString(httpEntity);
-        } catch (IOException e) {
-            log.error("\n====>执行post请求失败！");
-        } finally {
-            try {
-                if (httpResponse != null) {
-                    httpResponse.close();
-                }
-                if (httpClient != null) {
-                    httpClient.close();
-                }
-            } catch (IOException e) {
-                log.error("\n====>关闭请求失败！");
-            }
         }
-        log.info("\n====>执行post请求成功：{}", result);
-        return result;
+        return httpPost;
     }
 
-
     /**
-     * 执行http delete请求(无请求体)
-     *
-     * @param url    带入参（如果有）的完整url
-     * @param header 请求头
-     * @return delete请求结果
+     * 处理delete请求参数，并转换成HttpDelete对象
+     * @param url 完整url(可带参数)
+     * @param headers 请求头
+     * @return HttpDelete
      */
-    private String httpDelete(String url, Map<String, String> header) {
-        log.info("\n====>执行delete请求开始：{}", url);
-        // 创建 HttpClient 客户端
-        CloseableHttpClient httpClient = HttpClients.createDefault();
-        String result = null;
+    private HttpDelete transformDelete(String url, String headers) {
+        if (!url.startsWith("http")) {
+            url = this.defaultUrl + url;
+        }
+        // 创建 HttpDelete 请求
         HttpDelete httpDelete = new HttpDelete(url);
-        for (String key : header.keySet()) {
-            httpDelete.setHeader(key, header.get(key));
-        }
-        CloseableHttpResponse httpResponse = null;
-        try {
-            httpResponse = httpClient.execute(httpDelete);
-            HttpEntity httpEntity = httpResponse.getEntity();
-            result = EntityUtils.toString(httpEntity);
-        } catch (IOException e) {
-            log.error("\n====>执行delete请求失败！");
-        } finally {
-            try {
-                if (httpResponse != null) {
-                    httpResponse.close();
-                }
-                if (httpClient != null) {
-                    httpClient.close();
-                }
-            } catch (IOException e) {
-                log.error("\n====>关闭请求失败！");
-            }
-        }
-        log.info("\n====>执行delete请求成功：{}", result);
-        return result;
+        // 设置请求头
+        httpDelete.setHeaders(this.transformHeaders(headers));
+        return httpDelete;
     }
 
     /**
-     * 执行http put请求，通用方法
-     *
-     * @param url      带入参（如果有）的完整url
-     * @param jsonData json格式的body入参
-     * @param header   请求头
-     * @return put请求结果
+     * 处理put请求参数，并转换成HttpPut对象
+     * @param url 完整url(可带参数)
+     * @param body 请求体
+     * @param headers 请求头
+     * @return HttpPut
      */
-    private String httpPut(String url, String jsonData, Map<String, String> header) {
-        log.info("\n====>执行put请求开始：{}\n====>put请求body：{}", url, jsonData);
-        // 创建 HttpClient 客户端
-        CloseableHttpClient httpClient = HttpClients.createDefault();
-        String result = null;
-        HttpPut httpPut = new HttpPut(url);
-        for (String key : header.keySet()) {
-            httpPut.setHeader(key, header.get(key));
+    private HttpPut transformPut(String url, String body, String headers) {
+        if (!url.startsWith("http")) {
+            url = this.defaultUrl + url;
         }
-        CloseableHttpResponse httpResponse = null;
-        //设置请求体
-        if (jsonData != null) {
-            StringEntity stringEntity = new StringEntity(jsonData, StandardCharsets.UTF_8);
+        // 创建 HttpPut 请求
+        HttpPut httpPut = new HttpPut(url);
+        httpPut.setHeaders(this.transformHeaders(headers));
+        if (body != null) {
+            //设置编码格式避免中文乱码
+            StringEntity stringEntity = new StringEntity(body, StandardCharsets.UTF_8);
             stringEntity.setContentType("application/json");
+            // 设置 HttpPost 参数
             httpPut.setEntity(stringEntity);
         }
-        try {
-            httpResponse = httpClient.execute(httpPut);
-            HttpEntity httpEntity = httpResponse.getEntity();
-            result = EntityUtils.toString(httpEntity);
-        } catch (IOException e) {
-            log.error("\n====>执行put请求失败！");
-        } finally {
-            try {
-                if (httpResponse != null) {
-                    httpResponse.close();
-                }
-                if (httpClient != null) {
-                    httpClient.close();
-                }
-            } catch (IOException e) {
-                log.error("\n====>关闭请求失败！");
-            }
-        }
-        log.info("\n====>执行put请求成功：{}", result);
-        return result;
+        return httpPut;
     }
 
-    /**
-     * 把url字符串转换成URIBuilder对象
-     *
-     * @param url 完整url
-     * @return -
-     */
-    private URIBuilder getURIBuilder(String url) {
-        try {
-            return new URIBuilder(url);
-        } catch (URISyntaxException e) {
-            log.error("\n====>处理请求头url异常");
-//            e.printStackTrace();
+    private Header[] transformHeaders(String headers) {
+        List<Header> headerList = new ArrayList<>();
+        headerList.add(new BasicHeader("Connection", "keep-alive"));
+        headerList.addAll(DEFAULT_HEADER);
+        if (headers == null) {
+            return headerList.toArray(new Header[0]);
         }
-        return null;
-    }
-
-    /**
-     * 判断字符串是否为空(org.apache.dubbo.common.utils的方法)
-     * @param cs 目标字符串
-     * @return 字符串为null || 长度为0 || 只包含空格，则返回true
-     */
-    private boolean isBlank(CharSequence cs) {
-        int strLen;
-        if (cs != null && (strLen = cs.length()) != 0) {
-            for(int i = 0; i < strLen; ++i) {
-                if (!Character.isWhitespace(cs.charAt(i))) {
-                    return false;
-                }
-            }
-        }
-        return true;
-    }
-
-    private Map<String, String> transformJson2Map(String json) {
-        Map<String, String> map = new HashMap<>();
-        if (isBlank(json)) {
-            return map;
-        }
-        JSONObject jsonObject = JSON.parseObject(json);
+        JSONObject jsonObject = JSON.parseObject(headers);
         for (String key : jsonObject.keySet()) {
-            map.put(key, jsonObject.get(key).toString());
+            headerList.add(new BasicHeader(key, jsonObject.get(key).toString()));
         }
-        return map;
+        return headerList.toArray(new Header[0]);
+    }
+
+    /**
+     * 执行http请求
+     * @param request 请求对象
+     * @return 调用结果
+     */
+    private CloseableHttpResponse executeRequest(HttpUriRequest request) throws IOException {
+        if (httpClient == null) {
+            httpClient = HttpClients.createDefault();
+        }
+        return httpClient.execute(request);
+    }
+
+    /**
+     * 执行请求并获取结果中的body值
+     * @param request 请求
+     * @return response body
+     */
+    private String httpBody(HttpUriRequest request) {
+        try {
+            CloseableHttpResponse httpResponse = this.executeRequest(request);
+            String result = EntityUtils.toString(httpResponse.getEntity());
+            httpResponse.close();
+            return result;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return "false";
+        }
+    }
+
+    /**
+     * 执行请求并获取结果中的header
+     * @param request 请求
+     * @return response body
+     */
+    private String httpHeader(HttpUriRequest request, String headerName) {
+        try {
+            CloseableHttpResponse httpResponse = this.executeRequest(request);
+            Header[] header;
+            if (headerName == null) {
+                header = httpResponse.getAllHeaders();
+            } else {
+                header = httpResponse.getHeaders(headerName);
+            }
+            httpResponse.close();
+            return JSON.toJSONString(header);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return "false";
+        }
+    }
+
+    /**
+     * 关闭客户端
+     */
+    public void close() {
+        try {
+            if (httpClient != null) {
+                httpClient.close();
+            }
+        } catch (IOException e) {
+            log.error("===>关闭http客户端失败！");
+        }
+    }
+
+    /**
+     * 设置默认url(用于指定调用环境)
+     * @param defaultUrl 带协议头的环境地址
+     */
+    public void setDefaultUrl(String defaultUrl) {
+        this.defaultUrl = defaultUrl;
+    }
+
+    public void setDefaultHeader(String defaultHeader) {
+        DEFAULT_HEADER.clear();
+        JSONObject jsonObject = JSON.parseObject(defaultHeader);
+        for (String key : jsonObject.keySet()) {
+            DEFAULT_HEADER.add(new BasicHeader(key, jsonObject.get(key).toString()));
+        }
     }
 
     /**
@@ -249,9 +210,8 @@ public class HttpCommonClient {
      * @return 返回json格式
      */
     public String get(String url) {
-        Map<String, String> header = new HashMap<>();
-        header.put("Connection", "keep-alive");
-        return this.httpGet(url, header);
+        HttpGet httpGet = this.transformGet(url, null);
+        return this.httpBody(httpGet);
     }
 
     /**
@@ -262,9 +222,92 @@ public class HttpCommonClient {
      * @return 返回json格式
      */
     public String get(String url, String header) {
-        Map<String, String> headerMap = transformJson2Map(header);
-        headerMap.put("Connection", "keep-alive");
-        return this.httpGet(url, headerMap);
+        HttpGet httpGet = this.transformGet(url, header);
+        return this.httpBody(httpGet);
+    }
+
+    /**
+     * 执行http get请求，并返回所有header
+     *
+     * @param url  完整的url地址，可带参数-http://ip:port/path?param1=value1
+     * @return 返回json格式
+     */
+    public String getForHeader(String url) {
+        HttpGet httpGet = this.transformGet(url, null);
+        return this.httpHeader(httpGet, null);
+    }
+
+    /**
+     * 执行http get请求，并返回指定header
+     *
+     * @param url  完整的url地址，可带参数-http://ip:port/path?param1=value1
+     * @param headerName  指定获取的返回头
+     * @return 返回json格式
+     */
+    public String getForHeader(String url, String headerName) {
+        HttpGet httpGet = this.transformGet(url, null);
+        return this.httpHeader(httpGet, headerName);
+    }
+
+    /**
+     * 执行http post请求
+     *
+     * @param url  完整的url地址，可带参数-http://ip:port/path?param1=value1
+     * @return 返回json格式
+     */
+    public String post(String url) {
+        HttpPost httpPost = this.transformPost(url, null, null);
+        return this.httpBody(httpPost);
+    }
+
+    /**
+     * 执行http post请求
+     *
+     * @param url  完整的url地址，可带参数-http://ip:port/path?param1=value1
+     * @param body 接口传入的请求体，application/json格式
+     * @return 返回json格式
+     */
+    public String post(String url, String body) {
+        HttpPost httpPost = this.transformPost(url, body, null);
+        return this.httpBody(httpPost);
+    }
+
+    /**
+     * 执行http post请求
+     *
+     * @param url  完整的url地址-http://ip:port/path
+     * @param body 接口对应的POJO对象或Map对象，传入body中，application/json格式
+     * @param header 请求头，json字符串
+     * @return 返回json格式
+     */
+    public String post(String url, String body, String header) {
+        HttpPost httpPost = this.transformPost(url, body, header);
+        return this.httpBody(httpPost);
+    }
+
+    /**
+     * 执行http post请求，返回header
+     *
+     * @param url  完整的url地址，可带参数-http://ip:port/path?param1=value1
+     * @param body 接口传入的请求体，application/json格式
+     * @return 返回json格式
+     */
+    public String postForHeader(String url, String body) {
+        HttpPost httpPost = this.transformPost(url, body, null);
+        return this.httpHeader(httpPost, null);
+    }
+
+    /**
+     * 执行http post请求，返回指定header
+     *
+     * @param url  完整的url地址-http://ip:port/path
+     * @param body 接口对应的POJO对象或Map对象，传入body中，application/json格式
+     * @param headerName 要获取的header名
+     * @return 返回json格式
+     */
+    public String postForHeader(String url, String body, String headerName) {
+        HttpPost httpPost = this.transformPost(url, body, null);
+        return this.httpHeader(httpPost, headerName);
     }
 
     /**
@@ -274,9 +317,8 @@ public class HttpCommonClient {
      * @return 返回json格式
      */
     public String delete(String url) {
-        Map<String, String> header = new HashMap<>();
-        header.put("Connection", "keep-alive");
-        return this.httpDelete(url, header);
+        HttpDelete httpDelete = this.transformDelete(url, null);
+        return this.httpBody(httpDelete);
     }
 
     /**
@@ -287,41 +329,8 @@ public class HttpCommonClient {
      * @return 返回json格式
      */
     public String delete(String url, String header) {
-        Map<String, String> headerMap = transformJson2Map(header);
-        headerMap.put("Connection", "keep-alive");
-        return this.httpDelete(url, headerMap);
-    }
-
-    /**
-     * 执行http post请求
-     *
-     * @param url  完整的url地址，可带参数-http://ip:port/path?param1=value1
-     * @return 返回json格式
-     */
-    public String post(String url) {
-        Map<String, String> header = new HashMap<>();
-        header.put("Connection", "keep-alive");
-        return this.httpPost(url, null, header);
-    }
-
-
-    /**
-     * 执行http post请求
-     *
-     * @param url  完整的url地址，可带参数-http://ip:port/path?param1=value1
-     * @param body 接口传入的请求体，application/json格式
-     * @return 返回json格式
-     */
-    public String post(String url, String body) {
-        Map<String, String> header = new HashMap<>();
-        header.put("Connection", "keep-alive");
-        return this.httpPost(url, body, header);
-    }
-
-    public String post(String url, String body, String header) {
-        Map<String, String> headerMap = transformJson2Map(header);
-        headerMap.put("Connection", "keep-alive");
-        return this.httpPost(url, body, headerMap);
+        HttpDelete httpDelete = this.transformDelete(url, header);
+        return this.httpBody(httpDelete);
     }
 
     /**
@@ -331,9 +340,8 @@ public class HttpCommonClient {
      * @return 返回json格式
      */
     public String put(String url) {
-        Map<String, String> header = new HashMap<>();
-        header.put("Connection", "keep-alive");
-        return this.httpPut(url, null, header);
+        HttpPut httpPut = this.transformPut(url, null, null);
+        return this.httpBody(httpPut);
     }
 
     /**
@@ -344,9 +352,8 @@ public class HttpCommonClient {
      * @return 返回json格式
      */
     public String put(String url, String body) {
-        Map<String, String> header = new HashMap<>();
-        header.put("Connection", "keep-alive");
-        return this.httpPut(url, body, header);
+        HttpPut httpPut = this.transformPut(url, body, null);
+        return this.httpBody(httpPut);
     }
 
     /**
@@ -358,9 +365,8 @@ public class HttpCommonClient {
      * @return 返回json格式
      */
     public String put(String url, String body, String header) {
-        Map<String, String> headerMap = transformJson2Map(header);
-        headerMap.put("Connection", "keep-alive");
-        return this.httpPut(url, body, headerMap);
+        HttpPut httpPut = this.transformPut(url, body, header);
+        return this.httpBody(httpPut);
     }
 
 }

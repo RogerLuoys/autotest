@@ -1,5 +1,6 @@
 package testCase.http.flag;
 
+import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeSuite;
 import root.HttpFlagRoot;
@@ -17,13 +18,18 @@ public class FlagTestBase extends Config {
 
     // 用例执行时再开始实例化auto变量，因为用mvn test执行会先把test包下所有类实例化一遍
     @BeforeSuite
-    public void supperBeforeSuite() {
+    public void beforeSuite() {
         auto = new HttpFlagRoot();
     }
 
     @BeforeClass
-    public void beforeClass() {
+    public void supperBeforeClass() {
         // 指定环境
-        auto.http.setBaseURL(URL);
+        auto.http.setDefaultUrl(URL);
+    }
+
+    @AfterSuite
+    public void afterSuite() {
+        auto.http.close();
     }
 }
