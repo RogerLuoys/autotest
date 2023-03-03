@@ -16,15 +16,15 @@ public class DeleteFlag extends FlagTestBase {
         Reporter.log("按名称搜索");
         auto.ui.sendKey("//div[@id='pane-flag']//input[@placeholder='请输入名称']", "自动化FLAG状态测试-勿删");
         auto.ui.click("//div[@id='pane-flag']//i[@class='el-icon-search']");
-        auto.util.sleep(2);
+        auto.util.sleep("2");
 
         Reporter.log("点编辑");
-        auto.ui.click("//div[@id='pane-flag']//span[text()='编辑']", 1);
-        auto.util.sleep(2);
+        auto.ui.click("//div[@id='pane-flag']//span[text()='编辑']", "1");
+        auto.util.sleep("2");
 
         Reporter.log("更改状态为进行中");
         auto.ui.click("//span[text()='删除']");
-        auto.ui.click("//div[@class='el-popconfirm']//span[contains(text(),'确定')]", 1);
+        auto.ui.click("//div[@class='el-popconfirm']//span[contains(text(),'确定')]", "1");
 
         Reporter.log("校验更改结果");
         auto.assertion.isXpathNotExist("//div[text()='自动化FLAG状态测试-勿删']");

@@ -24,7 +24,7 @@ public class CycleTaskEditTest extends FlagTestBase {
         auto.ui.click("//span[contains(text(), '周二')]");
         auto.ui.sendKey("//textarea[@placeholder='请描述你的任务']", "自动化编辑任务描述");
         auto.ui.click("//span[text()='保存']");
-        auto.util.sleep(3);
+        auto.util.sleep("3");
 
         Reporter.log("验证编辑结果");
         auto.assertion.isXpathExist("//div[text()='自动化编辑任务名']");//验证名称编辑结果

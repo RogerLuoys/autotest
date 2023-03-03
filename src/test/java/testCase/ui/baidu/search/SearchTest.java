@@ -9,7 +9,7 @@ public class SearchTest extends BaiDuTestBase {
     public void test() {
         auto.ui.sendKeyByEnter("//input[@id='kw']", "测试");
 //        auto.ui.sendKey("//input[@id='kw']", "{ENTER}");
-        auto.util.sleep(3);
+        auto.util.sleep("3");
         auto.assertion.isXpathExist("//em[text()='测试']");
         auto.assertion.isXpathExist("//*[text()='广告']");
     }

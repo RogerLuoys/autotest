@@ -122,9 +122,9 @@ public class UtilCommonClient {
      *
      * @param second 等待的时间-单位秒
      */
-    public void sleep(int second) {
+    public void sleep(String second) {
         try {
-            Thread.sleep((long) second * 1000);
+            Thread.sleep(Long.parseLong(second) * 1000);
         } catch (InterruptedException e) {
             log.error("\n---->线程睡眠异常");
         }

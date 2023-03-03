@@ -23,7 +23,7 @@ public class NewTaskDailyWithoutFlagTest extends FlagTestBase {
         auto.ui.sendKey("//input[@placeholder='请输入任务名']", "自动化测试临时任务001");
         auto.ui.sendKey("//textarea[@placeholder='请输入描述']", "自动化临时任务描述001");
         auto.ui.click("//span[text()='保存']");
-        auto.util.sleep(3);
+        auto.util.sleep("3");
 
         Reporter.log("验证添加的临时任务详情");
         auto.ui.click("//td[contains(string(), '01')]//span[text()='今日有任务']");
