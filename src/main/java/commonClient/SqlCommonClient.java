@@ -7,7 +7,6 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
-import java.util.List;
 import java.util.Map;
 
 @Slf4j
