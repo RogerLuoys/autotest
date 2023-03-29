@@ -7,7 +7,17 @@ import org.testng.annotations.BeforeSuite;
 import root.UiReaderRoot;
 import root.UiReaderRoot;
 
-public class ReaderTestBase extends Config {
+public class ReaderTestBase {
+
+    /*---------------------------配置参数-------------------*/
+    // reader ui 自动化专用
+    // 环境域名
+    // 启动参数
+    public static final String[] OPTIONS = {"--disable-dev-shm-usage",
+            "--no-sandbox", "url=data:,", "--start-maximized", "--disable-gpu", "--hide-scrollbars",
+            "disable-infobars", "deviceName,Samsung Galaxy S8+","--headless"};
+    /*---------------------------配置参数-------------------*/
+
 
     /**
      * 代理类实例，所有公共模块方法通过此实例调用（加static则多线程只能到tests，不加可以tests或class）

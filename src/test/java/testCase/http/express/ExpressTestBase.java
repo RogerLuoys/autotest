@@ -5,7 +5,14 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeSuite;
 import root.HttpExpressRoot;
 
-public class ExpressTestBase extends Config {
+public class ExpressTestBase {
+
+    /*---------------------------配置参数-------------------*/
+    // express http 自动化专用
+    // 接口域名(调用环境)
+    public static final String URL = "http://www.kuaidi100.com/";
+    /*---------------------------配置参数-------------------*/
+
 
     /**
      * 代理类实例，所有公共模块方法通过此实例调用（这里一定要static）

@@ -6,7 +6,17 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeSuite;
 import root.UiBaiduRoot;
 
-public class BaiDuTestBase extends Config {
+public class BaiDuTestBase {
+
+    /*---------------------------配置参数-------------------*/
+    // baidu ui 自动化专用
+    // 环境域名
+    public static final String URL = "https://www.baidu.com/";
+    // webdriver启动参数,"--headless"
+    public static final String[] OPTIONS = {"--disable-dev-shm-usage",
+            "--no-sandbox", "url=data:,", "--start-maximized", "--disable-gpu", "--hide-scrollbars",
+            "disable-infobars","--headless"};
+    /*---------------------------配置参数-------------------*/
 
     /**
      * 代理类实例，所有公共模块方法通过此实例调用（这里一定要static，因为只实例化一次）

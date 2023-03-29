@@ -8,7 +8,7 @@ import po.baidu.BaiduCommonPO;
  */
 public class UiBaiduRoot {
 
-    // 传参小于等于3个，传参类型只用String或Integer，返回只用String
+    // 传参小于等于3个，传参类型只用String，返回只用String
 
     public UiClient ui = new UiClient();
     public HttpClient http = new HttpClient();

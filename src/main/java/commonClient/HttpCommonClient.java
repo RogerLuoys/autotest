@@ -195,6 +195,10 @@ public class HttpCommonClient {
         this.defaultUrl = defaultUrl;
     }
 
+    /**
+     * 设置默认请求头
+     * @param defaultHeader 请求头
+     */
     public void setDefaultHeader(String defaultHeader) {
         DEFAULT_HEADER.clear();
         JSONObject jsonObject = JSON.parseObject(defaultHeader);

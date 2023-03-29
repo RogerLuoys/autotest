@@ -7,7 +7,14 @@ import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.DataProvider;
 import root.RpcDzbRoot;
 
-public class DzbTestBase extends Config {
+public class DzbTestBase {
+
+    /*---------------------------配置参数-------------------*/
+    // 接口域名(调用环境)
+    public static final String URL = "dubbo://localhost:20881/";
+
+    public static final String ENV = "test2";
+    /*---------------------------配置参数-------------------*/
 
     /**
      * 代理类实例，所有公共模块方法通过此实例调用（这里一定要static）

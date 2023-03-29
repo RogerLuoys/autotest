@@ -11,7 +11,7 @@ import client.UtilClient;
  */
 public class HttpFlagRoot {
 
-    // 传参小于等于3个，传参类型只用String或Integer，返回只用String
+    // 传参小于等于3个，传参类型只用String，返回只用String
 
     public HttpClient http = new HttpClient();
     public SqlClients sql = new SqlClients();

@@ -25,9 +25,9 @@ public class SqlClients {
     public String flag(String sql) {
         // 使用时才初始化
         flag.init("com.mysql.cj.jdbc.Driver",
-                "jdbc:mysql://118.24.117.181:3306/onepiece?useUnicode=true&characterEncoding=UTF-8&userSSL=false&serverTimezone=Asia/Shanghai",
-                "testerone",
-                "testerone");
+                "jdbc:mysql://localhost:3306/onepiece?useUnicode=true&characterEncoding=UTF-8&userSSL=false&serverTimezone=Asia/Shanghai",
+                "****",
+                "****");
         return flag.execute(sql);
     }
 
@@ -42,11 +42,11 @@ public class SqlClients {
      */
     public String uc(String sql) {
         // 使用时才初始化
-        flag.init("com.mysql.cj.jdbc.Driver",
-                "jdbc:mysql://118.24.117.181:3306/onepiece?useUnicode=true&characterEncoding=UTF-8&userSSL=false&serverTimezone=Asia/Shanghai",
-                "testerone",
-                "testerone");
-        return flag.execute(sql);
+        uc.init("com.mysql.cj.jdbc.Driver",
+                "jdbc:mysql://localhost:3306/onepiece?useUnicode=true&characterEncoding=UTF-8&userSSL=false&serverTimezone=Asia/Shanghai",
+                "****",
+                "****");
+        return uc.execute(sql);
     }
 
     /**

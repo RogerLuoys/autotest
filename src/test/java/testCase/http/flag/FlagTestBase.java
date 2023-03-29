@@ -9,7 +9,13 @@ import root.HttpFlagRoot;
  * 该测试专用账号/密码：APITester/123456
  * 账号userId： 416176799148282
  */
-public class FlagTestBase extends Config {
+public class FlagTestBase {
+
+    /*---------------------------配置参数-------------------*/
+    // flag http 自动化专用
+    // 接口域名(调用环境)
+    public static final String URL = "http://localhost:9002/";
+    /*---------------------------配置参数-------------------*/
 
     /**
      * 代理类实例，所有公共模块方法通过此实例调用（这里一定要static）

@@ -11,7 +11,7 @@ import client.UtilClient;
  */
 public class RpcUcRoot {
 
-    // 传参小于等于3个，传参类型只用String或Integer，返回只用String
+    // 传参小于等于3个，传参类型只用String，返回只用String
 
     public RpcClient rpc = new RpcClient();
     public SqlClients sql = new SqlClients();
