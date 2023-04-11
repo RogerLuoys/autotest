@@ -17,7 +17,7 @@ public class NewHabitTest extends FlagTestBase {
         Reporter.log("输入名称新增习惯");
         auto.ui.click("//span[contains(text(), '新增习惯')]");
         auto.ui.sendKey("//div[@class='el-dialog__body']//input[@placeholder='请输入名称']", "自动化新增习惯测试");
-        auto.ui.click("//span[text()='确 定']", 1);
+        auto.ui.click("//span[text()='确 定']", "1");
 
         Reporter.log("验证习惯是否存在");
 //        auto.po.searchFlagByName("自动化新增习惯测试");

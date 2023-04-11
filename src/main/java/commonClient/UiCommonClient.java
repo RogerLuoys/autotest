@@ -229,20 +229,7 @@ public class UiCommonClient {
      * @param xpath 元素的xpath
      */
     public void click(String xpath) {
-        this.click(xpath, 0);
-    }
-
-    /**
-     * 鼠标点击指定元素
-     *
-     * @param xpath 元素的xpath
-     * @param index list下标，从0开始
-     */
-    @Deprecated
-    public void click(String xpath, Integer index) {
-        // 这里不能用显式等待，有的控件等不到，却可以点击
-        WebElement webElement = this.wait.until(driver -> driver.findElements(By.xpath(xpath)).get(index));
-        this.actions.click(webElement).perform();
+        this.click(xpath, "0");
     }
 
     /**
