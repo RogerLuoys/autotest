@@ -1,16 +1,9 @@
 package commonClient;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import lombok.extern.slf4j.Slf4j;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.Calendar;
-import java.util.Date;
 
-@Slf4j
 public class UtilCommonClient {
 
 
@@ -45,7 +38,7 @@ public class UtilCommonClient {
         //获取最近一个}或]的位置
         int nextEndIndex = json.indexOf(typeRight, endIndex) + 1;
         if (nextEndIndex >= json.length()) {
-            log.warn("节点值不规范");
+            System.out.println("节点值不规范");
             return -1;
         }  else if (this.countByString(json.substring(startIndex, nextEndIndex), typeLeft, 0)
                 == this.countByString(json.substring(startIndex, nextEndIndex), typeRight, 0)) {
@@ -112,7 +105,7 @@ public class UtilCommonClient {
         if (jsonResult.startsWith("\"")) {
             jsonResult = jsonResult.substring(1, jsonResult.length() - 1);
         }
-        log.info("\n====>获取到的json节点值为：{}", jsonResult);
+        System.out.println("\n====>获取到的json节点值为：{}" + jsonResult);
         return jsonResult;
     }
 
@@ -126,7 +119,7 @@ public class UtilCommonClient {
         try {
             Thread.sleep(Long.parseLong(second) * 1000);
         } catch (InterruptedException e) {
-            log.error("\n---->线程睡眠异常");
+            e.printStackTrace();
         }
     }
 

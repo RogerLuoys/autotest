@@ -2,10 +2,12 @@ package commonClient;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.http.Header;
+import org.apache.http.client.CookieStore;
 import org.apache.http.client.methods.*;
+import org.apache.http.cookie.Cookie;
 import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.BasicCookieStore;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicHeader;
@@ -20,7 +22,6 @@ import java.util.List;
 //2 创建Http请求
 //3 设置
 //4 发送请求
-@Slf4j
 public class HttpCommonClient {
 
     private final List<Header> DEFAULT_HEADER = new ArrayList<>();
@@ -183,7 +184,7 @@ public class HttpCommonClient {
                 httpClient.close();
             }
         } catch (IOException e) {
-            log.error("===>关闭http客户端失败！");
+            System.out.println("===>关闭http客户端失败！");
         }
     }
 
@@ -197,14 +198,54 @@ public class HttpCommonClient {
 
     /**
      * 设置默认请求头
-     * @param defaultHeader 请求头
+     * @param headerName 请求头的名字
+     * @param headerValue 请求头的值
      */
-    public void setDefaultHeader(String defaultHeader) {
-        DEFAULT_HEADER.clear();
-        JSONObject jsonObject = JSON.parseObject(defaultHeader);
-        for (String key : jsonObject.keySet()) {
-            DEFAULT_HEADER.add(new BasicHeader(key, jsonObject.get(key).toString()));
+    public void setDefaultHeader(String headerName, String headerValue) {
+        DEFAULT_HEADER.removeIf(header -> header.getName().equals(headerName));
+        DEFAULT_HEADER.add(new BasicHeader(headerName, headerValue));
+    }
+
+    /**
+     * 添加默认cookie，原默认也保留
+     * @param cookieValue cookie值，如 "token=****; accountId=****"
+     */
+    public void addDefaultCookie(String cookieValue) {
+        String cookies = null;
+        for (Header header: DEFAULT_HEADER) {
+            if (header.getName().equals("Cookie")) {
+                cookies = header.getValue();
+            }
         }
+        cookies = cookies + "; " + cookieValue;
+        DEFAULT_HEADER.add(new BasicHeader("Cookie", cookies));
+    }
+
+    /**
+     * 设置默认请求头
+     * @param cookieValue cookie值，如 "token=****; accountId=****"
+     */
+    public void setDefaultCookie(String cookieValue) {
+        DEFAULT_HEADER.removeIf(header -> header.getName().equals("Cookie"));
+        DEFAULT_HEADER.add(new BasicHeader("Cookie", cookieValue));
+    }
+
+    /**
+     * 查询默认cookie中对应的值
+     * @param cookieName cookie名
+     * @return cookie值
+     */
+    public String queryDefaultCookie(String cookieName) {
+        // cookies格式为 name1=value1; name2=value2
+        String cookies = "";
+        for (Header header: DEFAULT_HEADER) {
+            if (header.getName().equals("Cookie")) {
+                cookies = header.getValue();
+            }
+        }
+        int startIndex = cookies.indexOf(cookieName) + cookieName.length() + 1;
+        int endIndex = cookies.indexOf(";", startIndex);
+        return cookies.substring(startIndex, endIndex);
     }
 
     /**
@@ -251,6 +292,57 @@ public class HttpCommonClient {
     public String getForHeader(String url, String headerName) {
         HttpGet httpGet = this.transformGet(url, null);
         return this.httpHeader(httpGet, headerName);
+    }
+
+    /**
+     * 执行http get请求，并将返回的cookie设置为默认
+     *
+     * @param url  完整的url地址，可带参数-http://ip:port/path?param1=value1
+     * @return 返回json格式
+     */
+    public void getAndCookie(String url) {
+        this.setDefaultCookie(getForCookie(url, null));
+    }
+
+    /**
+     * 执行http get请求，并返回所有cookie
+     *
+     * @param url  完整的url地址，可带参数-http://ip:port/path?param1=value1
+     * @return 返回json格式
+     */
+    public String getForCookie(String url) {
+        return this.getForCookie(url, null);
+    }
+
+    /**
+     * 执行http get请求，并返回指定cookie
+     *
+     * @param url  完整的url地址，可带参数-http://ip:port/path?param1=value1
+     * @param cookieName  指定获取的cookie名
+     * @return 返回json格式
+     */
+    public String getForCookie(String url, String cookieName) {
+        StringBuilder result = new StringBuilder();
+        HttpGet httpGet = transformGet(url, null);
+        CookieStore cookieStore = new BasicCookieStore();
+        CloseableHttpClient httpClient = HttpClients.custom().setDefaultCookieStore(cookieStore).build();
+        try {
+            httpClient.execute(httpGet);
+            List<Cookie> cookieList = cookieStore.getCookies();
+            for (Cookie cookie: cookieList) {
+                if (cookieName == null || cookieName.equals(cookie.getName())) {
+                    result.append("; ").append(cookie.getName()).append("=").append(cookie.getValue());
+                }
+            }
+            if (result.length() > 2) {
+                result.delete(0, 2);
+            }
+            httpClient.close();
+            cookieStore.clear();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return result.toString();
     }
 
     /**

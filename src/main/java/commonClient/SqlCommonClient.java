@@ -1,6 +1,5 @@
 package commonClient;
 
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
@@ -9,7 +8,6 @@ import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Map;
 
-@Slf4j
 public class SqlCommonClient {
 
     private JdbcTemplate jdbcTemplate = null;
