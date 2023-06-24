@@ -16,6 +16,7 @@ public class QueryTest extends ExpressTestBase {
     public void test2() {
         String result = auto.http.get("http://openyqdz.manage-test.sit.91lyd.com/openyqdz/finance/sheetController/selectSystemAccountId?customerId=123", "{\"appKey\":12345}");
         System.out.println(result);
+
     }
 
         @Test
