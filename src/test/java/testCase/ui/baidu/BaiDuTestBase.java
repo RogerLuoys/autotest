@@ -15,7 +15,7 @@ public class BaiDuTestBase {
     // webdriver启动参数,"--headless"
     public static final String[] OPTIONS = {"--disable-dev-shm-usage",
             "--no-sandbox", "url=data:,", "--start-maximized", "--disable-gpu", "--hide-scrollbars",
-            "disable-infobars","--headless"};
+            "disable-infobars","--headless","--remote-allow-origins=*"};
     /*---------------------------配置参数-------------------*/
 
     /**
